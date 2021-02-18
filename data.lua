@@ -5,5 +5,3 @@
 
 -- Core functions
 require("prototypes.functions")
-
--- Mod Requires

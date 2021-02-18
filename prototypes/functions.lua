@@ -50,6 +50,7 @@ end
 ----------------------------------------------------------------------------------------------------
 
 -- LOGISTICS TECHNOLOGY ICONS
+-- DO NOT USE, NOT ACTIVE AS OF YET
 -- Returns a complete technology icons definition
 -- inputs   Table of parameters:
 --      base_tint      Types/Color     Color to tint the base sprite (gears, rails) [Optional; default nil]

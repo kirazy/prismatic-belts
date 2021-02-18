@@ -7,4 +7,4 @@ Date: 2021.02.18
     - Supports belts from Bob's Logistics, Krastorio 2, Ultimate Belts, Factorio Extended Plus and Random Factorio Things
     - Supports loaders from Miniloaders, Loader Redux, Deadlock Stacking Beltboxes & Loaders and Vanilla Loaders
     - Supports Artisanal Reskins tier labels and custom colors
-    - Public-facing API for mod authors to create their own colored transport belts
+    - Public-facing API for mod authors to create their own colored transport belts, see FAQ for details

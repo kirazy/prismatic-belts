@@ -5,6 +5,7 @@
 
 -- Make our function host
 if not prismatic_belts then prismatic_belts = {} end
+prismatic_belts.migration = require("__flib__.migration")
 
 -- Ensure tint is normalized to between 0 and 1
 local function normalize_tint(tint)

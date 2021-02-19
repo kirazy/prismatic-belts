@@ -1,5 +1,10 @@
 ---------------------------------------------------------------------------------------------------
-Version: 1.1.0
+Version: 1.1.2
+Date: 2021.02.19
+  Bugfixes:
+    - Fixed minor visual issues with the tintable spritesheets
+---------------------------------------------------------------------------------------------------
+Version: 1.1.1
 Date: 2021.02.19
   Bugfixes:
     - Fixed that the version of Artisanal Reskins that was supported was the development version

@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.3
+Date: 2021.02.26
+  Changes:
+    - Images are now losslessly compressed, instead of lossy; there is a modest increase in filesize
+---------------------------------------------------------------------------------------------------
 Version: 1.1.2
 Date: 2021.02.19
   Bugfixes:

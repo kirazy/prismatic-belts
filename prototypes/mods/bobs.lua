@@ -23,8 +23,7 @@ if mods["reskins-library"] then
     tiers["turbo-"].tier = 4
     tiers["ultimate-"].tier = 5
 
-    -- Fetch tints from Artisanal Reskins 1.1.3+
-    if prismatic_belts.migration.is_newer_version("1.1.2", mods["reskins-library"]) then
+    if not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
         tiers["basic-"].tint = reskins.lib.belt_tint_index[0]
 
         -- Check for custom colors, update tint and tier information if so
@@ -35,20 +34,6 @@ if mods["reskins-library"] then
             tiers["basic-"].tint = reskins.lib.belt_tint_index[0]
             tiers["turbo-"].tint = reskins.lib.belt_tint_index[4]
             tiers["ultimate-"].tint = reskins.lib.belt_tint_index[5]
-        end
-
-    -- Compatibility with Artisanal Reskins 1.1.2
-    elseif mods["reskins-bobs"] then
-        tiers["basic-"].tint = reskins.lib.belt_mask_tint(reskins.bobs.basic_belt_tint)
-
-        -- Check for custom colors, update tint and tier information if so
-        if reskins.lib.setting("reskins-lib-customize-tier-colors") then
-            tiers[""] = {tint = reskins.lib.belt_mask_tint(reskins.lib.tint_index["tier-"..1]), variant = 1, loader = "", tier = 1}
-            tiers["fast-"] = {tint = reskins.lib.belt_mask_tint(reskins.lib.tint_index["tier-"..2]), variant = 2, loader = "fast-", tier = 2}
-            tiers["express-"] = {tint = reskins.lib.belt_mask_tint(reskins.lib.tint_index["tier-"..3]), variant = 2, loader = "express-", tier = 3}
-            tiers["basic-"].tint = reskins.lib.belt_mask_tint(reskins.bobs.basic_belt_tint)
-            tiers["turbo-"].tint = reskins.lib.belt_mask_tint(reskins.lib.tint_index["tier-"..4])
-            tiers["ultimate-"].tint = reskins.lib.belt_mask_tint(reskins.lib.tint_index["tier-"..5])
         end
     end
 end
@@ -77,9 +62,13 @@ for prefix, properties in pairs(tiers) do
 
         -- Append tier labels for reskins-library
         if mods["reskins-library"] then
-            reskins.lib.append_tier_labels(properties.tier, {icon = icons, tier_labels = reskins.lib.setting("reskins-bobs-do-belt-entity-tier-labeling") and true or false})
+            if not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
+                reskins.lib.append_tier_labels(properties.tier, {icon = icons, tier_labels = reskins.lib.setting("reskins-bobs-do-belt-entity-tier-labeling") and true or false})
 
-            reskins.lib.assign_icons(prefix.."transport-belt", {icon = icons, icon_picture = prismatic_belts.transport_belt_picture(properties.tint), make_icon_pictures = true})
+                reskins.lib.assign_icons(prefix.."transport-belt", {icon = icons, icon_picture = prismatic_belts.transport_belt_picture(properties.tint), make_icon_pictures = true})
+            else
+                belt_item.icons = icons
+            end
         else
             belt_item.icons = icons
         end

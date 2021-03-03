@@ -116,16 +116,20 @@ for prefix, properties in pairs(tiers) do
 
         -- Append tier labels for reskins-library
         if mods["reskins-library"] then
-            reskins.lib.append_tier_labels(properties.tier, {icon = icons, tier_labels = reskins.lib.setting("reskins-bobs-do-belt-entity-tier-labeling") and true or false})
+            if not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
+                reskins.lib.append_tier_labels(properties.tier, {icon = icons, tier_labels = reskins.lib.setting("reskins-bobs-do-belt-entity-tier-labeling") and true or false})
 
-            local icon_picture = {
-                filename = "__prismatic-belts__/graphics/icons/base/"..prefix.."transport-belt.png",
-                size = 64,
-                mipmaps = 4,
-                scale = 0.25,
-            }
+                local icon_picture = {
+                    filename = "__prismatic-belts__/graphics/icons/base/"..prefix.."transport-belt.png",
+                    size = 64,
+                    mipmaps = 4,
+                    scale = 0.25,
+                }
 
-            reskins.lib.assign_icons(prefix.."transport-belt", {icon = icons, icon_picture = icon_picture, make_icon_pictures = true})
+                reskins.lib.assign_icons(prefix.."transport-belt", {icon = icons, icon_picture = icon_picture, make_icon_pictures = true})
+            else
+                belt_item.icons = icons
+            end
         else
             belt_item.icons = icons
         end

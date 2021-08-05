@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.2.0
-Date: ????
+Date: 2021-08-05
   Features:
     - Completed function `prismatic_belts.logistics_technology_icon`
     - Logistics-type technologies in all supported mods are now reskinned to be visually consistent with the colored belt surfaces

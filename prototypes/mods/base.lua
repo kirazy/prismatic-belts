@@ -65,9 +65,9 @@ local belt_animation_sets = {
 }
 
 local tiers = {
-    [""] = {},
-    ["fast-"] = {},
-    ["express-"] = {},
+    [""] = {technology = "logistics"},
+    ["fast-"] = {technology = "logistics-2"},
+    ["express-"] = {technology = "logistics-3"},
 }
 
 if mods["reskins-library"] then
@@ -115,21 +115,17 @@ for prefix, properties in pairs(tiers) do
         }
 
         -- Append tier labels for reskins-library
-        if mods["reskins-library"] then
-            if not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
-                reskins.lib.append_tier_labels(properties.tier, {icon = icons, tier_labels = reskins.lib.setting("reskins-bobs-do-belt-entity-tier-labeling") and true or false})
+        if mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
+            reskins.lib.append_tier_labels(properties.tier, {icon = icons, tier_labels = reskins.lib.setting("reskins-bobs-do-belt-entity-tier-labeling") and true or false})
 
-                local icon_picture = {
-                    filename = "__prismatic-belts__/graphics/icons/base/"..prefix.."transport-belt.png",
-                    size = 64,
-                    mipmaps = 4,
-                    scale = 0.25,
-                }
+            local icon_picture = {
+                filename = "__prismatic-belts__/graphics/icons/base/"..prefix.."transport-belt.png",
+                size = 64,
+                mipmaps = 4,
+                scale = 0.25,
+            }
 
-                reskins.lib.assign_icons(prefix.."transport-belt", {icon = icons, icon_picture = icon_picture, make_icon_pictures = true})
-            else
-                belt_item.icons = icons
-            end
+            reskins.lib.assign_icons(prefix.."transport-belt", {icon = icons, icon_picture = icon_picture, make_icon_pictures = true})
         else
             belt_item.icons = icons
         end
@@ -156,7 +152,8 @@ for prefix, properties in pairs(tiers) do
             remnants.icon = entities.belt.icon
             remnants.icon_size = entities.belt.icon_size
         end
-        remnants.animation = make_rotated_animation_variations_from_sheet (2, {
+
+        remnants.animation = make_rotated_animation_variations_from_sheet(2, {
             filename = "__prismatic-belts__/graphics/entity/base/"..prefix.."transport-belt/remnants/"..prefix.."transport-belt-remnants.png",
             line_length = 1,
             width = 54,
@@ -179,5 +176,20 @@ for prefix, properties in pairs(tiers) do
                 scale = 0.5
             }
         })
+    end
+
+    -- Setup logistics technologies
+    local technology = data.raw["technology"][properties.technology]
+
+    if technology then
+        local icons = {
+            {
+                icon = "__prismatic-belts__/graphics/technology/base/"..properties.technology..".png",
+                icon_size = 256,
+                icon_mipmaps = 4,
+            }
+        }
+
+        technology.icons = icons
     end
 end

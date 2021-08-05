@@ -49,4 +49,11 @@ for prefix, properties in pairs(tiers) do
     if entities.belt then
         prismatic_belts.create_remnant(prefix.."transport-belt", {mask_tint = properties.tint})
     end
+
+    -- Setup logistics technologies
+    local technology = data.raw["technology"][prefix.."logistics"]
+
+    if technology then
+        technology.icons = prismatic_belts.logistics_technology_icon({mask_tint = properties.tint})
+    end
 end

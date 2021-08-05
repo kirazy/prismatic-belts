@@ -35,7 +35,7 @@ for prefix, properties in pairs(tiers)do
     if belt_item then
         belt_item.icons = {
             {
-                icon = "__prismatic-belts__/graphics/icons/ultimate-transport-belt-icon.png",
+                icon = "__prismatic-belts__/graphics/icons/standard/ultimate-transport-belt-icon.png",
                 icon_size = 64,
                 icon_mipmaps = 4,
                 tint = prismatic_belts.adjust_alpha(properties.tint, 1),
@@ -57,6 +57,13 @@ for prefix, properties in pairs(tiers)do
 
     -- Setup remnants
     if entities.belt then
-        prismatic_belts.create_remnant(prefix.."belt", {mask_tint = properties.tint, brighten_arrows = true})
+        prismatic_belts.create_remnant(prefix.."belt", {base_tint = util.color("404040"), mask_tint = properties.tint, brighten_arrows = true})
+    end
+
+    -- Setup logistics technologies
+    local technology = data.raw["technology"][prefix.."logistics"]
+
+    if technology then
+        technology.icons = prismatic_belts.logistics_technology_icon({base_tint = util.color("404040"), mask_tint = properties.tint})
     end
 end

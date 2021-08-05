@@ -6,8 +6,8 @@
 if not mods["Krastorio2"] then return end
 
 local tiers = {
-    ["kr-advanced-"] = {tint = util.color("3ade21d1") , variant = 2},
-    ["kr-superior-"] = {tint = util.color("a30bd6d1") , variant = 2},
+    ["kr-advanced-"] = {tint = util.color("3ade21d1") , variant = 2, technology = "kr-logistic-4"},
+    ["kr-superior-"] = {tint = util.color("a30bd6d1") , variant = 2, technology = "kr-logistic-5"},
 }
 
 -- Setup all the entities to use the updated belt animation sets
@@ -45,5 +45,12 @@ for prefix, properties in pairs(tiers) do
     -- Setup remnants
     if entities.belt then
         prismatic_belts.create_remnant(prefix.."transport-belt", {mask_tint = properties.tint})
+    end
+
+    -- Setup logistics technologies
+    local technology = data.raw["technology"][properties.technology]
+
+    if technology then
+        technology.icons = prismatic_belts.logistics_technology_icon({mask_tint = properties.tint})
     end
 end

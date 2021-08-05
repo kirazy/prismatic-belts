@@ -5,7 +5,7 @@
 
 -- Make our function host
 if not prismatic_belts then prismatic_belts = {} end
-prismatic_belts.migration = require("__flib__.migration")
+prismatic_belts.migration = require("migration")
 
 -- Ensure tint is normalized to between 0 and 1
 local function normalize_tint(tint)
@@ -32,16 +32,19 @@ function prismatic_belts.adjust_alpha(tint, alpha)
 end
 
 -- Make an icon_pictures table for reskins-library
-function prismatic_belts.transport_belt_picture(tint)
-    local icon_pictures = {
-        {
-            filename = "__prismatic-belts__/graphics/icons/transport-belt-icon.png",
-            size = 64,
-            mipmaps = 4,
+function prismatic_belts.transport_belt_picture(tint, use_reskin_process)
+    local standard_icon = prismatic_belts.transport_belt_icon(tint, use_reskin_process)
+    local icon_pictures = {layers = {}}
+
+    for _, layer in pairs(standard_icon) do
+        table.insert(icon_pictures.layers, {
+            filename = layer.icon,
+            size = layer.icon_size,
+            mipmaps = layer.icon_mipmaps,
             scale = 0.25,
-            tint = prismatic_belts.adjust_alpha(tint, 1),
-        },
-    }
+            tint = layer.tint,
+        })
+    end
 
     return icon_pictures
 end
@@ -51,42 +54,85 @@ end
 ----------------------------------------------------------------------------------------------------
 
 -- LOGISTICS TECHNOLOGY ICONS
--- DO NOT USE, NOT ACTIVE AS OF YET
 -- Returns a complete technology icons definition
 -- inputs   Table of parameters:
---      base_tint      Types/Color     Color to tint the base sprite (gears, rails) [Optional; default nil]
---      mask_tint      Types/Color     Color to tint the mask sprite (belt surface, arrows) [Optional; default nil]
+--      base_tint            Types/Color     Color to tint the base sprite (gears, rails) [Optional; default nil]
+--      mask_tint            Types/Color     Color to tint the mask sprite (belt surface, arrows) [Optional; default nil]
+--      use_reskin_process   Boolean         When true, uses the icons compliant with Artisanal Reskins version 2.0.0+ [Optional; default nil]
 function prismatic_belts.logistics_technology_icon(inputs)
-    local technology_icons = {
-        {
-            icon = "__prismatic-belts__/graphics/technology/logistics-technology-base.png",
-            icon_size = 256,
-            icon_mipmaps = 4,
-            tint = prismatic_belts.adjust_alpha(inputs.base_tint, 1)
-        },
-        {
-            icon = "__prismatic-belts__/graphics/technology/logistics-technology-mask.png",
-            icon_size = 256,
-            icon_mipmaps = 4,
-            tint = inputs.mask_tint,
+    local technology_icons
+    if inputs.use_reskin_process then
+        technology_icons = {
+            {
+                icon = "__prismatic-belts__/graphics/technology/reskins/logistics-technology-base.png",
+                icon_size = 256,
+                icon_mipmaps = 4,
+                tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1)
+            },
+            {
+                icon = "__prismatic-belts__/graphics/technology/reskins/logistics-technology-mask.png",
+                icon_size = 256,
+                icon_mipmaps = 4,
+                tint = inputs.mask_tint,
+            },
+            {
+                icon = "__prismatic-belts__/graphics/technology/reskins/logistics-technology-highlights.png",
+                icon_size = 256,
+                icon_mipmaps = 4,
+                tint = {1, 1, 1, 0},
+            }
         }
-    }
+    else
+        technology_icons = {
+            {
+                icon = "__prismatic-belts__/graphics/technology/standard/logistics-technology-base.png",
+                icon_size = 256,
+                icon_mipmaps = 4,
+                tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1)
+            },
+            {
+                icon = "__prismatic-belts__/graphics/technology/standard/logistics-technology-mask.png",
+                icon_size = 256,
+                icon_mipmaps = 4,
+                tint = inputs.mask_tint,
+            }
+        }
+    end
 
     return technology_icons
 end
 
 -- TRANSPORT BELT ICONS
 -- Returns a complete item icons definition
--- tint     Types/Color     Color to tint the icon [Optional; default nil]
-function prismatic_belts.transport_belt_icon(tint)
-    local item_icons = {
-        {
-            icon = "__prismatic-belts__/graphics/icons/transport-belt-icon.png",
-            icon_size = 64,
-            icon_mipmaps = 4,
-            tint = prismatic_belts.adjust_alpha(tint, 1),
-        },
-    }
+-- tint                 Types/Color     Color to tint the icon [Optional; default nil]
+-- use_reskin_process   Boolean         When true, uses the icons compliant with Artisanal Reskins version 2.0.0+ [Optional; default nil]
+function prismatic_belts.transport_belt_icon(tint, use_reskin_process)
+    local item_icons
+    if use_reskin_process then
+        item_icons = {
+            {
+                icon = "__prismatic-belts__/graphics/icons/reskins/transport-belt-icon-base.png",
+                icon_size = 64,
+                icon_mipmaps = 4,
+                tint = tint and prismatic_belts.adjust_alpha(tint, 1),
+            },
+            {
+                icon = "__prismatic-belts__/graphics/icons/reskins/transport-belt-icon-highlights.png",
+                icon_size = 64,
+                icon_mipmaps = 4,
+                tint = {1, 1, 1, 0},
+            },
+        }
+    else
+        item_icons = {
+            {
+                icon = "__prismatic-belts__/graphics/icons/standard/transport-belt-icon.png",
+                icon_size = 64,
+                icon_mipmaps = 4,
+                tint = tint and prismatic_belts.adjust_alpha(tint, 1),
+            },
+        }
+    end
 
     return item_icons
 end
@@ -97,154 +143,70 @@ end
 --      base_tint           Types/Color     Color to tint the base sprite (gears, rails) [Optional; default nil]
 --      mask_tint           Types/Color     Color to tint the mask sprite (belt surface, arrows) [Optional; default nil]
 --      brighten_arrows     Boolean         When true, blends a white arrow with the underlying tinted belts to brighen the arrows [Optional; default nil]
+--      use_reskin_process  Boolean         When true, uses the tintable color masks consistent with Artisanal Reskins version 2.0.0+ [Optional; default nil]
 --      variant             Integer (1|2)   Spritesheet to return (1 for slow, 2 for fast) [Optional; default 1]
--- and the given varient (1 = slow (yellow), 2 = fast (red, blue))
 function prismatic_belts.transport_belt_animation_set(inputs)
     local transport_belt_animation_set
     local variant = inputs.variant or 1
 
+    -- Returns a tailored layer of the belt animation set
+    -- inputs   Table of parameters:
+    --      blend_mode          String          Blending mode for the layer
+    --      directory           String          "standard" or "reskins", determines types of color masks to use
+    --      layer               String          "base", "mask" or "arrows" (standard), or "base", "mask" or "highlights" (reskins). Determines specific spritesheet used by the layer
+    --      tint                Types/Color     Color to tint the layer
+    --      variant             Integer (1|2)   Spritesheet to return (1 for slow, 2 for fast)
+    local function return_belt_animation_set_layer(inputs)
+        -- Point to appropriate sprite directory
+        local directory = inputs.directory or "standard"
+
+        return
+        {
+            filename = "__prismatic-belts__/graphics/entity/"..directory.."/transport-belt-"..inputs.variant.."-"..inputs.layer..".png",
+            priority = "extra-high",
+            width = 64,
+            height = 64,
+            frame_count = 16*inputs.variant,
+            tint = inputs.tint,
+            blend_mode = inputs.blend_mode,
+            direction_count = 20,
+            hr_version = {
+                filename = "__prismatic-belts__/graphics/entity/"..directory.."/hr-transport-belt-"..inputs.variant.."-"..inputs.layer..".png",
+                priority = "extra-high",
+                width = 128,
+                height = 128,
+                scale = 0.5,
+                frame_count = 16*inputs.variant,
+                tint = inputs.tint,
+                blend_mode = inputs.blend_mode,
+                direction_count = 20,
+            }
+        }
+    end
+
     -- Setup belt transport set
-    if variant == 1 then
+    if inputs.use_reskin_process then
         transport_belt_animation_set = {
             animation_set = {
                 layers = {
-                    -- Base
-                    {
-                        filename = "__prismatic-belts__/graphics/entity/transport-belt/transport-belt-1-base.png",
-                        priority = "extra-high",
-                        width = 64,
-                        height = 64,
-                        frame_count = 16,
-                        tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1) or nil,
-                        direction_count = 20,
-                        hr_version = {
-                            filename = "__prismatic-belts__/graphics/entity/transport-belt/hr-transport-belt-1-base.png",
-                            priority = "extra-high",
-                            width = 128,
-                            height = 128,
-                            scale = 0.5,
-                            frame_count = 16,
-                            tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1) or nil,
-                            direction_count = 20
-                        }
-                    },
-                    -- Mask
-                    {
-                        filename = "__prismatic-belts__/graphics/entity/transport-belt/transport-belt-1-mask.png",
-                        priority = "extra-high",
-                        width = 64,
-                        height = 64,
-                        frame_count = 16,
-                        tint = inputs.mask_tint,
-                        direction_count = 20,
-                        hr_version = {
-                            filename = "__prismatic-belts__/graphics/entity/transport-belt/hr-transport-belt-1-mask.png",
-                            priority = "extra-high",
-                            width = 128,
-                            height = 128,
-                            scale = 0.5,
-                            frame_count = 16,
-                            tint = inputs.mask_tint,
-                            direction_count = 20
-                        }
-                    },
+                    return_belt_animation_set_layer{directory = "reskins", layer = "base", tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1) or nil, variant = variant},
+                    return_belt_animation_set_layer{directory = "reskins", layer = "mask", tint = inputs.mask_tint, variant = variant},
+                    return_belt_animation_set_layer{directory = "reskins", layer = "highlights", blend_mode = "additive", variant = variant},
                 }
             }
         }
-
-        if inputs.brighten_arrows then
-            table.insert(transport_belt_animation_set.animation_set.layers, {
-                filename = "__prismatic-belts__/graphics/entity/transport-belt/transport-belt-1-mask.png",
-                priority = "extra-high",
-                width = 64,
-                height = 64,
-                frame_count = 16,
-                tint = util.color("4"),
-                blend_mode = "additive-soft",
-                direction_count = 20,
-                hr_version = {
-                    filename = "__prismatic-belts__/graphics/entity/transport-belt/hr-transport-belt-1-mask.png",
-                    priority = "extra-high",
-                    width = 128,
-                    height = 128,
-                    scale = 0.5,
-                    frame_count = 16,
-                    tint = util.color("4"),
-                    blend_mode = "additive-soft",
-                    direction_count = 20
-                }
-            })
-        end
     else
         transport_belt_animation_set = {
             animation_set = {
                 layers = {
-                    -- Base
-                    {
-                        filename = "__prismatic-belts__/graphics/entity/transport-belt/transport-belt-2-base.png",
-                        priority = "extra-high",
-                        width = 64,
-                        height = 64,
-                        frame_count = 32,
-                        tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1) or nil,
-                        direction_count = 20,
-                        hr_version = {
-                            filename = "__prismatic-belts__/graphics/entity/transport-belt/hr-transport-belt-2-base.png",
-                            priority = "extra-high",
-                            width = 128,
-                            height = 128,
-                            scale = 0.5,
-                            frame_count = 32,
-                            tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1) or nil,
-                            direction_count = 20
-                        }
-                    },
-                    -- Mask
-                    {
-                        filename = "__prismatic-belts__/graphics/entity/transport-belt/transport-belt-2-mask.png",
-                        priority = "extra-high",
-                        width = 64,
-                        height = 64,
-                        frame_count = 32,
-                        tint = inputs.mask_tint,
-                        direction_count = 20,
-                        hr_version = {
-                            filename = "__prismatic-belts__/graphics/entity/transport-belt/hr-transport-belt-2-mask.png",
-                            priority = "extra-high",
-                            width = 128,
-                            height = 128,
-                            scale = 0.5,
-                            frame_count = 32,
-                            tint = inputs.mask_tint,
-                            direction_count = 20
-                        }
-                    },
+                    return_belt_animation_set_layer{layer = "base", tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1) or nil, variant = variant},
+                    return_belt_animation_set_layer{layer = "mask", tint = inputs.mask_tint, variant = variant},
                 }
             }
         }
 
         if inputs.brighten_arrows then
-            table.insert(transport_belt_animation_set.animation_set.layers, {
-                filename = "__prismatic-belts__/graphics/entity/transport-belt/transport-belt-2-arrows.png",
-                priority = "extra-high",
-                width = 64,
-                height = 64,
-                frame_count = 32,
-                tint = util.color("4"),
-                blend_mode = "additive-soft",
-                direction_count = 20,
-                hr_version = {
-                    filename = "__prismatic-belts__/graphics/entity/transport-belt/hr-transport-belt-2-arrows.png",
-                    priority = "extra-high",
-                    width = 128,
-                    height = 128,
-                    scale = 0.5,
-                    frame_count = 32,
-                    tint = util.color("4"),
-                    blend_mode = "additive-soft",
-                    direction_count = 20
-                }
-            })
+            table.insert(transport_belt_animation_set.animation_set.layers, return_belt_animation_set_layer{layer = "arrows", tint = util.color("4"), blend_mode = "additive-soft", variant = variant})
         end
     end
 
@@ -255,70 +217,26 @@ end
 -- This function reskins (or creates as needed) appropriate transport belt remnants
 -- name     Prototype name of the transport belt
 -- inputs   Table of parameters:
---      base_tint           Types/Color - Color to tint the base sprite (gears, rails) [Optional; default nil]
---      mask_tint           Types/Color - Color to tint the mask sprite (belt surface, arrows) [Optional; default nil]
---      brighten_arrows     Boolean     - When true, blends a white arrow with the underlying tinted belts to brighen the arrows [Optional; default nil]
+--      base_tint               Types/Color     Color to tint the base sprite (gears, rails) [Optional; default nil]
+--      mask_tint               Types/Color     Color to tint the mask sprite (belt surface, arrows) [Optional; default nil]
+--      brighten_arrows         Boolean         When true, blends a white arrow with the underlying tinted belts to brighen the arrows [Optional; default nil]
+--      use_reskin_process      Boolean         When true, uses the tintable color masks consistent with Artisanal Reskins version 2.0.0+ [Optional; default nil]
 function prismatic_belts.create_remnant(name, inputs)
-    -- Create remnant animation
-    local remnant_layers = {
-        -- Base
-        {
-            filename ="__prismatic-belts__/graphics/entity/transport-belt/remnants/transport-belt-remnants-base.png",
-            line_length = 1,
-            width = 54,
-            height = 52,
-            frame_count = 1,
-            variation_count = 1,
-            axially_symmetrical = false,
-            direction_count = 4,
-            tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1) or nil,
-            shift = util.by_pixel(1, 0),
-            hr_version = {
-                filename ="__prismatic-belts__/graphics/entity/transport-belt/remnants/hr-transport-belt-remnants-base.png",
-                line_length = 1,
-                width = 106,
-                height = 102,
-                frame_count = 1,
-                variation_count = 1,
-                axially_symmetrical = false,
-                direction_count = 4,
-                tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1) or nil,
-                shift = util.by_pixel(1, -0.5),
-                scale = 0.5,
-            }
-        },
-        -- Mask
-        {
-            filename ="__prismatic-belts__/graphics/entity/transport-belt/remnants/transport-belt-remnants-mask.png",
-            line_length = 1,
-            width = 54,
-            height = 52,
-            frame_count = 1,
-            variation_count = 1,
-            axially_symmetrical = false,
-            direction_count = 4,
-            tint = inputs.mask_tint,
-            shift = util.by_pixel(1, 0),
-            hr_version = {
-                filename ="__prismatic-belts__/graphics/entity/transport-belt/remnants/hr-transport-belt-remnants-mask.png",
-                line_length = 1,
-                width = 106,
-                height = 102,
-                frame_count = 1,
-                variation_count = 1,
-                axially_symmetrical = false,
-                direction_count = 4,
-                tint = inputs.mask_tint,
-                shift = util.by_pixel(1, -0.5),
-                scale = 0.5,
-            }
-        },
-    }
+    local remnant_layers
 
-    -- Brighten the arrows
-    if inputs.brighten_arrows then
-        table.insert(remnant_layers, {
-            filename ="__prismatic-belts__/graphics/entity/transport-belt/remnants/transport-belt-remnants-arrows.png",
+    -- Returns a tailored layer of the belt remnants
+    -- inputs   Table of parameters:
+    --      blend_mode          String          Blending mode for the layer
+    --      directory           String          "standard" or "reskins", determines types of color masks to use
+    --      layer               String          "base", "mask" or "arrows" (standard), or "base", "mask" or "highlights" (reskins). Determines specific spritesheet used by the layer
+    --      tint                Types/Color     Color to tint the layer
+    local function return_remnant_layer(inputs)
+        -- Point to appropriate sprite directory
+        local directory = inputs.directory or "standard"
+
+        return
+        {
+            filename ="__prismatic-belts__/graphics/entity/"..directory.."/remnants/transport-belt-remnants-"..inputs.layer..".png",
             line_length = 1,
             width = 54,
             height = 52,
@@ -326,11 +244,11 @@ function prismatic_belts.create_remnant(name, inputs)
             variation_count = 1,
             axially_symmetrical = false,
             direction_count = 4,
-            tint = util.color("4"),
-            blend_mode = "additive-soft",
+            tint = inputs.tint,
+            blend_mode = inputs.blend_mode,
             shift = util.by_pixel(1, 0),
             hr_version = {
-                filename ="__prismatic-belts__/graphics/entity/transport-belt/remnants/hr-transport-belt-remnants-arrows.png",
+                filename ="__prismatic-belts__/graphics/entity/"..directory.."/remnants/hr-transport-belt-remnants-"..inputs.layer..".png",
                 line_length = 1,
                 width = 106,
                 height = 102,
@@ -338,12 +256,30 @@ function prismatic_belts.create_remnant(name, inputs)
                 variation_count = 1,
                 axially_symmetrical = false,
                 direction_count = 4,
-                tint = util.color("4"),
-                blend_mode = "additive-soft",
+                tint = inputs.tint,
+                blend_mode = inputs.blend_mode,
                 shift = util.by_pixel(1, -0.5),
                 scale = 0.5,
             }
-        })
+        }
+    end
+
+    -- Setup belt transport set
+    if inputs.use_reskin_process then
+        remnant_layers = {
+            return_remnant_layer{directory = "reskins", layer = "base", tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1) or nil},
+            return_remnant_layer{directory = "reskins", layer = "mask", tint = inputs.mask_tint},
+            return_remnant_layer{directory = "reskins", layer = "highlights", blend_mode = "additive"},
+        }
+    else
+        remnant_layers = {
+            return_remnant_layer{layer = "base", tint = inputs.base_tint and prismatic_belts.adjust_alpha(inputs.base_tint, 1) or nil},
+            return_remnant_layer{layer = "mask", tint = inputs.mask_tint},
+        }
+
+        if inputs.brighten_arrows then
+            table.insert(remnant_layers, return_remnant_layer{layer = "arrows", tint = util.color("4"), blend_mode = "additive-soft"})
+        end
     end
 
     -- Fetch remnant

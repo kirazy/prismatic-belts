@@ -6,8 +6,8 @@
 if not mods["FactorioExtended-Plus-Transport"] then return end
 
 local tiers = {
-    ["mk1"] = {tint = util.color("2cd529d1")},
-    ["mk2"] = {tint = util.color("9a2cc9d1")},
+    ["mk1"] = {tint = util.color("2cd529d1"), technology = "logistics-4"},
+    ["mk2"] = {tint = util.color("9a2cc9d1"), technology = "logistics-5"},
 }
 
 -- Setup all the entities to use the updated belt animation sets
@@ -48,5 +48,12 @@ for tier, properties in pairs(tiers) do
     -- Setup remnants
     if entities.belt then
         prismatic_belts.create_remnant("rapid-transport-belt-"..tier, {mask_tint = properties.tint})
+    end
+
+    -- Setup logistics technologies
+    local technology = data.raw["technology"][properties.technology]
+
+    if technology then
+        technology.icons = prismatic_belts.logistics_technology_icon({mask_tint = properties.tint})
     end
 end

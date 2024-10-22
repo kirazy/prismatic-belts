@@ -7,7 +7,9 @@
 if not prismatic_belts then prismatic_belts = {} end
 prismatic_belts.migration = require("migration")
 
--- Ensure tint is normalized to between 0 and 1
+local meld = require("meld")
+
+--- Ensure tint is normalized to between 0 and 1
 local function normalize_tint(tint)
     local r = tint.r or tint[1]
     local g = tint.g or tint[2]
@@ -199,6 +201,9 @@ function prismatic_belts.transport_belt_animation_set(inputs)
             table.insert(transport_belt_animation_set.animation_set.layers, return_belt_animation_set_layer { layer = "arrows", tint = util.color("4"), blend_mode = "additive-soft", variant = variant })
         end
     end
+
+    -- Add belt reader sprites.
+    meld(transport_belt_animation_set, belt_reader_gfx)
 
     return transport_belt_animation_set
 end

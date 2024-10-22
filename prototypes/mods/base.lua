@@ -40,6 +40,12 @@ local belt_animation_sets = {
     },
 }
 
+-- Add belt reader sprites.
+local meld = require("meld")
+meld(belt_animation_sets["transport-belt"], belt_reader_gfx)
+meld(belt_animation_sets["fast-transport-belt"], belt_reader_gfx)
+meld(belt_animation_sets["express-transport-belt"], belt_reader_gfx)
+
 local tiers = {
     [""] = { technology = "logistics" },
     ["fast-"] = { technology = "logistics-2" },

@@ -8,51 +8,28 @@ local belt_animation_sets = {
     ["transport-belt"] = {
         animation_set = {
             filename = "__prismatic-belts__/graphics/entity/base/transport-belt/transport-belt.png",
-            priority = "extra-high",
-            width = 64,
-            height = 64,
-            frame_count = 16,
-            direction_count = 20,
-            hr_version = {
-                filename = "__prismatic-belts__/graphics/entity/base/transport-belt/hr-transport-belt.png",
                 priority = "extra-high",
                 width = 128,
                 height = 128,
                 scale = 0.5,
                 frame_count = 16,
                 direction_count = 20
-            }
         }
     },
     ["fast-transport-belt"] = {
         animation_set = {
             filename = "__prismatic-belts__/graphics/entity/base/fast-transport-belt/fast-transport-belt.png",
-            priority = "extra-high",
-            width = 64,
-            height = 64,
-            frame_count = 32,
-            direction_count = 20,
-            hr_version = {
-                filename = "__prismatic-belts__/graphics/entity/base/fast-transport-belt/hr-fast-transport-belt.png",
                 priority = "extra-high",
                 width = 128,
                 height = 128,
                 scale = 0.5,
                 frame_count = 32,
                 direction_count = 20
-            }
         }
     },
     ["express-transport-belt"] = {
         animation_set = {
             filename = "__prismatic-belts__/graphics/entity/base/express-transport-belt/express-transport-belt.png",
-            priority = "extra-high",
-            width = 64,
-            height = 64,
-            frame_count = 32,
-            direction_count = 20,
-            hr_version = {
-                filename = "__prismatic-belts__/graphics/entity/base/express-transport-belt/hr-express-transport-belt.png",
                 priority = "extra-high",
                 width = 128,
                 height = 128,
@@ -60,7 +37,6 @@ local belt_animation_sets = {
                 frame_count = 32,
                 direction_count = 20
             }
-        }
     },
 }
 
@@ -153,16 +129,6 @@ for prefix, properties in pairs(tiers) do
         remnants.animation = make_rotated_animation_variations_from_sheet(2, {
             filename = "__prismatic-belts__/graphics/entity/base/" .. prefix .. "transport-belt/remnants/" .. prefix .. "transport-belt-remnants.png",
             line_length = 1,
-            width = 54,
-            height = 52,
-            frame_count = 1,
-            variation_count = 1,
-            axially_symmetrical = false,
-            direction_count = 4,
-            shift = util.by_pixel(1, 0),
-            hr_version = {
-                filename = "__prismatic-belts__/graphics/entity/base/" .. prefix .. "transport-belt/remnants/hr-" .. prefix .. "transport-belt-remnants.png",
-                line_length = 1,
                 width = 106,
                 height = 102,
                 frame_count = 1,
@@ -171,7 +137,6 @@ for prefix, properties in pairs(tiers) do
                 direction_count = 4,
                 shift = util.by_pixel(1, -0.5),
                 scale = 0.5
-            }
         })
     end
 

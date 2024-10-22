@@ -163,24 +163,14 @@ function prismatic_belts.transport_belt_animation_set(inputs)
         return
         {
             filename = "__prismatic-belts__/graphics/entity/" .. directory .. "/transport-belt-" .. inputs.variant .. "-" .. inputs.layer .. ".png",
-            priority = "extra-high",
-            width = 64,
-            height = 64,
-            frame_count = 16 * inputs.variant,
-            tint = inputs.tint,
-            blend_mode = inputs.blend_mode,
-            direction_count = 20,
-            hr_version = {
-                filename = "__prismatic-belts__/graphics/entity/" .. directory .. "/hr-transport-belt-" .. inputs.variant .. "-" .. inputs.layer .. ".png",
                 priority = "extra-high",
                 width = 128,
                 height = 128,
                 scale = 0.5,
-                frame_count = 16 * inputs.variant,
-                tint = inputs.tint,
-                blend_mode = inputs.blend_mode,
+            frame_count = 16 * layer_inputs.variant,
+            tint = layer_inputs.tint,
+            blend_mode = layer_inputs.blend_mode,
                 direction_count = 20,
-            }
         }
     end
 
@@ -238,29 +228,16 @@ function prismatic_belts.create_remnant(name, inputs)
         {
             filename = "__prismatic-belts__/graphics/entity/" .. directory .. "/remnants/transport-belt-remnants-" .. inputs.layer .. ".png",
             line_length = 1,
-            width = 54,
-            height = 52,
+            width = 106,
+            height = 102,
             frame_count = 1,
             variation_count = 1,
             axially_symmetrical = false,
             direction_count = 4,
-            tint = inputs.tint,
-            blend_mode = inputs.blend_mode,
-            shift = util.by_pixel(1, 0),
-            hr_version = {
-                filename = "__prismatic-belts__/graphics/entity/" .. directory .. "/remnants/hr-transport-belt-remnants-" .. inputs.layer .. ".png",
-                line_length = 1,
-                width = 106,
-                height = 102,
-                frame_count = 1,
-                variation_count = 1,
-                axially_symmetrical = false,
-                direction_count = 4,
-                tint = inputs.tint,
-                blend_mode = inputs.blend_mode,
+            tint = layer_inputs.tint,
+            blend_mode = layer_inputs.blend_mode,
                 shift = util.by_pixel(1, -0.5),
                 scale = 0.5,
-            }
         }
     end
 

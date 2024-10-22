@@ -8,33 +8,33 @@ local belt_animation_sets = {
     ["transport-belt"] = {
         animation_set = {
             filename = "__prismatic-belts__/graphics/entity/base/transport-belt/transport-belt.png",
-                priority = "extra-high",
-                width = 128,
-                height = 128,
-                scale = 0.5,
-                frame_count = 16,
+            priority = "extra-high",
+            width = 128,
+            height = 128,
+            scale = 0.5,
+            frame_count = 16,
             direction_count = 20,
         },
     },
     ["fast-transport-belt"] = {
         animation_set = {
             filename = "__prismatic-belts__/graphics/entity/base/fast-transport-belt/fast-transport-belt.png",
-                priority = "extra-high",
-                width = 128,
-                height = 128,
-                scale = 0.5,
-                frame_count = 32,
+            priority = "extra-high",
+            width = 128,
+            height = 128,
+            scale = 0.5,
+            frame_count = 32,
             direction_count = 20,
         },
     },
     ["express-transport-belt"] = {
         animation_set = {
             filename = "__prismatic-belts__/graphics/entity/base/express-transport-belt/express-transport-belt.png",
-                priority = "extra-high",
-                width = 128,
-                height = 128,
-                scale = 0.5,
-                frame_count = 32,
+            priority = "extra-high",
+            width = 128,
+            height = 128,
+            scale = 0.5,
+            frame_count = 32,
             direction_count = 20,
         },
     },
@@ -89,31 +89,32 @@ for prefix, properties in pairs(tiers) do
     local belt_item = data.raw["item"][prefix .. "transport-belt"]
     if belt_item then
         ---@type data.IconData[]
-        local icons = { {
-                icon = "__prismatic-belts__/graphics/icons/base/" .. prefix .. "transport-belt.png",
-                icon_size = 64,
-                icon_mipmaps = 4,
+        local icon_data = { {
+            icon = "__prismatic-belts__/graphics/icons/base/" .. prefix .. "transport-belt.png",
+            icon_size = 64,
+            icon_mipmaps = 4,
         } }
 
         -- Append tier labels for reskins-library
         if mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
-            reskins.lib.append_tier_labels(properties.tier, { icon = icons, tier_labels = reskins.lib.setting("reskins-bobs-do-belt-entity-tier-labeling") and true or false })
+            local do_labels = reskins.lib.settings.get_value("reskins-bobs-do-belt-entity-tier-labeling") == true
 
-            local icon_picture = {
-                filename = "__prismatic-belts__/graphics/icons/base/" .. prefix .. "transport-belt.png",
-                size = 64,
-                mipmaps = 4,
-                scale = 0.25,
+            ---@type DeferrableIconData
+            local deferrable_icon = {
+                name = prefix .. "transport-belt",
+                type_name = "transport-belt",
+                icon_data = do_labels and reskins.lib.tiers.add_tier_labels_to_icons(properties.tier, icon_data) or icon_data,
+                pictures = do_labels and reskins.lib.sprites.create_sprite_from_icons(icon_data, 0.5) or nil,
             }
 
-            reskins.lib.assign_icons(prefix .. "transport-belt", { icon = icons, icon_picture = icon_picture, make_icon_pictures = true })
+            reskins.lib.icons.assign_deferrable_icon(deferrable_icon)
         else
-            belt_item.icons = icons
-        end
+            belt_item.icons = icon_data
 
-        -- Update entity icon to match
-        if entities.belt then
-            entities.belt.icons = belt_item.icons
+            -- Update entity icon to match
+            if entities.belt then
+                entities.belt.icons = belt_item.icons
+            end
         end
     end
 
@@ -137,13 +138,13 @@ for prefix, properties in pairs(tiers) do
         remnants.animation = make_rotated_animation_variations_from_sheet(2, {
             filename = "__prismatic-belts__/graphics/entity/base/" .. prefix .. "transport-belt/remnants/" .. prefix .. "transport-belt-remnants.png",
             line_length = 1,
-                width = 106,
-                height = 102,
-                frame_count = 1,
-                variation_count = 1,
-                axially_symmetrical = false,
-                direction_count = 4,
-                shift = util.by_pixel(1, -0.5),
+            width = 106,
+            height = 102,
+            frame_count = 1,
+            variation_count = 1,
+            axially_symmetrical = false,
+            direction_count = 4,
+            shift = util.by_pixel(1, -0.5),
             scale = 0.5,
         })
     end
@@ -153,12 +154,12 @@ for prefix, properties in pairs(tiers) do
 
     if technology then
         ---@type data.IconData[]
-        local icons = { {
-                icon = "__prismatic-belts__/graphics/technology/base/" .. properties.technology .. ".png",
-                icon_size = 256,
-                icon_mipmaps = 4,
+        local icon_data = { {
+            icon = "__prismatic-belts__/graphics/technology/base/" .. properties.technology .. ".png",
+            icon_size = 256,
+            icon_mipmaps = 4,
         } }
 
-        technology.icons = icons
+        technology.icons = icon_data
     end
 end

@@ -50,7 +50,6 @@ function prismatic_belts.transport_belt_picture(tint, use_reskin_process)
         table.insert(icon_pictures.layers, {
             filename = layer.icon,
             size = layer.icon_size,
-            mipmaps = layer.icon_mipmaps,
             scale = 0.25,
             tint = layer.tint,
         })
@@ -187,14 +186,14 @@ function prismatic_belts.transport_belt_animation_set(inputs)
         ---@type data.RotatedAnimation
         local layer = {
             filename = "__prismatic-belts__/graphics/entity/" .. directory .. "/transport-belt-" .. layer_inputs.variant .. "-" .. layer_inputs.layer .. ".png",
-                priority = "extra-high",
-                width = 128,
-                height = 128,
-                scale = 0.5,
+            priority = "extra-high",
+            width = 128,
+            height = 128,
+            scale = 0.5,
             frame_count = 16 * layer_inputs.variant,
             tint = layer_inputs.tint,
             blend_mode = layer_inputs.blend_mode,
-                direction_count = 20,
+            direction_count = 20,
         }
 
         return layer
@@ -271,8 +270,8 @@ function prismatic_belts.create_remnant(name, inputs)
             direction_count = 4,
             tint = layer_inputs.tint,
             blend_mode = layer_inputs.blend_mode,
-                shift = util.by_pixel(1, -0.5),
-                scale = 0.5,
+            shift = util.by_pixel(1, -0.5),
+            scale = 0.5,
         }
 
         return layer
@@ -307,7 +306,6 @@ function prismatic_belts.create_remnant(name, inputs)
             icons = data.raw["transport-belt"][name].icons,
             icon = data.raw["transport-belt"][name].icon,
             icon_size = data.raw["transport-belt"][name].icon_size,
-            icon_mipmaps = data.raw["transport-belt"][name].icon_mipmaps,
             flags = { "placeable-neutral", "not-on-map" },
             subgroup = "belt-remnants",
             order = (data.raw.item[name] and data.raw.item[name].order) and data.raw.item[name].order .. "-a[" .. name .. "-remnants]" or "a-a-a",

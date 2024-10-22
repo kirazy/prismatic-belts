@@ -13,8 +13,8 @@ local belt_animation_sets = {
                 height = 128,
                 scale = 0.5,
                 frame_count = 16,
-                direction_count = 20
-        }
+            direction_count = 20,
+        },
     },
     ["fast-transport-belt"] = {
         animation_set = {
@@ -24,8 +24,8 @@ local belt_animation_sets = {
                 height = 128,
                 scale = 0.5,
                 frame_count = 32,
-                direction_count = 20
-        }
+            direction_count = 20,
+        },
     },
     ["express-transport-belt"] = {
         animation_set = {
@@ -35,8 +35,8 @@ local belt_animation_sets = {
                 height = 128,
                 scale = 0.5,
                 frame_count = 32,
-                direction_count = 20
-            }
+            direction_count = 20,
+        },
     },
 }
 
@@ -73,11 +73,14 @@ for prefix, properties in pairs(tiers) do
         splitter = data.raw["splitter"][prefix .. "splitter"],
         underground = data.raw["underground-belt"][prefix .. "underground-belt"],
         loader = data.raw["loader"][prefix .. "loader"],
+
         -- Miniloader
         miniloader = data.raw["loader-1x1"][prefix .. "miniloader-loader"],
         filter_miniloader = data.raw["loader-1x1"][prefix .. "filter-miniloader-loader"],
+
         -- Deadlock Stacking Beltboxes and Compact loaders
         deadlock_loader = data.raw["loader-1x1"][prefix .. "transport-belt-loader"],
+
         -- Krastorio
         krastorio_loader = data.raw["loader-1x1"]["kr-" .. prefix .. "loader"],
     }
@@ -85,13 +88,12 @@ for prefix, properties in pairs(tiers) do
     -- Reskin the belt item
     local belt_item = data.raw["item"][prefix .. "transport-belt"]
     if belt_item then
-        local icons = {
-            {
+        ---@type data.IconData[]
+        local icons = { {
                 icon = "__prismatic-belts__/graphics/icons/base/" .. prefix .. "transport-belt.png",
                 icon_size = 64,
                 icon_mipmaps = 4,
-            }
-        }
+        } }
 
         -- Append tier labels for reskins-library
         if mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
@@ -142,7 +144,7 @@ for prefix, properties in pairs(tiers) do
                 axially_symmetrical = false,
                 direction_count = 4,
                 shift = util.by_pixel(1, -0.5),
-                scale = 0.5
+            scale = 0.5,
         })
     end
 
@@ -150,13 +152,12 @@ for prefix, properties in pairs(tiers) do
     local technology = data.raw["technology"][properties.technology]
 
     if technology then
-        local icons = {
-            {
+        ---@type data.IconData[]
+        local icons = { {
                 icon = "__prismatic-belts__/graphics/technology/base/" .. properties.technology .. ".png",
                 icon_size = 256,
                 icon_mipmaps = 4,
-            }
-        }
+        } }
 
         technology.icons = icons
     end

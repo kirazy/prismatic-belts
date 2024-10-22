@@ -18,11 +18,13 @@ for tier, properties in pairs(tiers) do
         splitter = data.raw["splitter"]["rapid-splitter-" .. tier],
         underground = data.raw["underground-belt"]["rapid-transport-belt-to-ground-" .. tier],
         loader = data.raw["loader"]["rapid-" .. tier .. "-loader"],
+
         -- Miniloader
         miniloader = data.raw["loader-1x1"]["rapid-" .. tier .. "-miniloader-loader"],
         filter_miniloader = data.raw["loader-1x1"]["rapid-" .. tier .. "-filter-miniloader-loader"],
+
         -- Deadlock Stacking Beltboxes and Compact loaders
-        deadlock_loader = data.raw["loader-1x1"]["rapid-transport-belt-" .. tier .. "-loader"]
+        deadlock_loader = data.raw["loader-1x1"]["rapid-transport-belt-" .. tier .. "-loader"],
     }
 
     -- Reskin the belt item
@@ -39,7 +41,10 @@ for tier, properties in pairs(tiers) do
     -- Reskin all related entity types
     for _, entity in pairs(entities) do
         if entity then
-            entity.belt_animation_set = prismatic_belts.transport_belt_animation_set({ mask_tint = properties.tint, 2 })
+            entity.belt_animation_set = prismatic_belts.transport_belt_animation_set({
+                mask_tint = properties.tint,
+                variant = 2,
+            })
         end
     end
 

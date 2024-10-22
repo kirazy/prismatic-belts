@@ -24,22 +24,37 @@ if mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logi
     tiers["turbo-"].tier = 4
     tiers["ultimate-"].tier = 5
 
-    tiers["basic-"].tint = reskins.lib.belt_tint_index[0]
-    tiers["turbo-"].tint = reskins.lib.belt_tint_index[4]
-    tiers["ultimate-"].tint = reskins.lib.belt_tint_index[5]
+    tiers["basic-"].tint = reskins.lib.tiers.get_belt_tint(0)
+    tiers["turbo-"].tint = reskins.lib.tiers.get_belt_tint(4)
+    tiers["ultimate-"].tint = reskins.lib.tiers.get_belt_tint(5)
 
     -- Check for custom colors, update tint and tier information if so
-    if reskins.lib.setting("reskins-lib-customize-tier-colors") then
-        tiers[""] = { tint = reskins.lib.belt_tint_index[1], variant = 1, loader = "", tier = 1, technology = "logistics" }
-        tiers["fast-"] = { tint = reskins.lib.belt_tint_index[2], variant = 2, loader = "fast-", tier = 2, technology = "logistics-2" }
-        tiers["express-"] = { tint = reskins.lib.belt_tint_index[3], variant = 2, loader = "express-", tier = 3, technology = "logistics-3" }
+    if reskins.lib.settings.get_value("reskins-lib-customize-tier-colors") then
+        tiers[""] = {
+            tint = reskins.lib.tiers.get_belt_tint(1),
+            variant = 1,
+            loader = "",
+            tier = 1,
+            technology = "logistics",
+        }
+        tiers["fast-"] = {
+            tint = reskins.lib.tiers.get_belt_tint(2),
+            variant = 2,
+            loader = "fast-",
+            tier = 2,
+            technology = "logistics-2",
+        }
+        tiers["express-"] = {
+            tint = reskins.lib.tiers.get_belt_tint(3),
+            variant = 2,
+            loader = "express-",
+            tier = 3,
+            technology = "logistics-3",
+        }
     end
 
-    -- Compatibility with Artisanal Reskins 2.0.0+
-    if prismatic_belts.migration.is_version_or_newer(mods["reskins-library"], "2.0.0") then
-        for _, properties in pairs(tiers) do
-            properties.use_reskin_process = true
-        end
+    for _, properties in pairs(tiers) do
+        properties.use_reskin_process = true
     end
 end
 
@@ -51,37 +66,53 @@ for prefix, properties in pairs(tiers) do
         splitter = data.raw["splitter"][prefix .. "splitter"],
         underground = data.raw["underground-belt"][prefix .. "underground-belt"],
         loader = data.raw["loader"][properties.loader .. "loader"],
+
         -- Miniloader
         miniloader = data.raw["loader-1x1"][prefix .. "miniloader-loader"],
         filter_miniloader = data.raw["loader-1x1"][prefix .. "filter-miniloader-loader"],
+
         -- Deadlock Stacking Beltboxes and Compact loaders
-        deadlock_loader = data.raw["loader-1x1"][prefix .. "transport-belt-loader"]
+        deadlock_loader = data.raw["loader-1x1"][prefix .. "transport-belt-loader"],
     }
 
     -- Reskin the belt item
     local belt_item = data.raw["item"][prefix .. "transport-belt"]
     if belt_item then
-        local icons = prismatic_belts.transport_belt_icon(properties.tint, properties.use_reskin_process)
+        -- Setup icons
+        ---@type data.IconData[]
+        local icon_data = prismatic_belts.transport_belt_icon(properties.tint, properties.use_reskin_process)
 
         -- Append tier labels for reskins-library
         if mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
-            reskins.lib.append_tier_labels(properties.tier, { icon = icons, tier_labels = reskins.lib.setting("reskins-bobs-do-belt-entity-tier-labeling") and true or false })
+            local do_labels = reskins.lib.settings.get_value("reskins-bobs-do-belt-entity-tier-labeling") == true
 
-            reskins.lib.assign_icons(prefix .. "transport-belt", { icon = icons, icon_picture = prismatic_belts.transport_belt_picture(properties.tint, properties.use_reskin_process), make_icon_pictures = true })
+            ---@type DeferrableIconData
+            local deferrable_icon = {
+                name = prefix .. "transport-belt",
+                type_name = "transport-belt",
+                icon_data = do_labels and reskins.lib.tiers.add_tier_labels_to_icons(properties.tier, icon_data) or icon_data,
+                pictures = do_labels and reskins.lib.sprites.create_sprite_from_icons(icon_data, 0.5) or nil,
+            }
+
+            reskins.lib.icons.assign_deferrable_icon(deferrable_icon)
         else
-            belt_item.icons = icons
-        end
+            belt_item.icons = icon_data
 
-        -- Update entity icon to match
-        if entities.belt then
-            entities.belt.icons = belt_item.icons
+            -- Update entity icon to match
+            if entities.belt then
+                entities.belt.icons = belt_item.icons
+            end
         end
     end
 
     -- Reskin all related entity types
     for _, entity in pairs(entities) do
         if entity then
-            entity.belt_animation_set = prismatic_belts.transport_belt_animation_set({ mask_tint = properties.tint, variant = properties.variant, use_reskin_process = properties.use_reskin_process })
+            entity.belt_animation_set = prismatic_belts.transport_belt_animation_set({
+                mask_tint = properties.tint,
+                variant = properties.variant,
+                use_reskin_process = properties.use_reskin_process,
+            })
         end
     end
 
@@ -94,6 +125,9 @@ for prefix, properties in pairs(tiers) do
     local technology = data.raw["technology"][properties.technology]
 
     if technology then
-        technology.icons = prismatic_belts.logistics_technology_icon({ mask_tint = properties.tint, use_reskin_process = properties.use_reskin_process })
+        technology.icons = prismatic_belts.logistics_technology_icon({
+            mask_tint = properties.tint,
+            use_reskin_process = properties.use_reskin_process,
+        })
     end
 end

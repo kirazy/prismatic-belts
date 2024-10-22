@@ -21,11 +21,13 @@ for prefix, properties in pairs(tiers) do
         belt = data.raw["transport-belt"][prefix .. "belt"],
         splitter = data.raw["splitter"][prefix .. "splitter"],
         underground = data.raw["underground-belt"][prefix .. "underground-belt"],
+
         -- Miniloader
         miniloader = data.raw["loader-1x1"]["ub-" .. prefix .. "miniloader-loader"],
         filter_miniloader = data.raw["loader-1x1"]["ub-" .. prefix .. "filter-miniloader-loader"],
+
         -- Deadlock Stacking Beltboxes and Compact loaders
-        deadlock_loader = data.raw["loader-1x1"][prefix .. "belt-loader"]
+        deadlock_loader = data.raw["loader-1x1"][prefix .. "belt-loader"],
     }
 
     -- Reskin the belt item
@@ -49,19 +51,31 @@ for prefix, properties in pairs(tiers) do
     -- Reskin all related entity types
     for _, entity in pairs(entities) do
         if entity then
-            entity.belt_animation_set = prismatic_belts.transport_belt_animation_set({ base_tint = util.color("404040"), mask_tint = properties.tint, variant = 2, brighten_arrows = true })
+            entity.belt_animation_set = prismatic_belts.transport_belt_animation_set({
+                base_tint = util.color("404040"),
+                mask_tint = properties.tint,
+                variant = 2,
+                brighten_arrows = true,
+            })
         end
     end
 
     -- Setup remnants
     if entities.belt then
-        prismatic_belts.create_remnant(prefix .. "belt", { base_tint = util.color("404040"), mask_tint = properties.tint, brighten_arrows = true })
+        prismatic_belts.create_remnant(prefix .. "belt", {
+            base_tint = util.color("404040"),
+            mask_tint = properties.tint,
+            brighten_arrows = true,
+        })
     end
 
     -- Setup logistics technologies
     local technology = data.raw["technology"][prefix .. "logistics"]
 
     if technology then
-        technology.icons = prismatic_belts.logistics_technology_icon({ base_tint = util.color("404040"), mask_tint = properties.tint })
+        technology.icons = prismatic_belts.logistics_technology_icon({
+            base_tint = util.color("404040"),
+            mask_tint = properties.tint,
+        })
     end
 end

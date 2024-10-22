@@ -37,7 +37,10 @@ for prefix, properties in pairs(tiers) do
     -- Reskin all related entity types
     for _, entity in pairs(entities) do
         if entity then
-            entity.belt_animation_set = prismatic_belts.transport_belt_animation_set({ mask_tint = properties.tint, variant = properties.variant })
+            entity.belt_animation_set = prismatic_belts.transport_belt_animation_set({
+                mask_tint = properties.tint,
+                variant = properties.variant,
+            })
         end
     end
 

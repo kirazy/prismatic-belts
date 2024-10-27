@@ -3,6 +3,9 @@
 --
 -- See LICENSE.md in the project directory for license information.
 
+local api = require("prototypes.api")
+local meld = require("meld")
+
 if not mods["space-age"] then return end
 
 -- Throw an error in the event the required space age asset mod is missing.
@@ -11,8 +14,6 @@ if not mods["prismatic-belts-space-age"] then
         "Using Prismatic Belts with Space Age requires the additional asset mod \"Prismatic Belts: Space Age\".\n\n" ..
         "Click on \"Manage\", and install and/or enable \"Prismatic Belts: Space Age\".\n")
 end
-
-local api = require("prototypes.api")
 
 -- Setup belt animation sets for space-age entities.
 ---@type { [data.EntityID] : data.TransportBeltAnimationSet }
@@ -33,7 +34,6 @@ local belt_animation_sets = {
 }
 
 -- Add belt reader sprites.
-local meld = require("meld")
 meld(belt_animation_sets["turbo-transport-belt"], belt_reader_gfx)
 
 local tiers = {

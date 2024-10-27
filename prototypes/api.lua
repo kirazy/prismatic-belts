@@ -81,7 +81,7 @@ end
 ---`mask_tint`.
 ---@field arrow_tint? data.Color
 
---- Returns a complete technology icons definition
+---Returns a complete technology icons definition
 ---@param inputs PrismaticBelts.TransportBeltTechnologyIconInputs
 ---@return data.IconData[]
 function api.get_transport_belt_technology_icon(inputs)
@@ -130,7 +130,7 @@ end
 ---`mask_tint`.
 ---@field arrow_tint? data.Color
 
---- Returns a complete item icons definition
+---Returns a complete item icons definition
 ---@return data.IconData[]
 function api.get_transport_belt_icon(inputs)
     local icon_type = inputs.use_three_arrow_variant and "ub-transport-belt" or "transport-belt"
@@ -203,7 +203,7 @@ function api.get_transport_belt_animation_set(inputs)
     ---@field tint_as_overlay? boolean When true, the color blending will use Overlay rules.
     ---@field variant? 1|2|3 Spritesheet to return (1 for slow, 2 for fast, 3 for turbo fast [requires Space Age]).
 
-    --- Returns a tailored layer of the belt animation set
+    ---Returns a tailored layer of the belt animation set
     ---@param layer_inputs PrismaticBelts.ReturnBeltAnimationSetLayerInputs
     ---@return data.RotatedAnimation
     local function return_belt_animation_set_layer(layer_inputs)

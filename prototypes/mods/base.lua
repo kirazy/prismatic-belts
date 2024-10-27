@@ -4,6 +4,7 @@
 -- See LICENSE.md in the project directory for license information.
 
 local api = require("prototypes.api")
+local meld = require("meld")
 
 -- Setup belt animation sets for vanilla entities
 local belt_animation_sets = {
@@ -46,7 +47,6 @@ local belt_animation_sets = {
 }
 
 -- Add belt reader sprites.
-local meld = require("meld")
 meld(belt_animation_sets["transport-belt"], belt_reader_gfx)
 meld(belt_animation_sets["fast-transport-belt"], belt_reader_gfx)
 meld(belt_animation_sets["express-transport-belt"], belt_reader_gfx)

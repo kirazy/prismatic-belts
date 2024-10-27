@@ -3,9 +3,9 @@
 --
 -- See LICENSE.md in the project directory for license information.
 
-if not mods["RandomFactorioThings"] then return end
-
 local api = require("prototypes.api")
+
+if not mods["RandomFactorioThings"] then return end
 
 local tiers = {
     ["nuclear-"] = { tint = util.color("00ff00") },

@@ -3,9 +3,9 @@
 --
 -- See LICENSE.md in the project directory for license information.
 
-if not mods["boblogistics"] then return end
-
 local api = require("prototypes.api")
+
+if not mods["boblogistics"] then return end
 
 local tiers = {
     ["basic-"] = { tint = util.color("7d7d7dd1"), variant = 1, loader = "basic-", technology = "logistics-0" },

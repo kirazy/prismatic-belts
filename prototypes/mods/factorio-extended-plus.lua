@@ -3,9 +3,9 @@
 --
 -- See LICENSE.md in the project directory for license information.
 
-if not mods["FactorioExtended-Plus-Transport"] then return end
-
 local api = require("prototypes.api")
+
+if not mods["FactorioExtended-Plus-Transport"] then return end
 
 local tiers = {
     ["mk1"] = { tint = util.color("2cd529d1"), technology = "logistics-4" },

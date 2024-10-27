@@ -3,13 +3,21 @@
 --
 -- See LICENSE.md in the project directory for license information.
 
-if not mods["UltimateBelts"] then return end
+if not (mods["UltimateBelts"] or mods["UltimateBeltsSpaceAge"]) then return end
+
+local api = require("prototypes.api")
+
+
+local base_tint = util.color("404040")
+local tint_base_as_overlay = true
+local variant = mods["prismatic-belts-space-age"] and 3 or 2
+
 
 local tiers = {
     ["ultra-fast-"] = { tint = util.color("00b30cff") },
-    ["extreme-fast-"] = { tint = util.color("e00000ff") },
-    ["ultra-express-"] = { tint = util.color("3604b5e8") },
-    ["extreme-express-"] = { tint = util.color("002bffff") },
+    ["extreme-fast-"] = { tint = util.color("e00000ff"), arrow_tint = util.color("5") },
+    ["ultra-express-"] = { tint = util.color("3604b5e8"), arrow_tint = util.color("5") },
+    ["extreme-express-"] = { tint = util.color("002bffff"), arrow_tint = util.color("5") },
     ["ultimate-"] = { tint = util.color("00ffddd1") },
     ["original-ultimate-"] = { tint = util.color("00ffddd1") },
 }
@@ -32,15 +40,14 @@ for prefix, properties in pairs(tiers) do
 
     -- Reskin the belt item
     local belt_item = data.raw["item"][prefix .. "belt"]
+
     if belt_item then
-        belt_item.icons = {
-            {
-                icon = "__prismatic-belts__/graphics/icons/standard/ultimate-transport-belt-icon.png",
-                icon_size = 64,
-                icon_mipmaps = 4,
-                tint = prismatic_belts.adjust_alpha(properties.tint, 1),
-            },
-        }
+        belt_item.icons = api.get_transport_belt_icon({
+            use_three_arrow_variant = true,
+            base_tint = base_tint,
+            mask_tint = properties.tint,
+            arrow_tint = properties.arrow_tint and { 0.2, 0.2, 0.2, 0 } or nil,
+        })
 
         -- Update entity icon to match
         if entities.belt then
@@ -51,21 +58,26 @@ for prefix, properties in pairs(tiers) do
     -- Reskin all related entity types
     for _, entity in pairs(entities) do
         if entity then
-            entity.belt_animation_set = prismatic_belts.transport_belt_animation_set({
-                base_tint = util.color("404040"),
+            entity.belt_animation_set = api.get_transport_belt_animation_set({
+                base_tint = base_tint,
+                tint_base_as_overlay = tint_base_as_overlay,
                 mask_tint = properties.tint,
-                variant = 2,
-                brighten_arrows = true,
+                tint_mask_as_overlay = true,
+                variant = variant,
+                arrow_tint = properties.arrow_tint,
             })
         end
     end
 
     -- Setup remnants
     if entities.belt then
-        prismatic_belts.create_remnant(prefix .. "belt", {
-            base_tint = util.color("404040"),
+        api.create_remnant(prefix .. "belt", {
+            base_tint = base_tint,
+            tint_base_as_overlay = tint_base_as_overlay,
             mask_tint = properties.tint,
-            brighten_arrows = true,
+            tint_mask_as_overlay = true,
+            variant = variant,
+            arrow_tint = properties.arrow_tint,
         })
     end
 
@@ -73,9 +85,10 @@ for prefix, properties in pairs(tiers) do
     local technology = data.raw["technology"][prefix .. "logistics"]
 
     if technology then
-        technology.icons = prismatic_belts.logistics_technology_icon({
+        technology.icons = api.get_transport_belt_technology_icon({
             base_tint = util.color("404040"),
             mask_tint = properties.tint,
+            arrow_tint = properties.arrow_tint and { 0.2, 0.2, 0.2, 0 } or nil,
         })
     end
 end

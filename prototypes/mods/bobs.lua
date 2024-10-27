@@ -5,6 +5,8 @@
 
 if not mods["boblogistics"] then return end
 
+local api = require("prototypes.api")
+
 local tiers = {
     ["basic-"] = { tint = util.color("7d7d7dd1"), variant = 1, loader = "basic-", technology = "logistics-0" },
     ["turbo-"] = { tint = util.color("a510e5d1"), variant = 2, loader = "purple-", technology = "logistics-4" },
@@ -52,10 +54,6 @@ if mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logi
             technology = "logistics-3",
         }
     end
-
-    for _, properties in pairs(tiers) do
-        properties.use_reskin_process = true
-    end
 end
 
 -- Setup all the entities to use the updated belt animation sets
@@ -80,7 +78,9 @@ for prefix, properties in pairs(tiers) do
     if belt_item then
         -- Setup icons
         ---@type data.IconData[]
-        local icon_data = prismatic_belts.transport_belt_icon(properties.tint, properties.use_reskin_process)
+        local icon_data = api.get_transport_belt_icon({
+            mask_tint = properties.tint,
+        })
 
         -- Append tier labels for reskins-library
         if mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
@@ -108,26 +108,29 @@ for prefix, properties in pairs(tiers) do
     -- Reskin all related entity types
     for _, entity in pairs(entities) do
         if entity then
-            entity.belt_animation_set = prismatic_belts.transport_belt_animation_set({
+            entity.belt_animation_set = api.get_transport_belt_animation_set({
                 mask_tint = properties.tint,
+                tint_mask_as_overlay = true,
                 variant = properties.variant,
-                use_reskin_process = properties.use_reskin_process,
             })
         end
     end
 
     -- Setup remnants
     if entities.belt then
-        prismatic_belts.create_remnant(prefix .. "transport-belt", { mask_tint = properties.tint })
+        api.create_remnant(prefix .. "transport-belt", {
+            mask_tint = properties.tint,
+            tint_mask_as_overlay = true,
+        })
     end
 
     -- Setup logistics technologies
     local technology = data.raw["technology"][properties.technology]
 
     if technology then
-        technology.icons = prismatic_belts.logistics_technology_icon({
+        technology.icons = api.get_transport_belt_technology_icon({
             mask_tint = properties.tint,
-            use_reskin_process = properties.use_reskin_process,
+            tint_mask_as_overlay = true,
         })
     end
 end

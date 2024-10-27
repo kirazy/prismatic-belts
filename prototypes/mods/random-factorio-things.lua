@@ -5,6 +5,8 @@
 
 if not mods["RandomFactorioThings"] then return end
 
+local api = require("prototypes.api")
+
 local tiers = {
     ["nuclear-"] = { tint = util.color("00ff00") },
     ["plutonium-"] = { tint = util.color("00e1ffde") },
@@ -30,7 +32,9 @@ for prefix, properties in pairs(tiers) do
     -- Reskin the belt item
     local belt_item = data.raw["item"][prefix .. "transport-belt"]
     if belt_item then
-        belt_item.icons = prismatic_belts.transport_belt_icon(properties.tint)
+        belt_item.icons = api.get_transport_belt_icon({
+            mask_tint = properties.tint,
+        })
 
         -- Update entity icon to match
         if entities.belt then
@@ -41,8 +45,9 @@ for prefix, properties in pairs(tiers) do
     -- Reskin all related entity types
     for _, entity in pairs(entities) do
         if entity then
-            entity.belt_animation_set = prismatic_belts.transport_belt_animation_set({
+            entity.belt_animation_set = api.get_transport_belt_animation_set({
                 mask_tint = properties.tint,
+                tint_mask_as_overlay = true,
                 variant = 2,
             })
         end
@@ -50,13 +55,16 @@ for prefix, properties in pairs(tiers) do
 
     -- Setup remnants
     if entities.belt then
-        prismatic_belts.create_remnant(prefix .. "transport-belt", { mask_tint = properties.tint })
+        api.create_remnant(prefix .. "transport-belt", {
+            mask_tint = properties.tint,
+            tint_mask_as_overlay = true,
+        })
     end
 
     -- Setup logistics technologies
     local technology = data.raw["technology"][prefix .. "logistics"]
 
     if technology then
-        technology.icons = prismatic_belts.logistics_technology_icon({ mask_tint = properties.tint })
+        technology.icons = api.get_transport_belt_technology_icon({ mask_tint = properties.tint })
     end
 end

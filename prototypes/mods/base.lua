@@ -3,6 +3,8 @@
 --
 -- See LICENSE.md in the project directory for license information.
 
+local api = require("prototypes.api")
+
 -- Setup belt animation sets for vanilla entities
 local belt_animation_sets = {
     ["transport-belt"] = {
@@ -15,6 +17,7 @@ local belt_animation_sets = {
             frame_count = 16,
             direction_count = 20,
         },
+        frozen_patch = api.get_transport_belt_frozen_patch(1),
     },
     ["fast-transport-belt"] = {
         animation_set = {
@@ -26,6 +29,7 @@ local belt_animation_sets = {
             frame_count = 32,
             direction_count = 20,
         },
+        frozen_patch = api.get_transport_belt_frozen_patch(2),
     },
     ["express-transport-belt"] = {
         animation_set = {
@@ -37,6 +41,7 @@ local belt_animation_sets = {
             frame_count = 32,
             direction_count = 20,
         },
+        frozen_patch = api.get_transport_belt_frozen_patch(2),
     },
 }
 
@@ -92,7 +97,6 @@ for prefix, properties in pairs(tiers) do
         local icon_data = { {
             icon = "__prismatic-belts__/graphics/icons/base/" .. prefix .. "transport-belt.png",
             icon_size = 64,
-            icon_mipmaps = 4,
         } }
 
         -- Append tier labels for reskins-library
@@ -157,7 +161,6 @@ for prefix, properties in pairs(tiers) do
         local icon_data = { {
             icon = "__prismatic-belts__/graphics/technology/base/" .. properties.technology .. ".png",
             icon_size = 256,
-            icon_mipmaps = 4,
         } }
 
         technology.icons = icon_data

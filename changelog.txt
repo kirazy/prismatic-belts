@@ -1,6 +1,9 @@
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.0
 Date: ????
+  Features:
+    - Added support for Factorio: Space Age!
+      - Requires supplementary asset mod Prismatic Belts: Space Age. An error will be raised if the mod is not present when Space Age is enabled
   Changes:
     - The API has been reworked:
       - Mod authors should now require the API with `require("__prismatic-belts__.prototypes.api")`

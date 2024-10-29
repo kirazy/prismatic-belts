@@ -71,6 +71,14 @@ if mods["miniloader"] then
     end
 end
 
+if mods["loaders-modernized"] then
+    local chute = data.raw["loader-1x1"]["chute-mdrn-loader"]
+
+    if chute then
+        chute.belt_animation_set = belt_animation_sets["transport-belt"]
+    end
+end
+
 for prefix, properties in pairs(tiers) do
     -- Fetch entities
     local entities = {
@@ -88,6 +96,9 @@ for prefix, properties in pairs(tiers) do
 
         -- Krastorio
         krastorio_loader = data.raw["loader-1x1"]["kr-" .. prefix .. "loader"],
+
+        -- Loaders Modernized
+        mdrn_loader = data.raw["loader-1x1"][prefix .. "mdrn-loader"],
     }
 
     -- Reskin the belt item

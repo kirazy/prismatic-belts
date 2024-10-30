@@ -23,6 +23,9 @@ for prefix, properties in pairs(tiers) do
         -- Miniloader
         miniloader = data.raw["loader-1x1"][prefix .. "miniloader-loader"],
         filter_miniloader = data.raw["loader-1x1"][prefix .. "filter-miniloader-loader"],
+
+        -- Loaders Modernized
+        mdrn_loader = data.raw["loader-1x1"][prefix .. "mdrn-loader"],
     }
 
     -- Reskin the belt item

@@ -34,6 +34,9 @@ for prefix, properties in pairs(tiers) do
 
         -- Deadlock Stacking Beltboxes and Compact loaders
         deadlock_loader = data.raw["loader-1x1"][prefix .. "belt-loader"],
+
+        -- Loaders Modernized
+        mdrn_loader = data.raw["loader-1x1"]["ub-" .. prefix .. "mdrn-loader"],
     }
 
     -- Reskin the belt item

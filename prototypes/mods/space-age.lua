@@ -59,7 +59,8 @@ for prefix, properties in pairs(tiers) do
         -- krastorio_loader = data.raw["loader-1x1"]["kr-" .. prefix .. "loader"],
 
         -- Loaders Modernized
-        mdrn_loader = data.raw["loader-1x1"][prefix .. "mdrn-loader"]
+        mdrn_loader = data.raw["loader-1x1"][prefix .. "mdrn-loader"],
+        mdrn_loader_split = data.raw["loader-1x1"][prefix .. "mdrn-loader-split"],
     }
 
     -- Reskin the belt item

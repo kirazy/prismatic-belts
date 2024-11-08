@@ -2,6 +2,11 @@
 Version: 2.0.3
 Date: ????
   Changes:
+    - Added support for split-lane entities from Loaders Modernized
+  Bugfixes:
+    - Fixed Ultimate Belts support for loaders from Loaders Modernized
+  Locale:
+    - Updated Japanese and Ukrainian localizations
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.2
 Date: 2024-10-30

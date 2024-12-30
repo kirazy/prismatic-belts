@@ -100,6 +100,9 @@ for prefix, properties in pairs(tiers) do
         -- Loaders Modernized
         mdrn_loader = data.raw["loader-1x1"][prefix .. "mdrn-loader"],
         mdrn_loader_split = data.raw["loader-1x1"][prefix .. "mdrn-loader-split"],
+
+        -- AAI Loaders
+        aai_loader = data.raw["loader-1x1"]["aai-" .. prefix .. "loader"],
     }
 
     -- Reskin the belt item

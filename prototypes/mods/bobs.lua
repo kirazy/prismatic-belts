@@ -13,12 +13,6 @@ local tiers = {
     ["bob-ultimate-"] = { tint = util.color("16f263d1"), variant = 2, loader = "bob-ultimate-", technology = "logistics-5" },
 }
 
--- Compatibility with Bob's Logistics Belt Reskin
-if mods["boblogistics-belt-reskin"] then
-    tiers["bob-basic-"].tint = util.color("e7e7e7d1")
-    tiers["bob-turbo-"].tint = util.color("df1ee5d1")
-end
-
 -- Compatibility with Artisanal Reskins 1.1.3+
 if mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
     -- Setup standard properties

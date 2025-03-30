@@ -8,27 +8,27 @@ local api = require("prototypes.api")
 if not mods["boblogistics"] then return end
 
 local tiers = {
-    ["basic-"] = { tint = util.color("7d7d7dd1"), variant = 1, loader = "basic-", technology = "logistics-0" },
-    ["turbo-"] = { tint = util.color("a510e5d1"), variant = 2, loader = "purple-", technology = "logistics-4" },
-    ["ultimate-"] = { tint = util.color("16f263d1"), variant = 2, loader = "green-", technology = "logistics-5" },
+    ["bob-basic-"] = { tint = util.color("7d7d7dd1"), variant = 1, loader = "bob-basic-", technology = "logistics-0" },
+    ["bob-turbo-"] = { tint = util.color("a510e5d1"), variant = 2, loader = "bob-turbo-", technology = "logistics-4" },
+    ["bob-ultimate-"] = { tint = util.color("16f263d1"), variant = 2, loader = "bob-ultimate-", technology = "logistics-5" },
 }
 
 -- Compatibility with Bob's Logistics Belt Reskin
 if mods["boblogistics-belt-reskin"] then
-    tiers["basic-"].tint = util.color("e7e7e7d1")
-    tiers["turbo-"].tint = util.color("df1ee5d1")
+    tiers["bob-basic-"].tint = util.color("e7e7e7d1")
+    tiers["bob-turbo-"].tint = util.color("df1ee5d1")
 end
 
 -- Compatibility with Artisanal Reskins 1.1.3+
 if mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
     -- Setup standard properties
-    tiers["basic-"].tier = 0
-    tiers["turbo-"].tier = 4
-    tiers["ultimate-"].tier = 5
+    tiers["bob-basic-"].tier = 0
+    tiers["bob-turbo-"].tier = 4
+    tiers["bob-ultimate-"].tier = 5
 
-    tiers["basic-"].tint = reskins.lib.tiers.get_belt_tint(0)
-    tiers["turbo-"].tint = reskins.lib.tiers.get_belt_tint(4)
-    tiers["ultimate-"].tint = reskins.lib.tiers.get_belt_tint(5)
+    tiers["bob-basic-"].tint = reskins.lib.tiers.get_belt_tint(0)
+    tiers["bob-turbo-"].tint = reskins.lib.tiers.get_belt_tint(4)
+    tiers["bob-ultimate-"].tint = reskins.lib.tiers.get_belt_tint(5)
 
     -- Check for custom colors, update tint and tier information if so
     if reskins.lib.settings.get_value("reskins-lib-customize-tier-colors") then

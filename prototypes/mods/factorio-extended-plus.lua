@@ -33,7 +33,7 @@ for tier, properties in pairs(tiers) do
         mdrn_loader_split = data.raw["loader-1x1"]["rapid-" .. tier .. "-mdrn-loader-split"],
 
         -- AAI Loaders
-        aai_loader = data.raw["loader-1x1"]["aai-" .. prefix .. "loader"],
+        aai_loader = data.raw["loader-1x1"]["aai-" .. tier .. "loader"],
     }
 
     -- Reskin the belt item

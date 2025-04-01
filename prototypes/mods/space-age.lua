@@ -84,7 +84,7 @@ for prefix, properties in pairs(tiers) do
         --     type_name = "transport-belt",
         --     icon_data = do_labels and reskins.lib.tiers.add_tier_labels_to_icons(properties.tier, icon_data) or
         --         icon_data,
-        --     pictures = do_labels and reskins.lib.sprites.create_sprite_from_icons(icon_data, 0.5) or nil,
+        --     pictures = do_labels and reskins.lib.sprites.create_sprite_from_icons(icon_data, 1.0) or nil,
         -- }
 
         -- reskins.lib.icons.assign_deferrable_icon(deferrable_icon)

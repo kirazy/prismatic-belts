@@ -1,7 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.6
 Date: ????
-  Changes:
+  Bugfixes:
+    - Fixed that the transport belt icons when used with Artisanal Reskins: Bob's Mods were smaller than intended
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.5
 Date: 2025-03-30

@@ -68,7 +68,7 @@ for prefix, properties in pairs(tiers) do
     local technology = data.raw["technology"][properties.technology]
 
     if technology then
-        technology.icons = api.logistics_technology_icon({
+        technology.icons = api.get_transport_belt_technology_icon({
             mask_tint = properties.tint,
         })
     end

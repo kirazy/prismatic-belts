@@ -8,20 +8,13 @@ local meld = require("meld")
 
 if not mods["space-age"] then return end
 
--- Throw an error in the event the required space age asset mod is missing.
-if not mods["prismatic-belts-space-age"] then
-    error("\n\nMissing required dependency: \n" ..
-        "Using Prismatic Belts with Space Age requires the additional asset mod \"Prismatic Belts: Space Age\".\n\n" ..
-        "Click on \"Manage\", and install and/or enable \"Prismatic Belts: Space Age\".\n")
-end
-
 -- Setup belt animation sets for space-age entities.
 ---@type { [data.EntityID] : data.TransportBeltAnimationSet }
 local belt_animation_sets = {
     ["turbo-transport-belt"] = {
         alternate = true,
         animation_set = {
-            filename = "__prismatic-belts-space-age__/graphics/entity/space-age/turbo-transport-belt/turbo-transport-belt.png",
+            filename = "__prismatic-belts__/graphics/entity/space-age/turbo-transport-belt/turbo-transport-belt.png",
             priority = "extra-high",
             width = 128,
             height = 128,
@@ -70,7 +63,7 @@ for prefix, properties in pairs(tiers) do
     local belt_item = data.raw["item"][prefix .. "transport-belt"]
     if belt_item then
         local icon_data = { {
-            icon = "__prismatic-belts-space-age__/graphics/icons/space-age/" .. prefix .. "transport-belt.png",
+            icon = "__prismatic-belts__/graphics/icons/space-age/" .. prefix .. "transport-belt.png",
             icon_size = 64,
         } }
 
@@ -116,7 +109,7 @@ for prefix, properties in pairs(tiers) do
         end
 
         remnants.animation = make_rotated_animation_variations_from_sheet(2, {
-            filename = "__prismatic-belts-space-age__/graphics/entity/space-age/" .. prefix .. "transport-belt/remnants/" .. prefix .. "transport-belt-remnants.png",
+            filename = "__prismatic-belts__/graphics/entity/space-age/" .. prefix .. "transport-belt/remnants/" .. prefix .. "transport-belt-remnants.png",
             line_length = 1,
             width = 106,
             height = 102,
@@ -134,7 +127,7 @@ for prefix, properties in pairs(tiers) do
 
     if technology then
         local icon_data = { {
-            icon = "__prismatic-belts-space-age__/graphics/technology/space-age/" .. properties.technology .. ".png",
+            icon = "__prismatic-belts__/graphics/technology/space-age/" .. properties.technology .. ".png",
             icon_size = 256,
         } }
 

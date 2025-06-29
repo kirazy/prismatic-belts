@@ -11,7 +11,6 @@
     "dependencies": [
         "base",
         "? space-age",
-        "? prismatic-belts-space-age",
         "? boblogistics",
         "? reskins-library >= 2.3.0",
         "(?) reskins-bobs",

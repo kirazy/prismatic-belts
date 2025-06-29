@@ -1,4 +1,4 @@
--- Copyright (c) 2024 Kirazy
+-- Copyright (c) 2021-2025 Kirazy
 -- Part of Prismatic Belts
 --
 -- See LICENSE.md in the project directory for license information.

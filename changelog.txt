@@ -3,6 +3,8 @@ Version: 2.0.8
 Date: ????
   Changes:
     - [space age] Moved sprites for Space Age into this mod; deprecated the supplementary asset mod Prismatic Belts: Space Age
+  Locale:
+    - Updated Japanese localization
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.7
 Date: 2025-05-11

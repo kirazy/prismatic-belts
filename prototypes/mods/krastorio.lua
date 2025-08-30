@@ -5,7 +5,7 @@
 
 local api = require("prototypes.api")
 
-if not mods["Krastorio2"] then return end
+if not (mods["Krastorio2"] or mods["Krastorio2-spaced-out"]) then return end
 
 local tiers = {
     ["kr-advanced-"] = { tint = util.color("3ade21d1"), variant = 2, technology = "kr-logistic-4" },

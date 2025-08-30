@@ -2,6 +2,7 @@
 Version: 2.0.9
 Date: ????
   Changes:
+    - [space-age] Added support for Krastorio 2: Spaced Out
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.8
 Date: 2025-06-29
@@ -13,7 +14,7 @@ Date: 2025-06-29
 Version: 2.0.7
 Date: 2025-05-11
   Bugfixes:
-    - Fixed crash due to incorrect call to `logistics_technology_icon` when playing with Krastorio 2.
+    - Fixed crash due to incorrect call to `logistics_technology_icon` when playing with Krastorio 2
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.6
 Date: 2025-04-01
@@ -61,7 +62,7 @@ Date: 2024-10-27
       - Functions `get_transport_belt_animation_set` and `create_remnant` `inputs` structures now have additional properties:
         - `tint_base_as_overlay` (suggested true)
         - `tint_mask_as_overlay` (suggested true)
-        - `arrow_tint` (Color); Adds an extra layer to raise the brightness of arrows when working with a darker `mask_tint` when defined, otherwise does nothing.
+        - `arrow_tint` (Color); Adds an extra layer to raise the brightness of arrows when working with a darker `mask_tint` when defined, otherwise does nothing
       - Function `create_remnant` now supports variants; 3 requires Space Age
       - Functions `get_transport_belt_icon` and `get_transport_belt_technology_icon` `inputs` structures now have additional properties:
         - `arrow_tint` (Color); Adds an extra layer to raise the brightness of arrows when working with a darker `mask_tint` when defined, otherwise does nothing. It is suggested to use low gray values and an alpha value of 0
@@ -74,7 +75,7 @@ Date: 2024-10-27
       - `logistics_technology_icon` has been renamed to `get_transport_belt_technology_icon`
         - The `inputs` structure has been revised:
           - `use_reskin_process` has been removed
-          - `arrow_tint` (a Color type) has been added; when omitted, the extra "arrow" layer is not added to the icon. Use to raise the brightness of arrows when working with a darker `mask_tint`.
+          - `arrow_tint` (a Color type) has been added; when omitted, the extra "arrow" layer is not added to the icon. Use to raise the brightness of arrows when working with a darker `mask_tint`
       - `transport_belt_icon` has been renamed to `get_transport_belt_icon`, and the inputs have been reworked into a single `inputs` structure
       - `transport_belt_animation_set` has been renamed to `get_transport_belt_animation_set`
         - The `inputs` structure has been revised:

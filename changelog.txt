@@ -78,8 +78,8 @@ Date: 2024-10-27
           - `arrow_tint` (a Color type) has been added; when omitted, the extra "arrow" layer is not added to the icon. Use to raise the brightness of arrows when working with a darker `mask_tint`
       - `transport_belt_icon` has been renamed to `get_transport_belt_icon`, and the inputs have been reworked into a single `inputs` structure
       - `transport_belt_animation_set` has been renamed to `get_transport_belt_animation_set`
-        - The `inputs` structure has been revised:
-          - `use_reskin_process` has been removed
+        - The `inputs` structure has been revised: 
+          - `use_reskin_process` has been removed 
           - `brighten_arrows` (boolean) has been replaced with `arrow_tint` (Color); suggested tints are e.g. `util.color("5")
       - `create_remnant` `inputs` structure has been revised:
         - `use_reskin_process` has been removed

@@ -79,7 +79,7 @@ for tier, properties in pairs(tiers) do
 			}),
 		}
 
-        api.icons.assign_deferrable_icon(belt_icon)
+		api.icons.assign_deferrable_icon(belt_icon)
 
 		if entities.splitter and entities.lane_splitter then
 			---@type DeferrableIconData

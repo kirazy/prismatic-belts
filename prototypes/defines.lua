@@ -35,19 +35,19 @@ defines_api.stage = {
 ---Represents the different types of animated transport belt sprite sheets.
 ---@enum PrismaticBelts.Api.Defines.BeltSprites
 defines_api.belt_sprites = {
-	---Indicates standard belt sprites. 
-    ---
-    ---Used for slower belt speeds, typically less than 30 items/s.
+	---Indicates standard belt sprites.
+	---
+	---Used for slower belt speeds, typically less than 30 items/s.
 	standard = 1,
-	---Indicates fast belt sprites. 
-    ---
-    ---Used for faster belt speeds, typically between 30 items/s and 60 items/s. 
-    ---Has twice as many frames as `defines.belt_sprites.standard` and larger spacing between arrows. 
+	---Indicates fast belt sprites.
+	---
+	---Used for faster belt speeds, typically between 30 items/s and 60 items/s.
+	---Has twice as many frames as `defines.belt_sprites.standard` and larger spacing between arrows.
 	fast = 2,
-	---Indicates turbo belt sprites. 
-    ---
-    ---Used for faster belt speeds, typically more than 75 items/s. 
-    ---Has twice as many frames as `defines.belt_sprites.fast` and larger spacing between arrows. Used for fastest belt speeds.
+	---Indicates turbo belt sprites.
+	---
+	---Used for faster belt speeds, typically more than 75 items/s.
+	---Has twice as many frames as `defines.belt_sprites.fast` and larger spacing between arrows. Used for fastest belt speeds.
 	turbo = 3,
 }
 

@@ -84,6 +84,10 @@ for prefix, properties in pairs(tiers) do
     local entities = {
         belt = data.raw["transport-belt"][prefix .. "transport-belt"],
         splitter = data.raw["splitter"][prefix .. "splitter"],
+
+        -- More Belts, potentially others...
+        lane_splitter = data.raw["lane-splitter"][prefix .. "lane-splitter"],
+
         underground = data.raw["underground-belt"][prefix .. "underground-belt"],
         loader = data.raw["loader"][prefix .. "loader"],
 

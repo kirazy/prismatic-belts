@@ -7,6 +7,7 @@
 require("prototypes.mods.base")                   -- Vanilla with LoaderRedux / Vanilla Loaders / Deadlock Loaders
 require("prototypes.mods.space-age")              -- Space Age
 require("prototypes.mods.bobs")                   -- Bob's Mods / Artisanal Reskins with Miniloaders / LoaderRedux / Vanilla Loaders / Deadlock Loaders
+require("prototypes.mods.more-belts")
 require("prototypes.mods.krastorio")              -- Krastorio 2 with Miniloaders
 require("prototypes.mods.ultimate-belts")         -- Ultimate Belts with Miniloaders / Deadlock Loaders
 require("prototypes.mods.factorio-extended-plus") -- Factorio Extended Plus with Miniloaders / LoaderRedux / Deadlock Loaders

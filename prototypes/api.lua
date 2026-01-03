@@ -14,6 +14,7 @@ local meld = require("meld")
 ---@class PrismaticBelts.Api
 local api = {
     defines = require("__prismatic-belts__.prototypes.defines"),
+    icons = require("__prismatic-belts__.prototypes.icons"),
 }
 
 --- Ensure tint is normalized to between 0 and 1

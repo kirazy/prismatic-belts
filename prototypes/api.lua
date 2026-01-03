@@ -5,7 +5,16 @@
 
 local meld = require("meld")
 
-local api = {}
+---The Prismatic Belts library of API functions.
+---
+---### Examples
+---```lua
+---local api = require("__prismatic-belts__.prototypes.api")
+---```
+---@class PrismaticBelts.Api
+local api = {
+    defines = require("__prismatic-belts__.prototypes.defines"),
+}
 
 --- Ensure tint is normalized to between 0 and 1
 ---@param tint data.Color
@@ -39,9 +48,10 @@ local function adjust_alpha(tint, alpha)
     return adjusted_tint
 end
 
----Gets the transport belt `frozen_patch` `RotatedSprite` for the given `variant`. If Space Age
----is not active, returns `nil`.
----@param variant 1|2|3 Spritesheet to return (1 for slow, 2 for fast, 3 for turbo fast [requires Space Age]).
+---Gets the transport belt `frozen_patch` `RotatedSprite` for the given `variant`. 
+---
+---If Space Age is not active, returns `nil`.
+---@param variant PrismaticBelts.Api.Defines.BeltSprites Spritesheet to use for the frozen patch.
 ---@return data.RotatedSprite|nil
 function api.get_transport_belt_frozen_patch(variant)
     if not mods["space-age"] then return nil end
@@ -183,41 +193,34 @@ end
 ---the arrows when used with a particularly dark `mask_tint`.
 ---@field arrow_tint? data.Color
 ---
----Spritesheet to return (1 for slow, 2 for fast, 3 for turbo fast [requires Space Age]).
----@field variant? 1|2|3
+---Spritesheet to use for the animation set; defaults to `defines.belt_sprites.standard`.
+---@field variant? PrismaticBelts.Api.Defines.BeltSprites
 
 ---Returns a complete `TransportBeltAnimationSet` definition.
 ---@param inputs PrismaticBelts.TransportBeltAnimationSetInputs
 ---@return data.TransportBeltAnimationSet
 function api.get_transport_belt_animation_set(inputs)
-    local variant = inputs.variant or 1
-
-    if (variant == 3) and not mods["prismatic-belts-space-age"] then
-        error("Missing required dependency: sprite sheet variant was 3, but Prismatic Belts: Space Age is not available.")
-    end
+    local variant = inputs.variant or api.defines.belt_sprites.standard
 
     ---@class PrismaticBelts.ReturnBeltAnimationSetLayerInputs
     ---@field blend_mode? data.BlendMode Blending mode for the layer.
     ---@field layer "base"|"mask"|"arrows" "base", "mask" or "arrows" (standard). Determines specific spritesheet used by the layer.
     ---@field tint? data.Color Color to tint the layer.
     ---@field tint_as_overlay? boolean When true, the color blending will use Overlay rules.
-    ---@field variant? 1|2|3 Spritesheet to return (1 for slow, 2 for fast, 3 for turbo fast [requires Space Age]).
 
     ---Returns a tailored layer of the belt animation set
     ---@param layer_inputs PrismaticBelts.ReturnBeltAnimationSetLayerInputs
     ---@return data.RotatedAnimation
     local function return_belt_animation_set_layer(layer_inputs)
         -- Point to appropriate sprite directory
-        local source_mod = layer_inputs.variant == 3 and "__prismatic-belts-space-age__" or "__prismatic-belts__"
-
         ---@type data.RotatedAnimation
         local layer = {
-            filename = source_mod .. "/graphics/entity/standard/transport-belt-" .. layer_inputs.variant .. "-" .. layer_inputs.layer .. ".png",
+            filename = "__prismatic-belts__/graphics/entity/standard/transport-belt-" .. variant .. "-" .. layer_inputs.layer .. ".png",
             priority = "extra-high",
             width = 128,
             height = 128,
             scale = 0.5,
-            frame_count = 16 * (2 ^ (layer_inputs.variant - 1)),
+            frame_count = 16 * (2 ^ (variant - 1)),
             tint = layer_inputs.tint,
             tint_as_overlay = layer_inputs.tint_as_overlay,
             blend_mode = layer_inputs.blend_mode,
@@ -237,13 +240,11 @@ function api.get_transport_belt_animation_set(inputs)
                     layer = "base",
                     tint = inputs.base_tint and adjust_alpha(inputs.base_tint, 1) or nil,
                     tint_as_overlay = inputs.tint_base_as_overlay,
-                    variant = variant,
                 },
                 return_belt_animation_set_layer {
                     layer = "mask",
                     tint = inputs.mask_tint,
                     tint_as_overlay = inputs.tint_mask_as_overlay,
-                    variant = variant,
                 },
             },
         },
@@ -255,9 +256,9 @@ function api.get_transport_belt_animation_set(inputs)
             layer = "arrows",
             tint = inputs.arrow_tint,
             blend_mode = "additive-soft",
-            variant = variant,
         })
     end
+
     -- Add belt reader sprites.
     meld(transport_belt_animation_set, belt_reader_gfx)
 
@@ -282,8 +283,8 @@ end
 ---the arrows when used with a particularly dark `mask_tint`.
 ---@field arrow_tint? data.Color
 ---
----Spritesheet to return (1 for slow, 2 for fast, 3 for turbo fast [requires Space Age]).
----@field variant? 1|2|3
+---Spritesheet to use for the remnants; defaults to `defines.belt_sprites.standard`.
+---@field variant? PrismaticBelts.Api.Defines.BeltSprites
 
 ---Reskins, or creates as needed, appropriate transport belt remnants.
 ---@param name data.EntityID The prototype name of the transport belt.
@@ -294,17 +295,14 @@ function api.create_remnant(name, inputs)
     ---@field layer "base"|"mask"|"arrows" "base", "mask" or "arrows" (standard). Determines specific spritesheet used by the layer.
     ---@field tint? data.Color Color to tint the layer.
     ---@field tint_as_overlay? boolean When true, the color blending will use Overlay rules.
-    ---@field variant? 1|2|3 Spritesheet to return (1 for slow, 2 for fast, 3 for turbo fast [requires Space Age]).
 
     --- Returns a tailored layer of the belt remnants.
     ---@param layer_inputs PrismaticBelts.ReturnRemnantLayerInputs
     ---@return data.RotatedAnimation
     local function return_remnant_layer(layer_inputs)
-        local source_mod = layer_inputs.variant == 3 and "__prismatic-belts-space-age__" or "__prismatic-belts__"
-
         ---@type data.RotatedAnimation
         local layer = {
-            filename = source_mod .. "/graphics/entity/standard/remnants/transport-belt-remnants-" .. layer_inputs.layer .. ".png",
+            filename = "__prismatic-belts__/graphics/entity/standard/remnants/transport-belt-remnants-" .. layer_inputs.layer .. ".png",
             line_length = 1,
             width = 106,
             height = 102,
@@ -329,13 +327,11 @@ function api.create_remnant(name, inputs)
             layer = "base",
             tint = inputs.base_tint and adjust_alpha(inputs.base_tint, 1) or nil,
             tint_as_overlay = inputs.tint_base_as_overlay,
-            variant = inputs.variant,
         },
         return_remnant_layer {
             layer = "mask",
             tint = inputs.mask_tint,
             tint_as_overlay = inputs.tint_mask_as_overlay,
-            variant = inputs.variant,
         },
     }
 
@@ -344,7 +340,6 @@ function api.create_remnant(name, inputs)
             layer = "arrows",
             tint = inputs.arrow_tint,
             blend_mode = "additive-soft",
-            variant = inputs.variant,
         })
     end
 

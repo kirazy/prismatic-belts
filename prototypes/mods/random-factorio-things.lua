@@ -55,7 +55,7 @@ for prefix, properties in pairs(tiers) do
             entity.belt_animation_set = api.get_transport_belt_animation_set({
                 mask_tint = properties.tint,
                 tint_mask_as_overlay = true,
-                variant = 2,
+                variant = api.defines.belt_sprites.fast,
             })
         end
     end

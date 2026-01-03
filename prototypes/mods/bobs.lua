@@ -8,9 +8,9 @@ local api = require("prototypes.api")
 if not mods["boblogistics"] then return end
 
 local tiers = {
-    ["bob-basic-"] = { tint = util.color("7d7d7dd1"), variant = 1, loader = "bob-basic-", technology = "logistics-0" },
-    ["bob-turbo-"] = { tint = util.color("a510e5d1"), variant = 2, loader = "bob-turbo-", technology = "logistics-4" },
-    ["bob-ultimate-"] = { tint = util.color("16f263d1"), variant = 2, loader = "bob-ultimate-", technology = "logistics-5" },
+    ["bob-basic-"] = { tint = util.color("7d7d7dd1"), variant = api.defines.belt_sprites.standard, technology = "logistics-0" },
+    ["bob-turbo-"] = { tint = util.color("a510e5d1"), variant = api.defines.belt_sprites.fast, technology = "logistics-4" },
+    ["bob-ultimate-"] = { tint = util.color("16f263d1"), variant = api.defines.belt_sprites.fast, technology = "logistics-5" },
 }
 
 -- Compatibility with Artisanal Reskins 1.1.3+
@@ -28,21 +28,21 @@ if mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logi
     if reskins.lib.settings.get_value("reskins-lib-customize-tier-colors") then
         tiers[""] = {
             tint = reskins.lib.tiers.get_belt_tint(1),
-            variant = 1,
+            variant = api.defines.belt_sprites.standard,
             loader = "",
             tier = 1,
             technology = "logistics",
         }
         tiers["fast-"] = {
             tint = reskins.lib.tiers.get_belt_tint(2),
-            variant = 2,
+            variant = api.defines.belt_sprites.fast,
             loader = "fast-",
             tier = 2,
             technology = "logistics-2",
         }
         tiers["express-"] = {
             tint = reskins.lib.tiers.get_belt_tint(3),
-            variant = 2,
+            variant = api.defines.belt_sprites.fast,
             loader = "express-",
             tier = 3,
             technology = "logistics-3",
@@ -57,7 +57,7 @@ for prefix, properties in pairs(tiers) do
         belt = data.raw["transport-belt"][prefix .. "transport-belt"],
         splitter = data.raw["splitter"][prefix .. "splitter"],
         underground = data.raw["underground-belt"][prefix .. "underground-belt"],
-        loader = data.raw["loader"][properties.loader .. "loader"],
+        loader = data.raw["loader"][prefix .. "loader"],
 
         -- Miniloader
         miniloader = data.raw["loader-1x1"][prefix .. "miniloader-loader"],

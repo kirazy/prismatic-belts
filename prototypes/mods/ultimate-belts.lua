@@ -1,4 +1,4 @@
--- Copyright (c) 2021-2025 Kirazy
+-- Copyright (c) Kirazy
 -- Part of Prismatic Belts
 --
 -- See LICENSE.md in the project directory for license information.
@@ -9,7 +9,7 @@ if not (mods["UltimateBelts"] or mods["UltimateBeltsSpaceAge"]) then return end
 
 local base_tint = util.color("404040")
 local tint_base_as_overlay = true
-local variant = mods["prismatic-belts-space-age"] and 3 or 2
+local variant = api.defines.belt_sprites.turbo
 
 local tiers = {
     ["ultra-fast-"] = { tint = util.color("00b30cff") },

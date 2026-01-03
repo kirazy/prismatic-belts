@@ -8,8 +8,8 @@ local api = require("prototypes.api")
 if not (mods["Krastorio2"] or mods["Krastorio2-spaced-out"]) then return end
 
 local tiers = {
-    ["kr-advanced-"] = { tint = util.color("3ade21d1"), variant = 2, technology = "kr-logistic-4" },
-    ["kr-superior-"] = { tint = util.color("a30bd6d1"), variant = 2, technology = "kr-logistic-5" },
+    ["kr-advanced-"] = { tint = util.color("3ade21d1"), variant = api.defines.belt_sprites.fast, technology = "kr-logistic-4" },
+    ["kr-superior-"] = { tint = util.color("a30bd6d1"), variant = api.defines.belt_sprites.fast, technology = "kr-logistic-5" },
 }
 
 -- Setup all the entities to use the updated belt animation sets

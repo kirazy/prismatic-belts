@@ -1,7 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.10
 Date: ????
-  Changes:
+  Bugfixes:
+    - Fixed that Prismatic Belts: Space Age was still required to use certain API functions
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.9
 Date: 2025-08-30

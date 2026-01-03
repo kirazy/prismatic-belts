@@ -27,6 +27,7 @@ for prefix, properties in pairs(tiers) do
         belt = data.raw["transport-belt"][prefix .. "belt"],
         splitter = data.raw["splitter"][prefix .. "splitter"],
         underground = data.raw["underground-belt"][prefix .. "underground-belt"],
+        loader = data.raw["loader"]["ub-" .. prefix .. "loader"],
 
         -- Miniloader
         miniloader = data.raw["loader-1x1"]["ub-" .. prefix .. "miniloader-loader"],

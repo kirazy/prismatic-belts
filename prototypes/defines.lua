@@ -1,8 +1,3 @@
--- Copyright (c) Kirazy
--- Part of Prismatic Belts
---
--- See LICENSE.md in the project directory for license information.
-
 --- Provides enumerations for use in Prismatic Belts.
 ---
 ---### Examples
@@ -46,7 +41,7 @@ defines_api.belt_sprites = {
 	fast = 2,
 	---Indicates turbo belt sprites.
 	---
-	---Used for faster belt speeds, typically more than 75 items/s.
+	---Used for faster belt speeds, typically more than 60 items/s.
 	---Has twice as many frames as `defines.belt_sprites.fast` and larger spacing between arrows. Used for fastest belt speeds.
 	turbo = 3,
 }

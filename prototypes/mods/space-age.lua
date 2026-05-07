@@ -1,17 +1,13 @@
--- Copyright (c) Kirazy
--- Part of Prismatic Belts
---
--- See LICENSE.md in the project directory for license information.
-
 local api = require("prototypes.api")
 local meld = require("meld")
+local sprite_utils = { icons = require("__reskins-sprite-utils__.icons") }
 
 if not mods["space-age"] then
 	return
 end
 
 -- Setup belt animation sets for space-age entities.
----@type { [data.EntityID] : data.TransportBeltAnimationSet }
+---@type { [data.EntityID] : data.TransportBeltAnimationSetWithCorners }
 local belt_animation_sets = {
 	["turbo-transport-belt"] = {
 		alternate = true,
@@ -31,87 +27,39 @@ local belt_animation_sets = {
 -- Add belt reader sprites.
 meld(belt_animation_sets["turbo-transport-belt"], belt_reader_gfx)
 
-local tiers = {
-	["turbo-"] = { technology = "turbo-transport-belt" },
+local transport_belts = {
+	["turbo-transport-belt"] = { logistics_technology = "turbo-transport-belt" },
 }
 
-for prefix, properties in pairs(tiers) do
-	-- Fetch entities
-	local entities = {
-		belt = data.raw["transport-belt"][prefix .. "transport-belt"],
-		splitter = data.raw["splitter"][prefix .. "splitter"],
-		underground = data.raw["underground-belt"][prefix .. "underground-belt"],
-		loader = data.raw["loader"][prefix .. "loader"],
+for name, options in pairs(transport_belts) do
+	local entity = data.raw["transport-belt"][name]
+	if not entity then
+		goto continue
+	end
 
-		-- Miniloader
-		-- miniloader = data.raw["loader-1x1"][prefix .. "miniloader-loader"],
-		-- filter_miniloader = data.raw["loader-1x1"][prefix .. "filter-miniloader-loader"],
-
-		-- Deadlock Stacking Beltboxes and Compact loaders
-		-- deadlock_loader = data.raw["loader-1x1"][prefix .. "transport-belt-loader"],
-
-		-- Krastorio
-		-- krastorio_loader = data.raw["loader-1x1"]["kr-" .. prefix .. "loader"],
-
-		-- Loaders Modernized
-		mdrn_loader = data.raw["loader-1x1"][prefix .. "mdrn-loader"],
-		mdrn_loader_split = data.raw["loader-1x1"][prefix .. "mdrn-loader-split"],
-
-		-- AAI Loaders
-		aai_loader = data.raw["loader-1x1"]["aai-" .. prefix .. "loader"],
+	---@type DeferrableIconData
+	local deferrable_icon = {
+		name = entity.name,
+		type_name = entity.type,
+		icon_data = {
+			{
+				icon = "__prismatic-belts__/graphics/icons/space-age/" .. name .. ".png",
+				icon_size = 64,
+			},
+		},
 	}
+	sprite_utils.icons.assign_deferrable_icon(deferrable_icon)
 
-	-- Reskin the belt item
-	local belt_item = data.raw["item"][prefix .. "transport-belt"]
-	if belt_item then
-		local icon_data = { {
-			icon = "__prismatic-belts__/graphics/icons/space-age/" .. prefix .. "transport-belt.png",
-			icon_size = 64,
-		} }
+	api.apply_belt_animation_set_and_update_related_connectables(entity, belt_animation_sets["turbo-transport-belt"])
 
-		-- Append tier labels for reskins-library
-		-- if mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false)) then
-		-- local do_labels = reskins.lib.settings.get_value("reskins-bobs-do-belt-entity-tier-labeling") == true
-
-		-- ---@type DeferrableIconData
-		-- local deferrable_icon = {
-		--     name = prefix .. "transport-belt",
-		--     type_name = "transport-belt",
-		--     icon_data = do_labels and reskins.lib.tiers.add_tier_labels_to_icons(properties.tier, icon_data) or
-		--         icon_data,
-		--     pictures = do_labels and reskins.lib.sprites.create_sprite_from_icons(icon_data, 1.0) or nil,
-		-- }
-
-		-- reskins.lib.icons.assign_deferrable_icon(deferrable_icon)
-		-- else
-		belt_item.icons = icon_data
-
-		-- Update entity icon to match
-		if entities.belt then
-			entities.belt.icons = belt_item.icons
-		end
-		-- end
-	end
-
-	-- Reskin all related entity types
-	for _, entity in pairs(entities) do
-		if entity then
-			entity.belt_animation_set = belt_animation_sets[prefix .. "transport-belt"]
-		end
-	end
-
-	-- Setup remnants
-	local remnants = data.raw["corpse"][prefix .. "transport-belt-remnants"]
-
+	local remnants = data.raw["corpse"][name .. "-remnants"]
 	if remnants then
-		if entities.belt then
-			remnants.icons = entities.belt.icons
-			remnants.icon = entities.belt.icon
-			remnants.icon_size = entities.belt.icon_size
-		end
+		remnants.icons = entity.icons
+		remnants.icon = entity.icon
+		remnants.icon_size = entity.icon_size
 
 		remnants.animation = make_rotated_animation_variations_from_sheet(2, {
-			filename = "__prismatic-belts__/graphics/entity/space-age/" .. prefix .. "transport-belt/remnants/" .. prefix .. "transport-belt-remnants.png",
+			filename = "__prismatic-belts__/graphics/entity/space-age/" .. name .. "/remnants/" .. name .. "-remnants.png",
 			line_length = 1,
 			width = 106,
 			height = 102,
@@ -124,15 +72,18 @@ for prefix, properties in pairs(tiers) do
 		})
 	end
 
-	-- Setup logistics technologies
-	local technology = data.raw["technology"][properties.technology]
+	---@type DeferrableIconData
+	local assignable_tech_icon = {
+		name = options.logistics_technology,
+		type_name = "technology",
+		icon_data = {
+			{
+				icon = "__prismatic-belts__/graphics/technology/space-age/" .. options.logistics_technology .. ".png",
+				icon_size = 256,
+			},
+		},
+	}
+	sprite_utils.icons.assign_deferrable_icon(assignable_tech_icon)
 
-	if technology then
-		local icon_data = { {
-			icon = "__prismatic-belts__/graphics/technology/space-age/" .. properties.technology .. ".png",
-			icon_size = 256,
-		} }
-
-		technology.icons = icon_data
-	end
+	::continue::
 end

@@ -1,6 +1,6 @@
 {
     "name": "prismatic-belts",
-    "version": "2.0.11",
+    "version": "3.0.0",
     "factorio_version": "2.0",
     "package": {
         "git_publish_branch": "main"
@@ -10,6 +10,7 @@
     "contact": "kirazy@live.com",
     "dependencies": [
         "base",
+        "reskins-sprite-utils",
         "? space-age",
         "? boblogistics",
         "? reskins-library >= 2.3.0",

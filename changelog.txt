@@ -4,6 +4,7 @@ Date: ????
   Features:
     - Now dynamically discovers and updates the belt animation set for any entities that use any of the supported transport belts
     - [space-age] Added support for frozen transport belts
+    - Added native support for most belt mods on the mod portal
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.10
 Date: 2026-01-02

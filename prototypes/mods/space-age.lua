@@ -20,7 +20,7 @@ local belt_animation_sets = {
 			frame_count = 64,
 			direction_count = 20,
 		},
-		frozen_patch = api.get_transport_belt_frozen_patch(3),
+		frozen_patch = api.get_transport_belt_frozen_patch(api.defines.belt_sprites.turbo),
 	},
 }
 

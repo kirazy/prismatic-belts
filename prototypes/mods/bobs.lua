@@ -10,15 +10,15 @@ end
 
 local transport_belts = {
 	["bob-basic-transport-belt"] = {
-		mask_tint = sprite_utils.colors.from_argb("7D7D7DD1"),
+		mask_tint = sprite_utils.colors.from_argb("D17D7D7D"),
 		logistics_technology = "logistics-0",
 	},
 	["bob-turbo-transport-belt"] = {
-		mask_tint = sprite_utils.colors.from_argb("A510E5D1"),
+		mask_tint = sprite_utils.colors.from_argb("D1A510E5"),
 		logistics_technology = "logistics-4",
 	},
 	["bob-ultimate-transport-belt"] = {
-		mask_tint = sprite_utils.colors.from_argb("16F263D1"),
+		mask_tint = sprite_utils.colors.from_argb("D116F263"),
 		logistics_technology = "logistics-5",
 	},
 }

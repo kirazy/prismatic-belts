@@ -12,7 +12,7 @@ local transport_belt_inputs_map = {
 			name = "elite-logistics",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFFFFFFF"),
+			mask_tint = sprite_utils.colors.from_argb("FF2DEB2D"),
 		},
 	},
 	["extreme-belt"] = {
@@ -20,7 +20,7 @@ local transport_belt_inputs_map = {
 			name = "extreme-logistics",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFFFFFFF"),
+			mask_tint = sprite_utils.colors.from_argb("FF2BFFE6"),
 		},
 	},
 	["supreme-belt"] = {
@@ -28,7 +28,7 @@ local transport_belt_inputs_map = {
 			name = "supreme-logistics",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFFFFFFF"),
+			mask_tint = sprite_utils.colors.from_argb("FFF12BFF"),
 		},
 	},
 	["ultimate-belt"] = {
@@ -36,7 +36,7 @@ local transport_belt_inputs_map = {
 			name = "ultimate-logistics",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFFFFFFF"),
+			mask_tint = sprite_utils.colors.from_argb("FFFF7F4D"),
 		},
 	},
 }

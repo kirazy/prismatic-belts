@@ -13,7 +13,6 @@ local transport_belt_inputs_map = {
 		},
 		belt_animation_set = {
 			mask_tint = sprite_utils.colors.from_argb("FFDD5FC1"),
-			belt_sprites = api.defines.belt_sprites.standard,
 		},
 	},
 }

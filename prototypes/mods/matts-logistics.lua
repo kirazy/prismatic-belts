@@ -26,7 +26,6 @@ local transport_belt_inputs_map = {
 		},
 		belt_animation_set = util.merge({ default_animation_set, {
 			mask_tint = sprite_utils.colors.from_argb("FFCC7E66"),
-			belt_sprites = api.defines.belt_sprites.fast,
 		} }),
 	},
 	["ultra-express-transport-belt"] = {

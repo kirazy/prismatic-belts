@@ -2,7 +2,7 @@ local api = require("prototypes.api")
 local meld = require("meld")
 local sprite_utils = { icons = require("__reskins-sprite-utils__.icons") }
 
-if not mods["space-age"] then
+if not (mods["space-age"] or mods["TurboBelt"]) then
 	return
 end
 

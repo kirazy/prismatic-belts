@@ -1,18 +1,16 @@
 local api = require("prototypes.api")
 local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
-if not (mods["promethium-belts"] or mods["promethium-belts-rebalance"]) then
+if not mods["rapid-belts-t4"] then
 	return
 end
 
 ---@type PrismaticBelts.TransportBeltInputsMapping
 local transport_belt_inputs_map = {
-	["promethium-transport-belt"] = {
-		logistics_technology = {
-			name = "promethium-transport-belt",
-		},
+	["rapid-transport-belt"] = {
+		logistics_technology = { name = "logistics-4" },
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFDD5FC1"),
+			mask_tint = sprite_utils.colors.from_argb("FFD1E595"),
 		},
 	},
 }

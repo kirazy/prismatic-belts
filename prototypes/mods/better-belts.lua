@@ -8,7 +8,10 @@ end
 ---@type PrismaticBelts.TransportBeltInputsMapping
 local transport_belt_inputs_map = {
 	["BetterBelts_ultra-transport-belt"] = {
-		logistics_technology = { name = "BetterBelts_ultra-class" },
+		logistics_technology = {
+			name = "BetterBelts_ultra-class",
+			structure_tint = sprite_utils.colors.from_argb("FF14CC14"),
+		},
 		belt_animation_set = {
 			mask_tint = sprite_utils.colors.from_argb("FF40CB4A"),
 		},

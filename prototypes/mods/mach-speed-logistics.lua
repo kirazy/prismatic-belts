@@ -10,6 +10,7 @@ local transport_belt_inputs_map = {
 	["mach-transport-belt"] = {
 		logistics_technology = {
 			name = "mach-speed-logistics",
+			structure_tint = sprite_utils.colors.from_argb("FFB800CC")
 		},
 		belt_animation_set = {
 			base_tint = sprite_utils.colors.from_argb("FF404040"),

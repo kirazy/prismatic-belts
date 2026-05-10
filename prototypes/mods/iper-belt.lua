@@ -14,8 +14,9 @@ local transport_belt_inputs_map = {
 		belt_animation_set = {
 			mask_tint = sprite_utils.colors.from_argb("FF5D65D9"),
 			arrow_tint = sprite_utils.colors.from_argb("FF2B3DF1"),
-			-- arrow_blend_mode = "normal",
-			-- tint_arrow_as_overlay = true,
+		},
+		belt_icon = {
+			arrow_tint = sprite_utils.colors.from_argb("FFa6acff"),
 		},
 	},
 }

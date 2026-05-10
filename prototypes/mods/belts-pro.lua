@@ -13,13 +13,19 @@ local transport_belt_inputs_map = {
 		},
 	},
 	["superior-transport-belt"] = {
-		logistics_technology = { name = "superior-belts" },
+		logistics_technology = {
+			name = "superior-belts",
+			structure_tint = sprite_utils.colors.from_argb("FFAA00CC"),
+		},
 		belt_animation_set = {
 			mask_tint = sprite_utils.colors.from_argb("FFDE66FF"),
 		},
 	},
 	["ultrasuperior-transport-belt"] = {
-		logistics_technology = { name = "ultrasuperior-belts" },
+		logistics_technology = {
+			name = "ultrasuperior-belts",
+			structure_tint = sprite_utils.colors.from_argb("FFFF0080"),
+		},
 		belt_animation_set = {
 			mask_tint = sprite_utils.colors.from_argb("FFCC3380"),
 			arrow_tint = sprite_utils.colors.from_argb("FFFD0071"),

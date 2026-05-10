@@ -8,6 +8,7 @@ Date: ????
     - Enhanced API for the logistics technology icon to allow coloring the structure paint independently
   Bugfixes:
     - Fixed that the Krastorio 2 and Krastorio 2: Spaced Outs belts were colored incorrectly
+    - Fixed that the Iper belt icon did not well match the belt itself
 ---------------------------------------------------------------------------------------------------
 Version: 3.0.0
 Date: 2026-05-08

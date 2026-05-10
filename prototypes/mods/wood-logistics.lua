@@ -10,6 +10,8 @@ local transport_belt_inputs_map = {
 	["wood-transport-belt"] = {
 		logistics_technology = {
 			name = "wood-logistics",
+			structure_tint = sprite_utils.colors.from_argb("FFA15A40"),
+			arrow_tint = sprite_utils.colors.from_argb("FFAE7E6A"),
 		},
 		belt_animation_set = {
 			mask_tint = sprite_utils.colors.from_argb("FFAE7E6A"),

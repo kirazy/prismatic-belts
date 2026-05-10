@@ -9,7 +9,7 @@ end
 local transport_belt_inputs_map = {
 	["extreme-belt"] = {
 		logistics_technology = {
-			name = "logistics-5",
+			name = "extreme-logistics",
 		},
 		belt_animation_set = {
 			mask_tint = sprite_utils.colors.from_argb("FF2BFFE6"),
@@ -17,7 +17,7 @@ local transport_belt_inputs_map = {
 	},
 	["ultimate-belt"] = {
 		logistics_technology = {
-			name = "logistics-6",
+			name = "ultimate-logistics",
 		},
 		belt_animation_set = {
 			mask_tint = sprite_utils.colors.from_argb("FFFF7F4D"),
@@ -25,7 +25,7 @@ local transport_belt_inputs_map = {
 	},
 	["high-speed-belt"] = {
 		logistics_technology = {
-			name = "logistics-7",
+			name = "high-speed-logistics",
 		},
 		belt_animation_set = {
 			mask_tint = sprite_utils.colors.from_argb("FFF12BFF"),

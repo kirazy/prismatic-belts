@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 3.0.2
-Date: ????
+Date: 2026-05-10
   Bugfixes:
     - Fixed startup issue when used with AAI Loaders and Advanced belts when fluid ingredients are enabled
     - Fixed that the wrong technologies were referenced with Advanced Belts

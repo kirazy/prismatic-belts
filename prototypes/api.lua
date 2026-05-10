@@ -287,6 +287,33 @@ function api.get_transport_belt_technology_icon(inputs)
 	return technology_icons
 end
 
+---@param inputs PrismaticBelts.TransportBeltIconInputs
+---@return data.IconData
+local function get_aai_loader_technology_icon_belt_layers(inputs)
+	local icon_type = inputs.use_three_arrow_variant and "ub-loader" or "loader"
+
+	---@type data.IconData[]
+	local icon_data = {
+		{
+			icon = "__prismatic-belts__/graphics/technology/aai-loaders/" .. icon_type .. "-technology-icon-base.png",
+			icon_size = 256,
+			tint = inputs.base_tint and adjust_alpha(inputs.base_tint, 1), -- Ensure non-transparent.
+		},
+		{
+			icon = "__prismatic-belts__/graphics/technology/aai-loaders/" .. icon_type .. "-technology-icon-mask.png",
+			icon_size = 256,
+			tint = inputs.mask_tint,
+		},
+		{
+			icon = "__prismatic-belts__/graphics/technology/aai-loaders/" .. icon_type .. "-technology-icon-highlights.png",
+			icon_size = 256,
+			tint = { 1, 1, 1, 0 },
+		},
+	}
+
+	return icon_data
+end
+
 ---@class PrismaticBelts.TransportBeltIconInputs
 ---When true, the icon will have three arrows; otherwise, it will have two.
 ---@field use_three_arrow_variant? boolean
@@ -696,7 +723,6 @@ function api.apply_belt_animation_set_and_update_related_connectables(transport_
 				or entity.name:find("^aai%-.+%-loader$")
 				or entity.name:find("^aai%-.+%-lane%-filtering$")
 				or entity.name:find("^aai%-.+%-stacking$") then
-			-- stylua: ignore end
 				local patch_layers = get_aai_loader_icon_belt_layers(icon_inputs)
 				local entity_icon = sprite_utils.icons.get_icon_from_prototype(entity)
 
@@ -705,7 +731,37 @@ function api.apply_belt_animation_set_and_update_related_connectables(transport_
 					type_name = entity.type,
 					icon_data = sprite_utils.icons.compose_icons("default", entity_icon[1], patch_layers, table.unpack(entity_icon, 2)),
 				})
+
+				local function try_patch_tech_icon(technology_name)
+					local technology = data.raw["technology"][technology_name]
+					if not technology then
+						return
+					end
+
+					local tech_patch_layers = get_aai_loader_technology_icon_belt_layers(icon_inputs)
+					local tech_icon = sprite_utils.icons.get_icon_from_prototype(technology)
+
+					if icon_inputs.use_three_arrow_variant then
+						table.insert(
+							tech_patch_layers,
+							util.merge({ tech_icon[2], {
+								icon = "__prismatic-belts__/graphics/technology/aai-loaders/ub-loader-technology-icon-arrow.png",
+								icon_size = 256,
+							} })
+						)
+					end
+
+					sprite_utils.icons.assign_deferrable_icon({
+						name = technology.name,
+						type_name = technology.type,
+						icon_data = sprite_utils.icons.compose_icons("technology", tech_icon[1], tech_patch_layers, table.unpack(tech_icon, 2)),
+					})
+				end
+
+				try_patch_tech_icon(entity.name)
+				try_patch_tech_icon(entity.name .. "-stacking")
 			end
+			-- stylua: ignore end
 
 			::continue::
 		end

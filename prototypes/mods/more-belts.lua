@@ -1,3 +1,4 @@
+local api = require("prototypes.api")
 local sprite_utils = {
 	icons = require("__reskins-sprite-utils__.icons"),
 	colors = require("__reskins-sprite-utils__.colors"),
@@ -7,7 +8,6 @@ if not mods["more-belts"] then
 	return
 end
 
-local api = require("prototypes.api")
 
 ---@type PrismaticBelts.TransportBeltInputsMapping
 local transport_belt_inputs_map = {

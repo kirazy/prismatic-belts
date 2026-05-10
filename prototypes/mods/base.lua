@@ -65,7 +65,9 @@ for name, options in pairs(transport_belts) do
 		mask_tint = options.mask_tint,
 		belt_sprites = options.belt_sprites,
 	}) or preset.belt_animation_set
-	api.apply_belt_animation_set_and_update_related_connectables(entity, animation_set)
+	api.apply_belt_animation_set_and_update_related_connectables(entity, animation_set, {
+		mask_tint = options.mask_tint or preset.tint,
+	})
 
 	if options.mask_tint then
 		api.create_or_update_remnants(entity.name, { mask_tint = options.mask_tint })

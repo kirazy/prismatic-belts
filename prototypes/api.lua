@@ -1,5 +1,8 @@
 local meld = require("meld")
-local sprite_utils = { icons = require("__reskins-sprite-utils__.icons") }
+local sprite_utils = {
+	icons = require("__reskins-sprite-utils__.icons"),
+	colors = require("__reskins-sprite-utils__.colors"),
+}
 
 ---The Prismatic Belts library of API functions.
 ---
@@ -90,6 +93,9 @@ end
 ---
 ---The technology icon for the technology that unlocks the transport belt.
 ---@field technology_icon data.IconData
+---
+---The nominal color of the preset for use with functions that use the tintable sprites.
+---@field tint data.Color
 
 ---Creates the remnants animation using the specified filename.
 ---@param filename data.FileName
@@ -133,6 +139,7 @@ local presets = {
 			icon = "__prismatic-belts__/graphics/technology/base/logistics.png",
 			icon_size = 256,
 		},
+		tint = sprite_utils.colors.from_argb("ffffb726"),
 	},
 	[api.defines.belt_presets.fast] = {
 		belt_animation_set = {
@@ -156,6 +163,7 @@ local presets = {
 			icon = "__prismatic-belts__/graphics/technology/base/logistics-2.png",
 			icon_size = 256,
 		},
+		tint = sprite_utils.colors.from_argb("fff22318"),
 	},
 	[api.defines.belt_presets.express] = {
 		belt_animation_set = {
@@ -179,6 +187,7 @@ local presets = {
 			icon = "__prismatic-belts__/graphics/technology/base/logistics-3.png",
 			icon_size = 256,
 		},
+		tint = sprite_utils.colors.from_argb("ff33b4ff"),
 	},
 	[api.defines.belt_presets.turbo] = {
 		belt_animation_set = {
@@ -203,6 +212,7 @@ local presets = {
 			icon = "__prismatic-belts__/graphics/technology/space-age/turbo-transport-belt.png",
 			icon_size = 256,
 		},
+		tint = sprite_utils.colors.from_argb("ff94cc33"),
 	},
 }
 
@@ -311,6 +321,41 @@ function api.get_transport_belt_icon(inputs)
 	if inputs.arrow_tint then
 		table.insert(icon_data, {
 			icon = "__prismatic-belts__/graphics/icons/standard/" .. icon_type .. "-icon-arrows.png",
+			icon_size = 64,
+			tint = inputs.arrow_tint,
+		})
+	end
+
+	return icon_data
+end
+
+---@param inputs PrismaticBelts.TransportBeltIconInputs
+---@return data.IconData
+local function get_aai_loader_icon_belt_layers(inputs)
+	local icon_type = inputs.use_three_arrow_variant and "ub-transport-belt" or "transport-belt"
+
+	---@type data.IconData[]
+	local icon_data = {
+		{
+			icon = "__prismatic-belts__/graphics/icons/aai-loaders/" .. icon_type .. "-icon-base.png",
+			icon_size = 64,
+			tint = inputs.base_tint and adjust_alpha(inputs.base_tint, 1), -- Ensure non-transparent.
+		},
+		{
+			icon = "__prismatic-belts__/graphics/icons/aai-loaders/" .. icon_type .. "-icon-mask.png",
+			icon_size = 64,
+			tint = inputs.mask_tint,
+		},
+		{
+			icon = "__prismatic-belts__/graphics/icons/aai-loaders/" .. icon_type .. "-icon-highlights.png",
+			icon_size = 64,
+			tint = { 1, 1, 1, 0 },
+		},
+	}
+
+	if inputs.arrow_tint then
+		table.insert(icon_data, {
+			icon = "__prismatic-belts__/graphics/icons/aai-loaders/" .. icon_type .. "-icon-arrows.png",
 			icon_size = 64,
 			tint = inputs.arrow_tint,
 		})
@@ -611,7 +656,8 @@ local supported_types = {
 ---
 ---@param transport_belt data.TransportBeltPrototype
 ---@param animation_set data.TransportBeltAnimationSetWithCorners
-function api.apply_belt_animation_set_and_update_related_connectables(transport_belt, animation_set)
+---@param icon_inputs PrismaticBelts.TransportBeltIconInputs?
+function api.apply_belt_animation_set_and_update_related_connectables(transport_belt, animation_set, icon_inputs)
 	-- The hashed identifier of the belt animation set to be replaced
 	local set_id_to_replace = get_animation_set_identity(transport_belt)
 	if not set_id_to_replace then
@@ -626,9 +672,33 @@ function api.apply_belt_animation_set_and_update_related_connectables(transport_
 		for _, entity in pairs(data.raw[type_name]) do
 			---@cast entity data.TransportBeltConnectablePrototype
 			local entity_set_id = get_animation_set_identity(entity)
-			if entity_set_id == set_id_to_replace then
-				entity.belt_animation_set = animation_set
+			if entity_set_id ~= set_id_to_replace then
+				goto continue
 			end
+
+			entity.belt_animation_set = animation_set
+
+			if not icon_inputs then
+				goto continue
+			end
+
+			-- stylua: ignore start
+			if entity.name == "aai-loader"
+				or entity.name:find("^aai%-.+%-loader$")
+				or entity.name:find("^aai%-.+%-lane%-filtering$")
+				or entity.name:find("^aai%-.+%-stacking$") then
+			-- stylua: ignore end
+				local patch_layers = get_aai_loader_icon_belt_layers(icon_inputs)
+				local entity_icon = sprite_utils.icons.get_icon_from_prototype(entity)
+
+				sprite_utils.icons.assign_deferrable_icon({
+					name = entity.name,
+					type_name = entity.type,
+					icon_data = sprite_utils.icons.compose_icons("default", entity_icon[1], patch_layers, table.unpack(entity_icon, 2)),
+				})
+			end
+
+			::continue::
 		end
 	end
 end
@@ -717,7 +787,12 @@ local function transform_belt_and_related_connectables_layered(entity, inputs)
 	end
 
 	local animation_set = api.get_transport_belt_animation_set(animation_set_inputs)
-	api.apply_belt_animation_set_and_update_related_connectables(entity, animation_set)
+	api.apply_belt_animation_set_and_update_related_connectables(entity, animation_set, {
+		use_three_arrow_variant = belt_icon_inputs.use_three_arrow_variant,
+		base_tint = belt_icon_inputs.base_tint or animation_set_inputs.base_tint,
+		mask_tint = belt_icon_inputs.mask_tint or animation_set_inputs.mask_tint,
+		arrow_tint = belt_icon_inputs.arrow_tint or animation_set_inputs.arrow_tint,
+	})
 	api.create_or_update_remnants(entity.name, animation_set_inputs)
 
 	for _, forced_entity in pairs(forced_entities) do

@@ -10,7 +10,7 @@
     "contact": "kirazy@live.com",
     "dependencies": [
         "base",
-        "reskins-sprite-utils",
+        "reskins-sprite-utils >= 0.0.3",
         "? space-age",
         "? boblogistics",
         "? reskins-library >= 2.3.0",

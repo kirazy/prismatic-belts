@@ -2,6 +2,7 @@
 Version: 3.0.2
 Date: ????
   Bugfixes:
+    - Fixed startup issue when used with AAI Loaders and Advanced belts when fluid ingredients are enabled
     - Fixed that the wrong technologies were referenced with Advanced Belts
     - Fixed that Periodic Madness was not included as an optional mod dependency
 ---------------------------------------------------------------------------------------------------

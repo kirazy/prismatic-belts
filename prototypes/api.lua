@@ -732,6 +732,16 @@ function api.apply_belt_animation_set_and_update_related_connectables(transport_
 					icon_data = sprite_utils.icons.compose_icons("default", entity_icon[1], patch_layers, table.unpack(entity_icon, 2)),
 				})
 
+				-- TODO: rework this process to single scan for icons in certain target entities
+				-- that have icons that contain the two-layer AAI Loader sprites and insert the patch.
+				-- Basically: confirm the icon we're updating is a valid target rather than assuming
+				-- that it is as we currently do.
+
+				local recipe = data.raw["recipe"][entity.name]
+				if recipe and not recipe.main_product then
+					recipe.icons = entity.icons
+				end
+
 				local function try_patch_tech_icon(technology_name)
 					local technology = data.raw["technology"][technology_name]
 					if not technology then

@@ -12,7 +12,7 @@ local transport_belt_inputs_map = {
 			name = "kr-logistic-4",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("3ade21d1"),
+			mask_tint = sprite_utils.colors.from_argb("d13ade21"),
 		},
 	},
 	["kr-superior-transport-belt"] = {
@@ -20,7 +20,7 @@ local transport_belt_inputs_map = {
 			name = "kr-logistic-5",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("a30bd6d1"),
+			mask_tint = sprite_utils.colors.from_argb("d1a30bd6"),
 		},
 	},
 }

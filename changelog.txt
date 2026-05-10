@@ -3,6 +3,7 @@ Version: 3.0.2
 Date: ????
   Bugfixes:
     - Fixed that the wrong technologies were referenced with Advanced Belts
+    - Fixed that Periodic Madness was not included as an optional mod dependency
 ---------------------------------------------------------------------------------------------------
 Version: 3.0.1
 Date: 2026-05-10

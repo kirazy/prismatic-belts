@@ -4,6 +4,7 @@ Date: ????
   Features:
     - Now updates AAI loaders icons, including lane filtering and stacking variants, to have appropriately colored belts
     - Enhanced API to include support for using the transport belt, fast transport belt, express transport belt and turbo transport belt preset sprite sheets
+    - Enhanced API for the logistics technology icon to allow coloring the structure paint independently
 ---------------------------------------------------------------------------------------------------
 Version: 3.0.0
 Date: 2026-05-08

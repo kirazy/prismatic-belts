@@ -239,10 +239,13 @@ end
 ---Color to tint the mask sprite (belt surface, arrows)
 ---@field mask_tint data.Color?
 ---
----Color to tint the arrow layer; when `nil`, the arrow layer will not be included. Suggested alpha
----value is 0. Use to increase the brightness of the arrows when used with a particularly dark
----`mask_tint`.
+---When provided, the color to tint the arrows on the belt. When `nil`, the layer will not be
+---included. Suggested alpha value is 0; use to increase the brightness of the arrows when used with
+---a particularly dark `mask_tint`.
 ---@field arrow_tint data.Color?
+---
+---When provided, the color to tint the splitter and underground colored structure.
+---@field structure_tint data.Color?
 
 ---Returns a complete technology icons definition
 ---@param inputs PrismaticBelts.LogisticsTechnologyIconInputs
@@ -258,22 +261,28 @@ function api.get_transport_belt_technology_icon(inputs)
 		{
 			icon = "__prismatic-belts__/graphics/technology/standard/logistics-technology-mask.png",
 			icon_size = 256,
-			tint = inputs.mask_tint,
+			tint = inputs.structure_tint or inputs.mask_tint,
 		},
 		{
-			icon = "__prismatic-belts__/graphics/technology/standard/logistics-technology-highlights.png",
+			icon = "__prismatic-belts__/graphics/technology/standard/logistics-technology-mask-belts.png",
 			icon_size = 256,
-			tint = { 1, 1, 1, 0 },
+			tint = inputs.mask_tint,
 		},
 	}
 
 	if inputs.arrow_tint then
 		table.insert(technology_icons, {
-			icon = "__prismatic-belts__/graphics/technology/standard/logistics-technology-arrows.png",
+			icon = "__prismatic-belts__/graphics/technology/standard/logistics-technology-mask-arrows.png",
 			icon_size = 256,
 			tint = inputs.arrow_tint,
 		})
 	end
+
+	table.insert(technology_icons, {
+		icon = "__prismatic-belts__/graphics/technology/standard/logistics-technology-highlights.png",
+		icon_size = 256,
+		tint = { 1, 1, 1, 0 },
+	})
 
 	return technology_icons
 end
@@ -770,6 +779,7 @@ local function transform_belt_and_related_connectables_layered(entity, inputs)
 			icon_data = api.get_transport_belt_technology_icon({
 				base_tint = logistics_technology_inputs.base_tint or animation_set_inputs.base_tint,
 				mask_tint = logistics_technology_inputs.mask_tint or animation_set_inputs.mask_tint,
+				structure_tint = logistics_technology_inputs.structure_tint or logistics_technology_inputs.mask_tint or animation_set_inputs.mask_tint,
 				arrow_tint = logistics_technology_inputs.arrow_tint or animation_set_inputs.arrow_tint,
 			}),
 		})

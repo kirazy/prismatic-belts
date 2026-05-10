@@ -545,50 +545,53 @@ function api.create_or_update_remnants(transport_belt_name, inputs)
 	create_or_update_remnants_core(transport_belt_name, animation)
 end
 
+-- Computes an integer hash code using a djb2-style algorithm for the provided string.
+---@param s string
+---@return integer
+local function hash_string(s)
+	local h = 5381
+	for i = 1, #s do
+		h = (h * 33 + string.byte(s, i)) % 2147483647
+	end
+	return h
+end
+
+---Converts the provided tint to a string.
+---@param t data.Color
+---@return string
+local function format_tint(t)
+	if not t then
+		return ""
+	end
+	return string.format("_t%.3f_%.3f_%.3f_%.3f", t.r or t[1] or 0, t.g or t[2] or 0, t.b or t[3] or 0, t.a or t[4] or 0)
+end
+
+---Computes a hash code that uniquely identifies an animation set in use by the provided `entity` by
+---filename(s), tint(s), and speed.
+---
+---Tint and speed are required to differentiate belt animation sets that are reused either as
+---colored sprite sets or for multiple belt speeds.
 ---@param entity data.TransportBeltConnectablePrototype
+---@return integer? # The hash code, if an animation set exists; otherwise, `nil`.
 local function get_animation_set_identity(entity)
 	if not entity.belt_animation_set or not entity.belt_animation_set.animation_set then
 		return
 	end
 
 	local animation_set = entity.belt_animation_set.animation_set
+	local speed = tostring(entity.speed)
 
-	-- Create a hash of the animation set to identify it uniquely; grab filenames and tints; if
-	-- layers, grab all such filenames and tints so that e.g. when using Artisanal Reskins and many
-	-- unique animation sets have the same file, the tint is a discriminator.
 	if animation_set.filename then
-		-- Single animation case
-		local tint_str = ""
-		if animation_set.tint then
-			local t = animation_set.tint or {}
-			local r = t.r or t[1] or 0
-			local g = t.g or t[2] or 0
-			local b = t.b or t[3] or 0
-			local a = t.a or t[4] or 0
-			tint_str = string.format("_t%.3f_%.3f_%.3f_%.3f", r, g, b, a)
-		end
-		return animation_set.filename .. tint_str
+		return hash_string(animation_set.filename .. format_tint(animation_set.tint) .. speed)
 	elseif animation_set.layers then
-		-- Multiple layers case
 		local parts = {}
 		for i, layer in ipairs(animation_set.layers) do
 			if layer.filename then
-				local tint_str = ""
-				if layer.tint then
-					local t = layer.tint or {}
-					local r = t.r or t[1] or 0
-					local g = t.g or t[2] or 0
-					local b = t.b or t[3] or 0
-					local a = t.a or t[4] or 0
-					tint_str = string.format("_t%.3f_%.3f_%.3f_%.3f", r, g, b, a)
-				end
-				parts[i] = layer.filename .. tint_str
+				parts[i] = layer.filename .. format_tint(layer.tint) .. speed
 			end
 		end
-		return table.concat(parts, "|")
+		return hash_string(table.concat(parts, "|"))
 	end
-
-	return nil
 end
 
 local supported_types = {
@@ -609,10 +612,9 @@ local supported_types = {
 ---@param transport_belt data.TransportBeltPrototype
 ---@param animation_set data.TransportBeltAnimationSetWithCorners
 function api.apply_belt_animation_set_and_update_related_connectables(transport_belt, animation_set)
-	-- Get the identifier of the animation set to be replaced, so we can scan for related
-	-- connectable prototypes.
-	local belt_set_id = get_animation_set_identity(transport_belt)
-	if not belt_set_id then
+	-- The hashed identifier of the belt animation set to be replaced
+	local set_id_to_replace = get_animation_set_identity(transport_belt)
+	if not set_id_to_replace then
 		error("Unable to resolve transport belt animation set identity for belt '" .. transport_belt.name .. "'.")
 	end
 
@@ -622,8 +624,9 @@ function api.apply_belt_animation_set_and_update_related_connectables(transport_
 	-- Find all entities sharing the old animation set and update the animation set.
 	for _, type_name in pairs(supported_types) do
 		for _, entity in pairs(data.raw[type_name]) do
+			---@cast entity data.TransportBeltConnectablePrototype
 			local entity_set_id = get_animation_set_identity(entity)
-			if belt_set_id == entity_set_id then
+			if entity_set_id == set_id_to_replace then
 				entity.belt_animation_set = animation_set
 			end
 		end

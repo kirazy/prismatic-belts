@@ -1,7 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 3.0.1
 Date: ????
-  Changes:
+  Features:
+    - Enhanced API to include support for using the transport belt, fast transport belt, express transport belt and turbo transport belt preset sprite sheets
 ---------------------------------------------------------------------------------------------------
 Version: 3.0.0
 Date: 2026-05-08

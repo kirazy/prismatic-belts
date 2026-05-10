@@ -74,6 +74,151 @@ function api.get_transport_belt_frozen_patch(belt_sprites)
 end
 
 ----------------------------------------------------------------------------------------------------
+-- BELT PRESETS
+----------------------------------------------------------------------------------------------------
+
+---@class PrismaticBelts.BeltSpritePreset
+---The transport belt animation set for the preset, including the frozen patch and belt reader
+---sprites.
+---@field belt_animation_set data.TransportBeltAnimationSetWithCorners
+---
+---The remnants animation used by the corresponding corpse prototype.
+---@field remnants_animation data.RotatedAnimationVariations
+---
+---The icon for the transport belt.
+---@field icon data.IconData
+---
+---The technology icon for the technology that unlocks the transport belt.
+---@field technology_icon data.IconData
+
+---Creates the remnants animation using the specified filename.
+---@param filename data.FileName
+---@return data.RotatedAnimationVariations
+local function get_corpse_animation(filename)
+	return make_rotated_animation_variations_from_sheet(2, {
+		filename = filename,
+		line_length = 1,
+		width = 106,
+		height = 102,
+		frame_count = 1,
+		variation_count = 1,
+		axially_symmetrical = false,
+		direction_count = 4,
+		shift = util.by_pixel(1, -0.5),
+		scale = 0.5,
+	})
+end
+
+---@type { [PrismaticBelts.Api.Defines.BeltPresets] : PrismaticBelts.BeltSpritePreset}
+local presets = {
+	[api.defines.belt_presets.standard] = {
+		belt_animation_set = {
+			animation_set = {
+				filename = "__prismatic-belts__/graphics/entity/base/transport-belt/transport-belt.png",
+				priority = "extra-high",
+				width = 128,
+				height = 128,
+				scale = 0.5,
+				frame_count = 16,
+				direction_count = 20,
+			},
+			frozen_patch = api.get_transport_belt_frozen_patch(api.defines.belt_sprites.standard),
+		},
+		remnants_animation = get_corpse_animation("__prismatic-belts__/graphics/entity/base/transport-belt/remnants/transport-belt-remnants.png"),
+		icon = {
+			icon = "__prismatic-belts__/graphics/icons/base/transport-belt.png",
+			icon_size = 64,
+		},
+		technology_icon = {
+			icon = "__prismatic-belts__/graphics/technology/base/logistics.png",
+			icon_size = 256,
+		},
+	},
+	[api.defines.belt_presets.fast] = {
+		belt_animation_set = {
+			animation_set = {
+				filename = "__prismatic-belts__/graphics/entity/base/fast-transport-belt/fast-transport-belt.png",
+				priority = "extra-high",
+				width = 128,
+				height = 128,
+				scale = 0.5,
+				frame_count = 32,
+				direction_count = 20,
+			},
+			frozen_patch = api.get_transport_belt_frozen_patch(api.defines.belt_sprites.fast),
+		},
+		remnants_animation = get_corpse_animation("__prismatic-belts__/graphics/entity/base/fast-transport-belt/remnants/fast-transport-belt-remnants.png"),
+		icon = {
+			icon = "__prismatic-belts__/graphics/icons/base/fast-transport-belt.png",
+			icon_size = 64,
+		},
+		technology_icon = {
+			icon = "__prismatic-belts__/graphics/technology/base/logistics-2.png",
+			icon_size = 256,
+		},
+	},
+	[api.defines.belt_presets.express] = {
+		belt_animation_set = {
+			animation_set = {
+				filename = "__prismatic-belts__/graphics/entity/base/express-transport-belt/express-transport-belt.png",
+				priority = "extra-high",
+				width = 128,
+				height = 128,
+				scale = 0.5,
+				frame_count = 32,
+				direction_count = 20,
+			},
+			frozen_patch = api.get_transport_belt_frozen_patch(api.defines.belt_sprites.fast),
+		},
+		remnants_animation = get_corpse_animation("__prismatic-belts__/graphics/entity/base/express-transport-belt/remnants/express-transport-belt-remnants.png"),
+		icon = {
+			icon = "__prismatic-belts__/graphics/icons/base/express-transport-belt.png",
+			icon_size = 64,
+		},
+		technology_icon = {
+			icon = "__prismatic-belts__/graphics/technology/base/logistics-3.png",
+			icon_size = 256,
+		},
+	},
+	[api.defines.belt_presets.turbo] = {
+		belt_animation_set = {
+			alternate = true,
+			animation_set = {
+				filename = "__prismatic-belts__/graphics/entity/space-age/turbo-transport-belt/turbo-transport-belt.png",
+				priority = "extra-high",
+				width = 128,
+				height = 128,
+				scale = 0.5,
+				frame_count = 64,
+				direction_count = 20,
+			},
+			frozen_patch = api.get_transport_belt_frozen_patch(api.defines.belt_sprites.turbo),
+		},
+		remnants_animation = get_corpse_animation("__prismatic-belts__/graphics/entity/space-age/turbo-transport-belt/remnants/turbo-transport-belt-remnants.png"),
+		icon = {
+			icon = "__prismatic-belts__/graphics/icons/space-age/turbo-transport-belt.png",
+			icon_size = 64,
+		},
+		technology_icon = {
+			icon = "__prismatic-belts__/graphics/technology/space-age/turbo-transport-belt.png",
+			icon_size = 256,
+		},
+	},
+}
+
+meld(presets[api.defines.belt_presets.standard].belt_animation_set, belt_reader_gfx)
+meld(presets[api.defines.belt_presets.fast].belt_animation_set, belt_reader_gfx)
+meld(presets[api.defines.belt_presets.express].belt_animation_set, belt_reader_gfx)
+meld(presets[api.defines.belt_presets.turbo].belt_animation_set, belt_reader_gfx)
+
+---Gets a copy of the sprite presets for the specified `belt_preset`.
+---@param belt_preset PrismaticBelts.Api.Defines.BeltPresets
+---@return PrismaticBelts.BeltSpritePreset
+function api.get_preset(belt_preset)
+	return util.copy(presets[belt_preset])
+end
+
+----------------------------------------------------------------------------------------------------
 -- BELT COLORING API
 ----------------------------------------------------------------------------------------------------
 
@@ -281,6 +426,47 @@ function api.get_transport_belt_animation_set(inputs)
 	return transport_belt_animation_set
 end
 
+local function create_or_update_remnants_core(transport_belt_name, animation)
+	-- Fetch remnant
+	local remnants = data.raw["corpse"][transport_belt_name .. "-remnants"]
+
+	-- If there is no existing remnant, create one
+	if not remnants then
+		remnants = {
+			type = "corpse",
+			name = "prismatic-belts-" .. transport_belt_name .. "-remnants",
+			localised_name = {
+				"",
+				(data.raw["transport-belt"][transport_belt_name].localised_name or { "entity-name." .. transport_belt_name }),
+				" (remnant)",
+			},
+			icons = data.raw["transport-belt"][transport_belt_name].icons,
+			icon = data.raw["transport-belt"][transport_belt_name].icon,
+			icon_size = data.raw["transport-belt"][transport_belt_name].icon_size,
+			flags = { "placeable-neutral", "not-on-map" },
+			subgroup = "belt-remnants",
+			order = (data.raw.item[transport_belt_name] and data.raw.item[transport_belt_name].order) and data.raw.item[transport_belt_name].order .. "-a[" .. transport_belt_name .. "-remnants]" or "a-a-a",
+			selection_box = { { -0.5, -0.5 }, { 0.5, 0.5 } },
+			tile_width = 1,
+			tile_height = 1,
+			selectable_in_game = false,
+			time_before_removed = 60 * 60 * 15, -- 15 minutes
+			final_render_layer = "remnants",
+			animation = animation,
+		}
+
+		data:extend({ remnants })
+
+		-- Assign the corpse
+		data.raw["transport-belt"][transport_belt_name].corpse = "prismatic-belts-" .. transport_belt_name .. "-remnants"
+	else
+		remnants.icons = data.raw["transport-belt"][transport_belt_name].icons
+		remnants.icon = data.raw["transport-belt"][transport_belt_name].icon
+		remnants.icon_size = data.raw["transport-belt"][transport_belt_name].icon_size
+		remnants.animation = animation
+	end
+end
+
 ---Creates or updates remnant sprites for a transport belt prototype.
 ---
 ---If no remnant exists, it creates a new corpse prototype; otherwise, it updates the existing one
@@ -296,9 +482,9 @@ end
 ---
 ---If no remnant exists, it creates a new corpse prototype; otherwise, it updates the existing one
 ---with the prismatic sprite layers.
----@param name data.EntityID The prototype name of the transport belt.
+---@param transport_belt_name data.EntityID The prototype name of the transport belt.
 ---@param inputs PrismaticBelts.SpriteTintInputs Table of parameters that configure the remnant sprites.
-function api.create_or_update_remnants(name, inputs)
+function api.create_or_update_remnants(transport_belt_name, inputs)
 	---@class PrismaticBelts.ReturnRemnantLayerInputs
 	---@field blend_mode? data.BlendMode Blending mode for the layer.
 	---@field layer "base"|"mask"|"arrows" "base", "mask" or "arrows" (standard). Determines specific spritesheet used by the layer.
@@ -355,44 +541,8 @@ function api.create_or_update_remnants(name, inputs)
 		)
 	end
 
-	-- Fetch remnant
-	local remnants = data.raw["corpse"][name .. "-remnants"]
-
-	-- If there is no existing remnant, create one
-	if not remnants then
-		remnants = {
-			type = "corpse",
-			name = "prismatic-belts-" .. name .. "-remnants",
-			localised_name = {
-				"",
-				(data.raw["transport-belt"][name].localised_name or { "entity-name." .. name }),
-				" (remnant)",
-			},
-			icons = data.raw["transport-belt"][name].icons,
-			icon = data.raw["transport-belt"][name].icon,
-			icon_size = data.raw["transport-belt"][name].icon_size,
-			flags = { "placeable-neutral", "not-on-map" },
-			subgroup = "belt-remnants",
-			order = (data.raw.item[name] and data.raw.item[name].order) and data.raw.item[name].order .. "-a[" .. name .. "-remnants]" or "a-a-a",
-			selection_box = { { -0.5, -0.5 }, { 0.5, 0.5 } },
-			tile_width = 1,
-			tile_height = 1,
-			selectable_in_game = false,
-			time_before_removed = 60 * 60 * 15, -- 15 minutes
-			final_render_layer = "remnants",
-			animation = make_rotated_animation_variations_from_sheet(2, { layers = remnant_layers }),
-		}
-
-		data:extend({ remnants })
-
-		-- Assign the corpse
-		data.raw["transport-belt"][name].corpse = "prismatic-belts-" .. name .. "-remnants"
-	else
-		remnants.icons = data.raw["transport-belt"][name].icons
-		remnants.icon = data.raw["transport-belt"][name].icon
-		remnants.icon_size = data.raw["transport-belt"][name].icon_size
-		remnants.animation = make_rotated_animation_variations_from_sheet(2, { layers = remnant_layers })
-	end
+	local animation = make_rotated_animation_variations_from_sheet(2, { layers = remnant_layers })
+	create_or_update_remnants_core(transport_belt_name, animation)
 end
 
 ---@param entity data.TransportBeltConnectablePrototype
@@ -480,45 +630,43 @@ function api.apply_belt_animation_set_and_update_related_connectables(transport_
 	end
 end
 
----@class PrismaticBelts.TransportBeltConnectableEntity
----The name of the transport belt connectable entity for which the belt_animation_set property
----should be set.
----@field name data.EntityID
----The type of the transport belt connectable entity.
----@field type_name "splitter"|"lane-splitter"|"underground-belt"|"loader-1x1"|"loader"
+---Implementation for `transform_belt_and_related_connectables` using a preset sprite set.
+---@param entity data.TransportBeltPrototype
+---@param inputs PrismaticBelts.PresetTransformBeltInputs
+local function transform_belt_and_related_connectables_preset(entity, inputs)
+	local preset = api.get_preset(inputs.preset)
 
----@class PrismaticBelts.LogisticsTechnologyInputs:PrismaticBelts.LogisticsTechnologyIconInputs
----The technology prototype name of a technology that unlocks the associated transport belt, and
----which should use a Logistics-style technology icon that has been colored like the transport belts.
----@field name data.TechnologyID
+	sprite_utils.icons.assign_deferrable_icon({
+		name = entity.name,
+		type_name = entity.type,
+		icon_datum = preset.icon,
+	})
 
----@class PrismaticBelts.TransformBeltInputs
----The options that configured how the transport belt will be colored, and which spritesheet to use.
----@field belt_animation_set PrismaticBelts.TransportBeltAnimationSetInputs
----
----The options that configure how the transport belt icon will be handled. Omit to use the same
----options as in the `animation_set` field.
----@field belt_icon PrismaticBelts.TransportBeltIconInputs?
----
----The options that configure how a technology unlocking the belt, having a Logistics-style
----technology icon, will be transformed; omit if no technology, or the unlocking technology does not
----use a Logistics-style technology icon.
----@field logistics_technology PrismaticBelts.LogisticsTechnologyInputs?
----
----A list of entities to forcibly set to the `belt_animation_set` of the reference belt. Use when
----the automatic resolution of reference belts does not resolve correctly.
----@field forced_connectable_belt_entities PrismaticBelts.TransportBeltConnectableEntity[]?
-
----For the transport belt with the specified `name`, updates the sprites to use the tinted prismatic
----belt sprites and automatically updates entities that use the transport belt.
----@param name data.EntityID
----@param inputs PrismaticBelts.TransformBeltInputs?
-function api.transform_belt_and_related_connectables(name, inputs)
-	local entity = data.raw["transport-belt"][name]
-	if not entity then
-		return
+	if inputs.logistics_technology_name then
+		sprite_utils.icons.assign_deferrable_icon({
+			name = inputs.logistics_technology_name,
+			type_name = "technology",
+			icon_datum = preset.technology_icon,
+		})
 	end
 
+	api.apply_belt_animation_set_and_update_related_connectables(entity, preset.belt_animation_set, {
+		mask_tint = preset.tint,
+	})
+	create_or_update_remnants_core(entity.name, preset.remnants_animation)
+
+	for _, forced_entity in pairs(inputs.forced_connectable_belt_entities or {}) do
+		local target_entity = data.raw[forced_entity.type_name][forced_entity.name]
+		if target_entity then
+			target_entity.belt_animation_set = entity.belt_animation_set
+		end
+	end
+end
+
+---Implementation for `transform_belt_and_related_connectables` using the layered, tintable sprite set.
+---@param entity data.TransportBeltPrototype
+---@param inputs PrismaticBelts.TransformBeltInputs?
+local function transform_belt_and_related_connectables_layered(entity, inputs)
 	---@type PrismaticBelts.TransportBeltAnimationSetInputs
 	local animation_set_inputs = inputs and inputs.belt_animation_set or {}
 
@@ -577,7 +725,65 @@ function api.transform_belt_and_related_connectables(name, inputs)
 	end
 end
 
----@alias PrismaticBelts.TransportBeltInputsMapping { [data.EntityID]: PrismaticBelts.TransformBeltInputs }
+---@class PrismaticBelts.TransportBeltConnectableEntity
+---The name of the transport belt connectable entity for which the belt_animation_set property
+---should be set.
+---@field name data.EntityID
+---The type of the transport belt connectable entity.
+---@field type_name "splitter"|"lane-splitter"|"underground-belt"|"loader-1x1"|"loader"
+
+---@class PrismaticBelts.LogisticsTechnologyInputs:PrismaticBelts.LogisticsTechnologyIconInputs
+---The technology prototype name of a technology that unlocks the associated transport belt, and
+---which should use a Logistics-style technology icon that has been colored like the transport belts.
+---@field name data.TechnologyID
+
+---@class PrismaticBelts.PresetTransformBeltInputs
+---@field preset PrismaticBelts.Api.Defines.BeltPresets
+---The technology prototype name of a technology that unlocks the associated transport belt, and
+---which should use a Logistics-style technology icon that has been colored like the transport belts.
+---
+---Omit if there is no corresponding technology.
+---@field logistics_technology_name data.TechnologyID?
+---
+---A list of entities to forcibly set to the `belt_animation_set` of the reference belt. Use when
+---the automatic resolution of reference belts does not resolve correctly.
+---@field forced_connectable_belt_entities PrismaticBelts.TransportBeltConnectableEntity[]?
+
+---@class PrismaticBelts.TransformBeltInputs
+---The options that configured how the transport belt will be colored, and which spritesheet to use.
+---@field belt_animation_set PrismaticBelts.TransportBeltAnimationSetInputs
+---
+---The options that configure how the transport belt icon will be handled. Omit to use the same
+---options as in the `animation_set` field.
+---@field belt_icon PrismaticBelts.TransportBeltIconInputs?
+---
+---The options that configure how a technology unlocking the belt, having a Logistics-style
+---technology icon, will be transformed; omit if no technology, or the unlocking technology does not
+---use a Logistics-style technology icon.
+---@field logistics_technology PrismaticBelts.LogisticsTechnologyInputs?
+---
+---A list of entities to forcibly set to the `belt_animation_set` of the reference belt. Use when
+---the automatic resolution of reference belts does not resolve correctly.
+---@field forced_connectable_belt_entities PrismaticBelts.TransportBeltConnectableEntity[]?
+
+---For the transport belt with the specified `name`, updates the sprites to use the tinted prismatic
+---belt sprites and automatically updates entities that use the transport belt.
+---@param name data.EntityID
+---@param inputs (PrismaticBelts.TransformBeltInputs|PrismaticBelts.PresetTransformBeltInputs)?
+function api.transform_belt_and_related_connectables(name, inputs)
+	local entity = data.raw["transport-belt"][name]
+	if not entity then
+		return
+	end
+
+	if inputs and inputs.preset then
+		transform_belt_and_related_connectables_preset(entity, inputs)
+	else
+		transform_belt_and_related_connectables_layered(entity, inputs)
+	end
+end
+
+---@alias PrismaticBelts.TransportBeltInputsMapping { [data.EntityID]: PrismaticBelts.TransformBeltInputs|PrismaticBelts.PresetTransformBeltInputs }
 
 ---For the set of transport belt inputs, updates the sprites to use the tinted prismatic belt
 ---sprites and automatically updates entities that use each transport belt.

@@ -3,6 +3,7 @@ Version: 3.0.1
 Date: ????
   Features:
     - Now updates AAI loaders icons, including lane filtering and stacking variants, to have appropriately colored belts
+    - Added native support for Periodic Madness
     - Enhanced API to include support for using the transport belt, fast transport belt, express transport belt and turbo transport belt preset sprite sheets
     - Enhanced API for the logistics technology icon to allow coloring the structure paint independently
 ---------------------------------------------------------------------------------------------------

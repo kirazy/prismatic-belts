@@ -1,6 +1,11 @@
 local api = require("prototypes.api")
 local sprite_utils = { icons = require("__reskins-sprite-utils__.icons") }
 
+-- Periodic Madness re-sequences the belts.
+if mods["periodic-madness"] then
+	return
+end
+
 local transport_belts = {
 	["transport-belt"] = {
 		logistics_technology_name = "logistics",

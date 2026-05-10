@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 3.0.1
-Date: ????
+Date: 2026-05-10
   Features:
     - Now updates AAI loaders icons, including lane filtering and stacking variants, to have appropriately colored belts
     - Added native support for Periodic Madness

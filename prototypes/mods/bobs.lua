@@ -1,4 +1,5 @@
 local api = require("prototypes.api")
+local migration = require("__flib__.migration")
 local sprite_utils = {
 	icons = require("__reskins-sprite-utils__.icons"),
 	colors = require("__reskins-sprite-utils__.colors"),
@@ -22,6 +23,20 @@ local transport_belts = {
 		logistics_technology = "logistics-5",
 	},
 }
+
+local function is_same_or_newer(version, version_to_compare_with)
+	local v1 = migration.format_version(version)
+	local v2 = migration.format_version(version_to_compare_with)
+
+	if v1 and v2 then
+		return v1 >= v2
+	end
+	return nil
+end
+
+if is_same_or_newer(mods["boblibrary"], "2.1.0") then
+	transport_belts["turbo-transport-belt"] = transport_belts["bob-turbo-transport-belt"]
+end
 
 local is_reskin_adaptation_needed = mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false))
 if is_reskin_adaptation_needed then

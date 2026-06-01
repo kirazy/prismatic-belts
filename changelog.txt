@@ -2,6 +2,7 @@
 Version: 3.0.3
 Date: ????
   Changes:
+    - Updated for changes to the Turbo belt in Bob's mods 2.1+
 ---------------------------------------------------------------------------------------------------
 Version: 3.0.2
 Date: 2026-05-10

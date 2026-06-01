@@ -86,7 +86,7 @@ for name, options in pairs(transport_belts) do
 
 	---@type DeferrableIconData
 	local assignable_tech_icon = {
-		name = entity.name,
+		name = options.logistics_technology,
 		type_name = "technology",
 		icon_data = api.get_transport_belt_technology_icon({ mask_tint = options.mask_tint }),
 	}

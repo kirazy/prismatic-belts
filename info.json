@@ -1,6 +1,6 @@
 {
     "name": "prismatic-belts",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "factorio_version": "2.1",
     "package": {
         "git_publish_branch": "main"

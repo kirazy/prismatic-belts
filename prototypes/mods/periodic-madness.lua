@@ -35,7 +35,7 @@ local transport_belt_inputs_map = {
 	["pm-high-density-transport-belt"] = {
 		logistics_technology = {
 			name = "pm-logistics-5",
-            structure_tint = sprite_utils.colors.from_argb("ff7b4cd9"),
+			structure_tint = sprite_utils.colors.from_argb("ff7b4cd9"),
 		},
 		belt_animation_set = {
 			mask_tint = sprite_utils.colors.from_argb("d1d480ff"),

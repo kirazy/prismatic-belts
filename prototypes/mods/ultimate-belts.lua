@@ -1,7 +1,14 @@
 local api = require("prototypes.api")
 local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
-if not (mods["UltimateBelts"] or mods["UltimateBeltsSpaceAge"] or mods["NovasUltimateBelts"] or mods["UltimateBeltsSpaceAgeFork"]) then
+if
+	not (
+		mods["UltimateBelts"]
+		or mods["UltimateBeltsSpaceAge"]
+		or mods["NovasUltimateBelts"]
+		or mods["UltimateBeltsSpaceAgeFork"]
+	)
+then
 	return
 end
 

@@ -61,7 +61,7 @@ defines_api.belt_presets = {
 	---
 	---Should be used with faster belt speeds, between 30 items/s and 60 items/s.
 	fast = 2,
-	---Indicates the express (blue) transport belt animation set should be used. 
+	---Indicates the express (blue) transport belt animation set should be used.
 	---
 	---Should be used with faster belt speeds, between 30 items/s and 60 items/s.
 	express = 3,

@@ -8,7 +8,6 @@ if not mods["more-belts"] then
 	return
 end
 
-
 ---@type PrismaticBelts.TransportBeltInputsMapping
 local transport_belt_inputs_map = {
 	["mk4"] = {
@@ -56,7 +55,11 @@ local transport_belt_inputs_map = {
 local function get_lane_splitter_icon(splitter_entity, belt_entity)
 	local splitter_icon = sprite_utils.icons.get_icon_from_prototype(splitter_entity)
 	local belt_icon = sprite_utils.icons.get_icon_from_prototype(belt_entity)
-	return sprite_utils.icons.compose_icons("default", splitter_icon, sprite_utils.icons.transform_icon(belt_icon, 0.5, { 8, -8 }))
+	return sprite_utils.icons.compose_icons(
+		"default",
+		splitter_icon,
+		sprite_utils.icons.transform_icon(belt_icon, 0.5, { 8, -8 })
+	)
 end
 
 for tier, inputs in pairs(transport_belt_inputs_map) do

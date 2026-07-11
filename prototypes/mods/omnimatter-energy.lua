@@ -15,7 +15,8 @@ local transport_belts = {
 	},
 }
 
-local is_reskin_adaptation_needed = mods["reskins-library"] and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false))
+local is_reskin_adaptation_needed = mods["reskins-library"]
+	and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false))
 if is_reskin_adaptation_needed then
 	transport_belts["basic-transport-belt"].tier = 0
 
@@ -43,7 +44,8 @@ for name, options in pairs(transport_belts) do
 	if is_reskin_adaptation_needed then
 		-- Append tier labels for reskins-library
 		local do_labels = reskins.lib.settings.get_value("reskins-bobs-do-belt-entity-tier-labeling") == true
-		assignable_belt_icon.icon_data = do_labels and reskins.lib.tiers.add_tier_labels_to_icons(options.tier, icon_data) or icon_data
+		assignable_belt_icon.icon_data = do_labels and reskins.lib.tiers.add_tier_labels_to_icons(options.tier, icon_data)
+			or icon_data
 		assignable_belt_icon.pictures = do_labels and reskins.lib.sprites.create_sprite_from_icons(icon_data, 1.0) or nil
 	end
 
@@ -71,18 +73,22 @@ end
 -- Apply recipe icon fixes, as Omnienergy does not set main_product for the single-item belt recipes
 -- and so the icons do not automatically resolve.
 local recipes = {
-    "basic-transport-belt",
-    "transport-belt",
+	"basic-transport-belt",
+	"transport-belt",
 }
 
 for _, name in pairs(recipes) do
-    local item = data.raw.item[name]
-    if not item then goto continue end
+	local item = data.raw.item[name]
+	if not item then
+		goto continue
+	end
 
-    local recipe = data.raw.recipe[name]
-    if not recipe then goto continue end
+	local recipe = data.raw.recipe[name]
+	if not recipe then
+		goto continue
+	end
 
-    recipe.icons = item.icons
+	recipe.icons = item.icons
 
-    ::continue::
+	::continue::
 end

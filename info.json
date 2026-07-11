@@ -13,7 +13,7 @@
         "reskins-sprite-utils",
         "? space-age",
         "? boblogistics",
-        "? reskins-library >= 2.3.0",
+        "? reskins-library",
         "(?) reskins-bobs",
         "(?) reskins-compatibility",
         "(?) aai-loaders",

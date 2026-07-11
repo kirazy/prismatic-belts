@@ -7,7 +7,8 @@
     },
     "title": "Prismatic Belts",
     "author": "Kirazy",
-    "contact": "kirazy@live.com",
+    "contact": "https://discord.gg/qAvSyzZFPr",
+    "homepage": "https://github.com/kirazy/prismatic-belts",
     "dependencies": [
         "base",
         "reskins-sprite-utils",

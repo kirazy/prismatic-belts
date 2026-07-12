@@ -1,3 +1,5 @@
+---@namespace PrismaticBelts
+
 --- Provides enumerations for use in Prismatic Belts.
 ---
 ---### Examples
@@ -5,12 +7,12 @@
 ---local api = require("__prismatic-belts__.prototypes.api")
 ---local defines = api.defines
 ---```
----@class PrismaticBelts.Api.Defines
-local defines_api = {}
+---@class Defines
+local _defines = {}
 
 ---Represents stages of the Factorio mod loading process.
----@enum PrismaticBelts.Api.Defines.Stage
-defines_api.stage = {
+---@enum Stage
+_defines.stage = {
 	---The settings stage.
 	settings = 0,
 	---The settings updates stage.
@@ -28,8 +30,8 @@ defines_api.stage = {
 }
 
 ---Represents the different types of animated transport belt sprite sheets.
----@enum PrismaticBelts.Api.Defines.BeltSprites
-defines_api.belt_sprites = {
+---@enum BeltSprites
+_defines.belt_sprites = {
 	---Indicates standard belt sprites.
 	---
 	---Used for slower belt speeds, typically less than 30 items/s.
@@ -51,8 +53,8 @@ defines_api.belt_sprites = {
 ---
 ---Pre-colored sprite sheets are more performative than multi-layered dynamic sprite sheets and so
 ---these have been included to support reskinning the standard base-Factorio transport belts.
----@enum PrismaticBelts.Api.Defines.BeltPresets
-defines_api.belt_presets = {
+---@enum BeltPreset
+_defines.belt_presets = {
 	---Indicates the (yellow) transport belt animation set should be used.
 	---
 	---Should be used with slower belt speeds, less than 30 items/s.
@@ -71,4 +73,4 @@ defines_api.belt_presets = {
 	turbo = 4,
 }
 
-return defines_api
+return _defines

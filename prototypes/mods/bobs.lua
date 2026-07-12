@@ -10,7 +10,7 @@ local transport_belts = {
 		mask_tint = util.color("#7D7D7DD1"),
 		logistics_technology = "logistics-0",
 	},
-	["bob-turbo-transport-belt"] = {
+	["turbo-transport-belt"] = {
 		mask_tint = util.color("#A510E584"),
 		logistics_technology = "logistics-4",
 	},
@@ -24,11 +24,11 @@ local is_reskin_adaptation_needed = mods["reskins-library"]
 	and not (reskins.bobs and (reskins.bobs.triggers.logistics.entities == false))
 if is_reskin_adaptation_needed then
 	transport_belts["bob-basic-transport-belt"].tier = 0
-	transport_belts["bob-turbo-transport-belt"].tier = 4
+	transport_belts["turbo-transport-belt"].tier = 4
 	transport_belts["bob-ultimate-transport-belt"].tier = 5
 
 	transport_belts["bob-basic-transport-belt"].mask_tint = reskins.lib.tiers.get_belt_tint(0)
-	transport_belts["bob-turbo-transport-belt"].mask_tint = reskins.lib.tiers.get_belt_tint(4)
+	transport_belts["turbo-transport-belt"].mask_tint = reskins.lib.tiers.get_belt_tint(4)
 	transport_belts["bob-ultimate-transport-belt"].mask_tint = reskins.lib.tiers.get_belt_tint(5)
 end
 

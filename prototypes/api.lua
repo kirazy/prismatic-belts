@@ -130,7 +130,9 @@ local presets = {
 			},
 			frozen_patch = api.get_transport_belt_frozen_patch(api.defines.belt_sprites.standard),
 		},
-		remnants_animation = get_corpse_animation("__prismatic-belts__/graphics/entity/base/transport-belt/remnants/transport-belt-remnants.png"),
+		remnants_animation = get_corpse_animation(
+			"__prismatic-belts__/graphics/entity/base/transport-belt/remnants/transport-belt-remnants.png"
+		),
 		icon = {
 			icon = "__prismatic-belts__/graphics/icons/base/transport-belt.png",
 			icon_size = 64,
@@ -154,7 +156,9 @@ local presets = {
 			},
 			frozen_patch = api.get_transport_belt_frozen_patch(api.defines.belt_sprites.fast),
 		},
-		remnants_animation = get_corpse_animation("__prismatic-belts__/graphics/entity/base/fast-transport-belt/remnants/fast-transport-belt-remnants.png"),
+		remnants_animation = get_corpse_animation(
+			"__prismatic-belts__/graphics/entity/base/fast-transport-belt/remnants/fast-transport-belt-remnants.png"
+		),
 		icon = {
 			icon = "__prismatic-belts__/graphics/icons/base/fast-transport-belt.png",
 			icon_size = 64,
@@ -178,7 +182,9 @@ local presets = {
 			},
 			frozen_patch = api.get_transport_belt_frozen_patch(api.defines.belt_sprites.fast),
 		},
-		remnants_animation = get_corpse_animation("__prismatic-belts__/graphics/entity/base/express-transport-belt/remnants/express-transport-belt-remnants.png"),
+		remnants_animation = get_corpse_animation(
+			"__prismatic-belts__/graphics/entity/base/express-transport-belt/remnants/express-transport-belt-remnants.png"
+		),
 		icon = {
 			icon = "__prismatic-belts__/graphics/icons/base/express-transport-belt.png",
 			icon_size = 64,
@@ -203,7 +209,9 @@ local presets = {
 			},
 			frozen_patch = api.get_transport_belt_frozen_patch(api.defines.belt_sprites.turbo),
 		},
-		remnants_animation = get_corpse_animation("__prismatic-belts__/graphics/entity/space-age/turbo-transport-belt/remnants/turbo-transport-belt-remnants.png"),
+		remnants_animation = get_corpse_animation(
+			"__prismatic-belts__/graphics/entity/space-age/turbo-transport-belt/remnants/turbo-transport-belt-remnants.png"
+		),
 		icon = {
 			icon = "__prismatic-belts__/graphics/icons/space-age/turbo-transport-belt.png",
 			icon_size = 64,
@@ -447,7 +455,11 @@ function api.get_transport_belt_animation_set(inputs)
 		-- Point to appropriate sprite directory
 		---@type data.RotatedAnimation
 		local layer = {
-			filename = "__prismatic-belts__/graphics/entity/standard/transport-belt-" .. belt_sprites .. "-" .. layer_inputs.layer .. ".png",
+			filename = "__prismatic-belts__/graphics/entity/standard/transport-belt-"
+				.. belt_sprites
+				.. "-"
+				.. layer_inputs.layer
+				.. ".png",
 			priority = "extra-high",
 			width = 128,
 			height = 128,
@@ -526,7 +538,9 @@ local function create_or_update_remnants_core(transport_belt_name, animation)
 			icon_size = data.raw["transport-belt"][transport_belt_name].icon_size,
 			flags = { "placeable-neutral", "not-on-map" },
 			subgroup = "belt-remnants",
-			order = (data.raw.item[transport_belt_name] and data.raw.item[transport_belt_name].order) and data.raw.item[transport_belt_name].order .. "-a[" .. transport_belt_name .. "-remnants]" or "a-a-a",
+			order = (data.raw.item[transport_belt_name] and data.raw.item[transport_belt_name].order)
+					and data.raw.item[transport_belt_name].order .. "-a[" .. transport_belt_name .. "-remnants]"
+				or "a-a-a",
 			selection_box = { { -0.5, -0.5 }, { 0.5, 0.5 } },
 			tile_width = 1,
 			tile_height = 1,
@@ -578,7 +592,9 @@ function api.create_or_update_remnants(transport_belt_name, inputs)
 	local function return_remnant_layer(layer_inputs)
 		---@type data.RotatedAnimation
 		local layer = {
-			filename = "__prismatic-belts__/graphics/entity/standard/remnants/transport-belt-remnants-" .. layer_inputs.layer .. ".png",
+			filename = "__prismatic-belts__/graphics/entity/standard/remnants/transport-belt-remnants-"
+				.. layer_inputs.layer
+				.. ".png",
 			line_length = 1,
 			width = 106,
 			height = 102,
@@ -845,7 +861,9 @@ local function transform_belt_and_related_connectables_layered(entity, inputs)
 			icon_data = api.get_transport_belt_technology_icon({
 				base_tint = logistics_technology_inputs.base_tint or animation_set_inputs.base_tint,
 				mask_tint = logistics_technology_inputs.mask_tint or animation_set_inputs.mask_tint,
-				structure_tint = logistics_technology_inputs.structure_tint or logistics_technology_inputs.mask_tint or animation_set_inputs.mask_tint,
+				structure_tint = logistics_technology_inputs.structure_tint
+					or logistics_technology_inputs.mask_tint
+					or animation_set_inputs.mask_tint,
 				arrow_tint = logistics_technology_inputs.arrow_tint or animation_set_inputs.arrow_tint,
 			}),
 		})

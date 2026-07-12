@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not mods["periodic-madness"] then
 	return
@@ -14,10 +13,10 @@ local transport_belt_inputs_map = {
 	["fast-transport-belt"] = {
 		logistics_technology = {
 			name = "logistics-2",
-			structure_tint = sprite_utils.colors.from_argb("ffff4000"),
+			structure_tint = util.color("#ff4000FF"),
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("d1f36f37"),
+			mask_tint = util.color("#f36f37d1"),
 		},
 	},
 	["pm-advanced-transport-belt"] = {
@@ -26,7 +25,7 @@ local transport_belt_inputs_map = {
 	},
 	["express-transport-belt"] = {
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("ff33b4ff"),
+			mask_tint = util.color("#33b4ffFF"),
 		},
 		logistics_technology = {
 			name = "pm-logistics-4",
@@ -35,10 +34,10 @@ local transport_belt_inputs_map = {
 	["pm-high-density-transport-belt"] = {
 		logistics_technology = {
 			name = "pm-logistics-5",
-			structure_tint = sprite_utils.colors.from_argb("ff7b4cd9"),
+			structure_tint = util.color("#7b4cd9FF"),
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("d1d480ff"),
+			mask_tint = util.color("#d480ffd1"),
 		},
 	},
 }

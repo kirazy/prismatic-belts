@@ -1,12 +1,11 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not mods["matts-logistics"] then
 	return
 end
 
 local default_animation_set = {
-	base_tint = sprite_utils.colors.from_argb("FF737373"),
+	base_tint = util.color("#737373FF"),
 	tint_base_as_overlay = false,
 }
 
@@ -19,7 +18,7 @@ local transport_belt_inputs_map = {
 		belt_animation_set = util.merge({
 			default_animation_set,
 			{
-				mask_tint = sprite_utils.colors.from_argb("FF74CC66"),
+				mask_tint = util.color("#74CC66FF"),
 			},
 		}),
 	},
@@ -30,7 +29,7 @@ local transport_belt_inputs_map = {
 		belt_animation_set = util.merge({
 			default_animation_set,
 			{
-				mask_tint = sprite_utils.colors.from_argb("FFCC7E66"),
+				mask_tint = util.color("#CC7E66FF"),
 			},
 		}),
 	},
@@ -41,7 +40,7 @@ local transport_belt_inputs_map = {
 		belt_animation_set = util.merge({
 			default_animation_set,
 			{
-				mask_tint = sprite_utils.colors.from_argb("FF8F66CC"),
+				mask_tint = util.color("#8F66CCFF"),
 			},
 		}),
 	},
@@ -52,7 +51,7 @@ local transport_belt_inputs_map = {
 		belt_animation_set = util.merge({
 			default_animation_set,
 			{
-				mask_tint = sprite_utils.colors.from_argb("FF667ACC"),
+				mask_tint = util.color("#667ACCFF"),
 			},
 		}),
 	},
@@ -63,8 +62,8 @@ local transport_belt_inputs_map = {
 		belt_animation_set = util.merge({
 			default_animation_set,
 			{
-				mask_tint = sprite_utils.colors.from_argb("FF737373"),
-				arrow_tint = sprite_utils.colors.from_argb("FFB3B3B3"),
+				mask_tint = util.color("#737373FF"),
+				arrow_tint = util.color("#B3B3B3FF"),
 			},
 		}),
 	},

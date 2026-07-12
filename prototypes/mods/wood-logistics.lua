@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not mods["wood-logistics"] then
 	return
@@ -10,12 +9,12 @@ local transport_belt_inputs_map = {
 	["wood-transport-belt"] = {
 		logistics_technology = {
 			name = "wood-logistics",
-			structure_tint = sprite_utils.colors.from_argb("FFA15A40"),
-			arrow_tint = sprite_utils.colors.from_argb("FFAE7E6A"),
+			structure_tint = util.color("#A15A40FF"),
+			arrow_tint = util.color("#AE7E6AFF"),
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFAE7E6A"),
-			arrow_tint = sprite_utils.colors.from_argb("FF864828"),
+			mask_tint = util.color("#AE7E6AFF"),
+			arrow_tint = util.color("#864828FF"),
 			arrow_blend_mode = "normal",
 		},
 	},

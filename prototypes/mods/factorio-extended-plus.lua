@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not (mods["FactorioExtended-Plus-Transport"] or mods["FactorioExtended-Plus-Transport2"]) then
 	return
@@ -12,7 +11,7 @@ local transport_belt_inputs_map = {
 			name = "logistics-4",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("D12CD529"),
+			mask_tint = util.color("#2CD529D1"),
 		},
 	},
 	["rapid-transport-belt-mk2"] = {
@@ -20,7 +19,7 @@ local transport_belt_inputs_map = {
 			name = "logistics-5",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("D19A2CC9"),
+			mask_tint = util.color("#9A2CC9D1"),
 		},
 	},
 }

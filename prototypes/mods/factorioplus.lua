@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not mods["factorioplus"] then
 	return
@@ -10,19 +9,19 @@ local transport_belt_inputs_map = {
 	["basic-transport-belt"] = {
 		logistics_technology = { name = "logistics-basic" },
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("D17D7D7D"),
+			mask_tint = util.color("#7D7D7DD1"),
 		},
 	},
 	["turbo-transport-belt"] = {
 		logistics_technology = { name = "logistics-4" },
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FF8AE58A"),
+			mask_tint = util.color("#8AE58AFF"),
 		},
 	},
 	["supersonic-transport-belt"] = {
 		logistics_technology = { name = "logistics-5" },
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFCC8BE4"),
+			mask_tint = util.color("#CC8BE4FF"),
 		},
 	},
 }

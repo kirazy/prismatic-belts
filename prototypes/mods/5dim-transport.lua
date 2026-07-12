@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not mods["5dim_transport"] then
 	return
@@ -12,7 +11,7 @@ local transport_belt_inputs_map = {
 			name = "logistics-4",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFFFA8F9"),
+			mask_tint = util.color("#FFA8F9FF"),
 		},
 	},
 	["5d-transport-belt-05"] = {
@@ -20,7 +19,7 @@ local transport_belt_inputs_map = {
 			name = "logistics-5",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FF58FF4F"),
+			mask_tint = util.color("#58FF4FFF"),
 		},
 	},
 	["5d-transport-belt-06"] = {
@@ -28,7 +27,7 @@ local transport_belt_inputs_map = {
 			name = "logistics-6",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFB18E77"),
+			mask_tint = util.color("#B18E77FF"),
 		},
 	},
 	["5d-transport-belt-07"] = {
@@ -36,7 +35,7 @@ local transport_belt_inputs_map = {
 			name = "logistics-7",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFA168C7"),
+			mask_tint = util.color("#A168C7FF"),
 		},
 	},
 	["5d-transport-belt-08"] = {
@@ -44,7 +43,7 @@ local transport_belt_inputs_map = {
 			name = "logistics-8",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFCDCDCB"),
+			mask_tint = util.color("#CDCDCBFF"),
 		},
 	},
 	["5d-transport-belt-09"] = {
@@ -52,7 +51,7 @@ local transport_belt_inputs_map = {
 			name = "logistics-9",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFFF9736"),
+			mask_tint = util.color("#FF9736FF"),
 		},
 	},
 	["5d-transport-belt-10"] = {
@@ -60,7 +59,7 @@ local transport_belt_inputs_map = {
 			name = "logistics-10",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FF9A9BFF"),
+			mask_tint = util.color("#9A9BFFFF"),
 		},
 	},
 }

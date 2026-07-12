@@ -1,7 +1,7 @@
 local meld = require("meld")
 local sprite_utils = {
+	---@type Reskins.SpriteUtils.Icons
 	icons = require("__reskins-sprite-utils__.icons"),
-	colors = require("__reskins-sprite-utils__.colors"),
 }
 
 ---The Prismatic Belts library of API functions.
@@ -141,7 +141,7 @@ local presets = {
 			icon = "__prismatic-belts__/graphics/technology/base/logistics.png",
 			icon_size = 256,
 		},
-		tint = sprite_utils.colors.from_argb("ffffb726"),
+		tint = util.color("#ffb726FF"),
 	},
 	[api.defines.belt_presets.fast] = {
 		belt_animation_set = {
@@ -167,7 +167,7 @@ local presets = {
 			icon = "__prismatic-belts__/graphics/technology/base/logistics-2.png",
 			icon_size = 256,
 		},
-		tint = sprite_utils.colors.from_argb("fff22318"),
+		tint = util.color("#f22318FF"),
 	},
 	[api.defines.belt_presets.express] = {
 		belt_animation_set = {
@@ -193,7 +193,7 @@ local presets = {
 			icon = "__prismatic-belts__/graphics/technology/base/logistics-3.png",
 			icon_size = 256,
 		},
-		tint = sprite_utils.colors.from_argb("ff33b4ff"),
+		tint = util.color("#33b4ffFF"),
 	},
 	[api.defines.belt_presets.turbo] = {
 		belt_animation_set = {
@@ -220,7 +220,7 @@ local presets = {
 			icon = "__prismatic-belts__/graphics/technology/space-age/turbo-transport-belt.png",
 			icon_size = 256,
 		},
-		tint = sprite_utils.colors.from_argb("ff94cc33"),
+		tint = util.color("#94cc33FF"),
 	},
 }
 

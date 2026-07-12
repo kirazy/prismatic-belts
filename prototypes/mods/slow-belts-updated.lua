@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not mods["slow-belts-updated"] then
 	return
@@ -9,17 +8,17 @@ end
 local transport_belt_inputs_map = {
 	["slowest-belt"] = {
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFDF8CBF"),
+			mask_tint = util.color("#DF8CBFFF"),
 		},
 	},
 	["slower-belt"] = {
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFDD9370"),
+			mask_tint = util.color("#DD9370FF"),
 		},
 	},
 	["slow-belt"] = {
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FF6D77B9"),
+			mask_tint = util.color("#6D77B9FF"),
 		},
 	},
 }

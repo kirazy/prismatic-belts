@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not mods["RandomFactorioThings"] then
 	return
@@ -12,7 +11,7 @@ local transport_belt_inputs_map = {
 			name = "nuclear-logistics",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FF00FF00"),
+			mask_tint = util.color("#00FF00FF"),
 		},
 	},
 	["plutonium-transport-belt"] = {
@@ -20,7 +19,7 @@ local transport_belt_inputs_map = {
 			name = "plutonium-logistics",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("DE00E1FF"),
+			mask_tint = util.color("#00E1FFDE"),
 		},
 	},
 }

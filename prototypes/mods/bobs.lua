@@ -1,8 +1,5 @@
 local api = require("prototypes.api")
-local sprite_utils = {
-	icons = require("__reskins-sprite-utils__.icons"),
-	colors = require("__reskins-sprite-utils__.colors"),
-}
+local sprite_utils = { icons = require("__reskins-sprite-utils__.icons") }
 
 if not mods["boblogistics"] then
 	return
@@ -10,15 +7,15 @@ end
 
 local transport_belts = {
 	["bob-basic-transport-belt"] = {
-		mask_tint = sprite_utils.colors.from_argb("D17D7D7D"),
+		mask_tint = util.color("#7D7D7DD1"),
 		logistics_technology = "logistics-0",
 	},
 	["bob-turbo-transport-belt"] = {
-		mask_tint = sprite_utils.colors.from_argb("D1A510E5"),
+		mask_tint = util.color("#A510E584"),
 		logistics_technology = "logistics-4",
 	},
 	["bob-ultimate-transport-belt"] = {
-		mask_tint = sprite_utils.colors.from_argb("D116F263"),
+		mask_tint = util.color("#16F263D1"),
 		logistics_technology = "logistics-5",
 	},
 }

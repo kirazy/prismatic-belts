@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not (mods["promethium-belts"] or mods["promethium-belts-rebalance"]) then
 	return
@@ -10,10 +9,10 @@ local transport_belt_inputs_map = {
 	["promethium-transport-belt"] = {
 		logistics_technology = {
 			name = "promethium-transport-belt",
-			structure_tint = sprite_utils.colors.from_argb("FFFF1AF4"),
+			structure_tint = util.color("#FF1AF4FF"),
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFDD5FC1"),
+			mask_tint = util.color("#DD5FC1FF"),
 		},
 	},
 }

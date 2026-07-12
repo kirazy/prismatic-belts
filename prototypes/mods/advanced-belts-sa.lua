@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not mods["AdvancedBeltsSA"] then
 	return
@@ -12,7 +11,7 @@ local transport_belt_inputs_map = {
 			name = "extreme-logistics",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FF2BFFE6"),
+			mask_tint = util.color("#2BFFE6FF"),
 		},
 	},
 	["ultimate-belt"] = {
@@ -20,7 +19,7 @@ local transport_belt_inputs_map = {
 			name = "ultimate-logistics",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFFF7F4D"),
+			mask_tint = util.color("#FF7F4DFF"),
 		},
 	},
 	["high-speed-belt"] = {
@@ -28,7 +27,7 @@ local transport_belt_inputs_map = {
 			name = "high-speed-logistics",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFF12BFF"),
+			mask_tint = util.color("#F12BFFFF"),
 		},
 	},
 }

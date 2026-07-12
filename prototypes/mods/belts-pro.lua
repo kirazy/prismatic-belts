@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not mods["Belts_Pro"] then
 	return
@@ -9,26 +8,26 @@ end
 local transport_belt_inputs_map = {
 	["advanced-transport-belt"] = {
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FF62E856"),
+			mask_tint = util.color("#62E856FF"),
 		},
 	},
 	["superior-transport-belt"] = {
 		logistics_technology = {
 			name = "superior-belts",
-			structure_tint = sprite_utils.colors.from_argb("FFAA00CC"),
+			structure_tint = util.color("#AA00CCFF"),
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFDE66FF"),
+			mask_tint = util.color("#DE66FFFF"),
 		},
 	},
 	["ultrasuperior-transport-belt"] = {
 		logistics_technology = {
 			name = "ultrasuperior-belts",
-			structure_tint = sprite_utils.colors.from_argb("FFFF0080"),
+			structure_tint = util.color("#FF0080FF"),
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FFCC3380"),
-			arrow_tint = sprite_utils.colors.from_argb("FFFD0071"),
+			mask_tint = util.color("#CC3380FF"),
+			arrow_tint = util.color("#FD0071FF"),
 		},
 	},
 }

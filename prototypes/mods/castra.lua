@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not mods["castra"] then
 	return
@@ -10,14 +9,14 @@ local transport_belt_inputs_map = {
 	["military-transport-belt"] = {
 		logistics_technology = {
 			name = "military-transport-belt",
-			base_tint = sprite_utils.colors.from_argb("FFDEDCF5"),
+			base_tint = util.color("#DEDCF5FF"),
 		},
 		belt_icon = {
-			base_tint = sprite_utils.colors.from_argb("FFDEDCF5"),
+			base_tint = util.color("#DEDCF5FF"),
 		},
 		belt_animation_set = {
-			base_tint = sprite_utils.colors.from_argb("FF6B6A75"),
-			mask_tint = sprite_utils.colors.from_argb("FFB37D47"),
+			base_tint = util.color("#6B6A75FF"),
+			mask_tint = util.color("#B37D47FF"),
 			tint_base_as_overlay = true,
 		},
 	},

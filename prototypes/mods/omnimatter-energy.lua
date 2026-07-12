@@ -1,8 +1,7 @@
+-- cspell: words Omnienergy
+
 local api = require("prototypes.api")
-local sprite_utils = {
-	icons = require("__reskins-sprite-utils__.icons"),
-	colors = require("__reskins-sprite-utils__.colors"),
-}
+local sprite_utils = { icons = require("__reskins-sprite-utils__.icons") }
 
 if not mods["omnimatter_energy"] then
 	return
@@ -10,7 +9,7 @@ end
 
 local transport_belts = {
 	["basic-transport-belt"] = {
-		mask_tint = sprite_utils.colors.from_argb("D17D7D7D"),
+		mask_tint = util.color("#7D7D7DD1"),
 		logistics_technology = "logistics-0",
 	},
 }

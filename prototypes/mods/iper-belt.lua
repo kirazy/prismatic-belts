@@ -1,5 +1,4 @@
 local api = require("prototypes.api")
-local sprite_utils = { colors = require("__reskins-sprite-utils__.colors") }
 
 if not mods["iper-belt"] then
 	return
@@ -12,11 +11,11 @@ local transport_belt_inputs_map = {
 			name = "iper-transport-belts",
 		},
 		belt_animation_set = {
-			mask_tint = sprite_utils.colors.from_argb("FF5D65D9"),
-			arrow_tint = sprite_utils.colors.from_argb("FF2B3DF1"),
+			mask_tint = util.color("#5D65D9FF"),
+			arrow_tint = util.color("#2B3DF1FF"),
 		},
 		belt_icon = {
-			arrow_tint = sprite_utils.colors.from_argb("FFa6acff"),
+			arrow_tint = util.color("#a6acffFF"),
 		},
 	},
 }

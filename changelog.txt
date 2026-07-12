@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 3.1.1
-Date: ????
+Date: 2026-07-11
   Bugfixes:
     - Fixed that Omnienergy was not included as a dependency
     - Fixed that Bob's Logistics Turbo Belts were not colored, or were colored incorrectly (Space Age)

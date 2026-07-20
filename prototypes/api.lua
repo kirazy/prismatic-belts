@@ -437,12 +437,16 @@ end
 ---@class TransportBeltAnimationSetInputs: SpriteTintInputs
 ---Spritesheet to use for the animation set; if omitted, defaults to a suitable spritesheet.
 ---@field belt_sprites? BeltSprites
+---Spritesheet to use for the animation set; if omitted, defaults to a suitable spritesheet.
+---
+---@deprecated Use `belt_sprites` instead of `variant`; this field will be removed in a future version.
+---@field variant? BeltSprites
 
 ---Returns a complete `TransportBeltAnimationSet` definition.
 ---@param inputs TransportBeltAnimationSetInputs
 ---@return data.TransportBeltAnimationSetWithCorners
 function api.get_transport_belt_animation_set(inputs)
-	local belt_sprites = inputs.belt_sprites or api.defines.belt_sprites.standard
+	local belt_sprites = inputs.belt_sprites or inputs.variant or api.defines.belt_sprites.standard
 
 	---@class ReturnBeltAnimationSetLayerInputs
 	---@field blend_mode? data.BlendMode Blending mode for the layer.

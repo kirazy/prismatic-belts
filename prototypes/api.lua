@@ -4,6 +4,7 @@ local meld = require("meld")
 local sprite_utils = {
 	---@type Reskins.SpriteUtils.Icons
 	icons = require("__reskins-sprite-utils__.icons"),
+	colors = require("__reskins-sprite-utils__.colors"),
 }
 
 ---The Prismatic Belts library of API functions.
@@ -17,31 +18,12 @@ local api = {
 	defines = require("prototypes.defines"),
 }
 
---- Ensure tint is normalized to between 0 and 1
----@param tint data.Color
----@return data.Color
-local function normalize_tint(tint)
-	local r = tint.r or tint[1]
-	local g = tint.g or tint[2]
-	local b = tint.b or tint[3]
-	local a
-
-	if r > 255 or g > 255 or b > 255 then
-		r = r / 255
-		g = g / 255
-		b = b / 255
-		a = tint.a / 255 or tint[4] / 255 or 1
-	end
-
-	return { r = r, g = g, b = b, a = a }
-end
-
 --- Adjust the alpha value of a given tint
 ---@param tint data.Color
 ---@param alpha float
 ---@return data.Color
 local function adjust_alpha(tint, alpha)
-	local normalized_tint = normalize_tint(tint)
+	local normalized_tint = sprite_utils.colors.normalize(tint)
 
 	---@type data.Color
 	local adjusted_tint = { r = normalized_tint.r, g = normalized_tint.g, b = normalized_tint.b, a = alpha }

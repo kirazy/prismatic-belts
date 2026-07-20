@@ -1,5 +1,7 @@
 -- cspell: words Omnienergy
 
+---@using Reskins.SpriteUtils
+
 local api = require("prototypes.api")
 local sprite_utils = { icons = require("__reskins-sprite-utils__.icons") }
 
@@ -40,12 +42,12 @@ for name, options in pairs(transport_belts) do
 		icon_data = icon_data,
 	}
 
-	if is_reskin_adaptation_needed then
-		-- Append tier labels for reskins-library
-		local do_labels = reskins.lib.settings.get_value("reskins-bobs-do-belt-entity-tier-labeling") == true
-		assignable_belt_icon.icon_data = do_labels and reskins.lib.tiers.add_tier_labels_to_icons(options.tier, icon_data)
-			or icon_data
-		assignable_belt_icon.pictures = do_labels and reskins.lib.sprites.create_sprite_from_icons(icon_data, 1.0) or nil
+	if
+		is_reskin_adaptation_needed
+		and reskins.lib.settings.get_value("reskins-bobs-do-belt-entity-tier-labeling") ~= false
+	then
+		assignable_belt_icon.icon_data = reskins.lib.tiers.add_tier_labels_to_icons(options.tier, icon_data)
+		assignable_belt_icon.pictures = reskins.lib.sprites.create_sprite_from_icons(icon_data, 1.0)
 	end
 
 	sprite_utils.icons.assign_deferrable_icon(assignable_belt_icon)

@@ -1,3 +1,5 @@
+---@using Reskins.SpriteUtils
+
 local api = require("prototypes.api")
 local sprite_utils = { icons = require("__reskins-sprite-utils__.icons") }
 
@@ -59,7 +61,10 @@ for name, options in pairs(transport_belts) do
 		icon_data = icon_data,
 	}
 
-	if is_reskin_adaptation_needed and reskins.lib.settings.get_value("reskins-bobs-do-belt-entity-tier-labeling") then
+	if
+		is_reskin_adaptation_needed
+		and reskins.lib.settings.get_value("reskins-bobs-do-belt-entity-tier-labeling") ~= false
+	then
 		deferrable_icon.icon_data = reskins.lib.tiers.add_tier_labels_to_icons(options.tier, icon_data)
 		deferrable_icon.pictures = reskins.lib.sprites.create_sprite_from_icons(icon_data, 1.0)
 	end

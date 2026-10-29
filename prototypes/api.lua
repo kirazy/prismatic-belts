@@ -452,7 +452,7 @@ function api.get_transport_belt_animation_set(inputs)
 			width = 128,
 			height = 128,
 			scale = 0.5,
-			frame_count = 16 * (2 ^ (belt_sprites - 1)),
+			frame_count = 16 * (2 ^ (belt_sprites - 1)) --[[@as uint32]],
 			tint = layer_inputs.tint,
 			tint_as_overlay = layer_inputs.tint_as_overlay,
 			blend_mode = layer_inputs.blend_mode,
@@ -480,7 +480,7 @@ function api.get_transport_belt_animation_set(inputs)
 
 	if not inputs.omit_mask_layer then
 		table.insert(
-			transport_belt_animation_set.animation_set.layers,
+			transport_belt_animation_set.animation_set.layers --[[@cast -?]],
 			return_belt_animation_set_layer({
 				layer = "mask",
 				tint = inputs.mask_tint,
@@ -491,7 +491,7 @@ function api.get_transport_belt_animation_set(inputs)
 
 	if inputs.arrow_tint then
 		table.insert(
-			transport_belt_animation_set.animation_set.layers,
+			transport_belt_animation_set.animation_set.layers --[[@cast -?]],
 			return_belt_animation_set_layer({
 				layer = "arrows",
 				tint = inputs.arrow_tint,
@@ -642,7 +642,7 @@ local function hash_string(s)
 end
 
 ---Converts the provided tint to a string.
----@param t data.Color
+---@param t data.Color?
 ---@return string
 local function format_tint(t)
 	if not t then
@@ -730,7 +730,7 @@ function api.apply_belt_animation_set_and_update_related_connectables(transport_
 				local patch_layers = get_aai_loader_icon_belt_layers(icon_inputs)
 				local entity_icon = sprite_utils.icons.get_icon_from_prototype(entity)
 
-				sprite_utils.icons.assign_deferrable_icon({
+				sprite_utils.icons.apply_icon_assignment({
 					name = entity.name,
 					type_name = entity.type,
 					icon_data = sprite_utils.icons.compose_icons("default", entity_icon[1], patch_layers, table.unpack(entity_icon, 2)),
@@ -753,7 +753,7 @@ function api.apply_belt_animation_set_and_update_related_connectables(transport_
 					end
 
 					local tech_patch_layers = get_aai_loader_technology_icon_belt_layers(icon_inputs)
-					local tech_icon = sprite_utils.icons.get_icon_from_prototype(technology)
+					local tech_icon = sprite_utils.icons.get_icon_from_prototype(technology) --[[@as (data.IconData[])]]
 
 					if icon_inputs.use_three_arrow_variant then
 						table.insert(
@@ -765,7 +765,7 @@ function api.apply_belt_animation_set_and_update_related_connectables(transport_
 						)
 					end
 
-					sprite_utils.icons.assign_deferrable_icon({
+					sprite_utils.icons.apply_icon_assignment({
 						name = technology.name,
 						type_name = technology.type,
 						icon_data = sprite_utils.icons.compose_icons("technology", tech_icon[1], tech_patch_layers, table.unpack(tech_icon, 2)),
@@ -788,14 +788,14 @@ end
 local function transform_belt_and_related_connectables_preset(entity, inputs)
 	local preset = api.get_preset(inputs.preset)
 
-	sprite_utils.icons.assign_deferrable_icon({
+	sprite_utils.icons.apply_icon_assignment({
 		name = entity.name,
 		type_name = entity.type,
 		icon_datum = preset.icon,
 	})
 
 	if inputs.logistics_technology_name then
-		sprite_utils.icons.assign_deferrable_icon({
+		sprite_utils.icons.apply_icon_assignment({
 			name = inputs.logistics_technology_name,
 			type_name = "technology",
 			icon_datum = preset.technology_icon,
@@ -831,7 +831,7 @@ local function transform_belt_and_related_connectables_layered(entity, inputs)
 	---@type TransportBeltConnectableEntity[]
 	local forced_entities = inputs and inputs.forced_connectable_belt_entities or {}
 
-	sprite_utils.icons.assign_deferrable_icon({
+	sprite_utils.icons.apply_icon_assignment({
 		name = entity.name,
 		type_name = entity.type,
 		icon_data = api.get_transport_belt_icon({
@@ -843,7 +843,7 @@ local function transform_belt_and_related_connectables_layered(entity, inputs)
 	})
 
 	if logistics_technology_inputs then
-		sprite_utils.icons.assign_deferrable_icon({
+		sprite_utils.icons.apply_icon_assignment({
 			name = logistics_technology_inputs.name,
 			type_name = "technology",
 			icon_data = api.get_transport_belt_technology_icon({

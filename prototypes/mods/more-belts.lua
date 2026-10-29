@@ -1,3 +1,5 @@
+---@using Reskins.SpriteUtils
+
 local api = require("prototypes.api")
 local sprite_utils = { icons = require("__reskins-sprite-utils__.icons") }
 
@@ -67,14 +69,14 @@ for tier, inputs in pairs(transport_belt_inputs_map) do
 	local lane_splitter = data.raw["lane-splitter"][tier .. "-lane-splitter"]
 
 	if belt and splitter and lane_splitter then
-		---@type DeferrableIconData
+		---@type IconDataAssignment
 		local lane_splitter_icon = {
 			name = lane_splitter.name,
 			type_name = lane_splitter.type,
 			icon_data = get_lane_splitter_icon(splitter, belt),
 		}
 
-		sprite_utils.icons.assign_deferrable_icon(lane_splitter_icon)
+		sprite_utils.icons.apply_icon_assignment(lane_splitter_icon)
 	end
 end
 
@@ -86,13 +88,13 @@ for _, prefix in pairs({ "fast-", "express-" }) do
 	local lane_splitter = data.raw["lane-splitter"][prefix .. "lane-splitter"]
 
 	if belt and splitter and lane_splitter then
-		---@type DeferrableIconData
+		---@type IconDataAssignment
 		local lane_splitter_icon = {
 			name = lane_splitter.name,
 			type_name = lane_splitter.type,
 			icon_data = get_lane_splitter_icon(splitter, belt),
 		}
 
-		sprite_utils.icons.assign_deferrable_icon(lane_splitter_icon)
+		sprite_utils.icons.apply_icon_assignment(lane_splitter_icon)
 	end
 end

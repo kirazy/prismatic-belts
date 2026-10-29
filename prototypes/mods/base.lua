@@ -54,8 +54,8 @@ for name, options in pairs(transport_belts) do
 		mask_tint = options.mask_tint,
 	}) or { preset.icon }
 
-	---@type DeferrableIconData
-	local deferrable_icon = {
+	---@type IconDataAssignment
+	local icon_assignment = {
 		name = entity.name,
 		type_name = entity.type,
 		icon_data = icon_data,
@@ -65,11 +65,11 @@ for name, options in pairs(transport_belts) do
 		is_reskin_adaptation_needed
 		and reskins.lib.settings.get_value("reskins-bobs-do-belt-entity-tier-labeling") ~= false
 	then
-		deferrable_icon.icon_data = reskins.lib.tiers.add_tier_labels_to_icons(options.tier, icon_data)
-		deferrable_icon.pictures = reskins.lib.sprites.create_sprite_from_icons(icon_data, 1.0)
+		icon_assignment.icon_data = reskins.lib.tiers.add_tier_labels_to_icons(options.tier, icon_data)
+		icon_assignment.pictures = reskins.lib.sprites.create_sprite_from_icons(icon_data, 1.0)
 	end
 
-	sprite_utils.icons.assign_deferrable_icon(deferrable_icon)
+	sprite_utils.icons.apply_icon_assignment(icon_assignment)
 
 	local animation_set = options.mask_tint
 			and api.get_transport_belt_animation_set({
@@ -95,7 +95,7 @@ for name, options in pairs(transport_belts) do
 		end
 	end
 
-	---@type DeferrableIconData
+	---@type IconDataAssignment
 	local assignable_tech_icon = {
 		name = options.logistics_technology_name,
 		type_name = "technology",
@@ -103,7 +103,7 @@ for name, options in pairs(transport_belts) do
 			mask_tint = options.mask_tint,
 		}) or { preset.technology_icon },
 	}
-	sprite_utils.icons.assign_deferrable_icon(assignable_tech_icon)
+	sprite_utils.icons.apply_icon_assignment(assignable_tech_icon)
 
 	::continue::
 end

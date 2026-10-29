@@ -1,3 +1,5 @@
+---@using Reskins.SpriteUtils
+
 local sprite_utils = { icons = require("__reskins-sprite-utils__.icons") }
 
 if not mods["more-belts"] then
@@ -23,11 +25,11 @@ local function get_lane_splitter_icon(splitter_entity, belt_entity)
 	)
 end
 
----@type DeferrableIconData
-local deferrable_icon = {
+---@type IconDataAssignment
+local icon_assignment = {
 	name = lane_splitter.name,
 	type_name = lane_splitter.type,
 	icon_data = get_lane_splitter_icon(splitter, belt),
 }
 
-sprite_utils.icons.assign_deferrable_icon(deferrable_icon)
+sprite_utils.icons.apply_icon_assignment(icon_assignment)

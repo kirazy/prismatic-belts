@@ -11,7 +11,7 @@
 	"homepage": "https://github.com/kirazy/prismatic-belts",
 	"dependencies": [
 		"base",
-		"reskins-sprite-utils",
+		"reskins-sprite-utils >= 0.3.0",
 		"? space-age",
 		"? boblogistics",
 		"? reskins-library",

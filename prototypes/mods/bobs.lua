@@ -45,7 +45,7 @@ for name, options in pairs(transport_belts) do
 		mask_tint = options.mask_tint,
 	})
 
-	---@type DeferrableIconData
+	---@type IconDataAssignment
 	local assignable_belt_icon = {
 		name = entity.name,
 		type_name = entity.type,
@@ -60,7 +60,7 @@ for name, options in pairs(transport_belts) do
 		assignable_belt_icon.pictures = reskins.lib.sprites.create_sprite_from_icons(icon_data, 1.0)
 	end
 
-	sprite_utils.icons.assign_deferrable_icon(assignable_belt_icon)
+	sprite_utils.icons.apply_icon_assignment(assignable_belt_icon)
 
 	local animation_set = api.get_transport_belt_animation_set({
 		mask_tint = options.mask_tint,
@@ -70,13 +70,13 @@ for name, options in pairs(transport_belts) do
 
 	api.create_or_update_remnants(entity.name, { mask_tint = options.mask_tint })
 
-	---@type DeferrableIconData
+	---@type IconDataAssignment
 	local assignable_tech_icon = {
 		name = options.logistics_technology,
 		type_name = "technology",
 		icon_data = api.get_transport_belt_technology_icon({ mask_tint = options.mask_tint }),
 	}
-	sprite_utils.icons.assign_deferrable_icon(assignable_tech_icon)
+	sprite_utils.icons.apply_icon_assignment(assignable_tech_icon)
 
 	::continue::
 end

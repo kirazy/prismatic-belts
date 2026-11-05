@@ -3,7 +3,7 @@
 	"version": "3.1.4",
 	"factorio_version": "2.1",
 	"package": {
-		"git_publish_branch": "dev2.1"
+		"git_publish_branch": "main"
 	},
 	"title": "Prismatic Belts",
 	"author": "Kirazy",
